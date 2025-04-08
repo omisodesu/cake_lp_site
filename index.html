@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>いつでもケーキ | ケーキ店向け24時間オンライン予約システム | 店頭受取予約システム</title>
+    <meta name="description" content="「いつでもケーキ」は、ケーキ店向けの24時間オンライン予約システム（店頭受取予約システム）です。営業時間外の予約受付、業務効率化、売上アップを実現します。月額5,500円から、10社限定特別プラン実施中！">
+    
+    <!-- OGP設定 -->
+    <meta property="og:title" content="いつでもケーキ | ケーキ店向け店頭受取予約システム">
+    <meta property="og:description" content="「いつでもケーキ」は、ケーキ店向け店頭受取予約システムです。営業時間外の予約受付、業務効率化、売上アップを実現します。月額5,500円から、10社限定特別プラン実施中！">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://itsudemo-cake.jp/">
+    <meta property="og:image" content="https://itsudemo-cake.jp/assets/images/logo_03.jpg">
+    
+    <!-- フォント -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- スタイルシート -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+     <!-- ファビコン設定 -->
+     <link rel="icon" href="assets/images/logo_03.jpg" type="image/jpeg">
+    
+    <!-- 構造化データ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "いつでもケーキ",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "5500",
+        "priceCurrency": "JPY"
+      },
+      "description": "ケーキ店向け店頭受取予約システム"
+    }
+    </script>
+</head>
+<body>
+    <!-- ヘッダーセクション -->
+    <header class="header" id="top">
+        <div class="container">
+             <!-- ▼ ロゴ画像を1枚で表示する場合の例 ▼ -->
+    <div class="header__logo-wrap" style="text-align: center; margin-bottom: 20px;">
+        <img src="assets/images/logo_07.jpg" 
+             alt="ITSUDEMO CAKE いつでもケーキ"
+             style="max-width: 300px;">
+      </div>
+            <div class="header__content">
+                <h1 class="header__title">お客様は24時間『予約がしたい！』<br>あなたはその声、聞いていますか？</h1>
+                <p class="header__subtitle">月額5,500円から始められる。10社限定特別プラン実施中</p>
+                <a href="#contact" class="cta-button">無料相談・資料請求はこちら</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 課題提起セクション -->
+    <section class="section problems" id="problems">
+        <div class="container">
+            <h2>こんな課題はありませんか？</h2>
+            <div class="problems__list">
+                <div class="problem-card">
+                    <div class="problem-card__icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="problem-card__title">営業時間外の予約機会の損失</h3>
+                    <p>お客様が予約したいと思った時に、お店が閉まっていて予約できない機会損失が発生しています。</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-card__icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3 class="problem-card__title">電話対応による業務の中断</h3>
+                    <p>ケーキ製作中に電話対応が入り、作業が中断。効率低下や品質への影響が懸念されます。</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-card__icon">
+                        <i class="fas fa-user-clock"></i>
+                    </div>
+                    <h3 class="problem-card__title">人手不足による予約受付の負担</h3>
+                    <p>スタッフ不足の中、予約受付業務に時間を取られ、本来の製菓業務に集中できない状況です。</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-card__icon">
+                        <i class="fas fa-list-check"></i>
+                    </div>
+                    <h3 class="problem-card__title">予約情報の管理の煩雑さ</h3>
+                    <p>手書きやエクセルでの予約管理は煩雑で、ミスや漏れが発生するリスクがあります。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- サービス紹介セクション -->
+    <section class="section service" id="service">
+        <div class="container">
+            <h2>「いつでもケーキ」が解決します</h2>
+            <div class="service__features">
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="feature-card__title">24時間オンライン予約受付</h3>
+                    <p>お店が閉まっている時間帯でも、お客様はいつでもケーキの予約ができます。営業時間外の需要を取り込み、売上アップにつながります。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <i class="fas fa-print"></i>
+                    </div>
+                    <h3 class="feature-card__title">予約伝票の自動印刷機能</h3>
+                    <p>オンラインで受けた予約は自動的に伝票として印刷可能。既存の伝票運用をそのまま活かせます。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="feature-card__title">既存オペレーションを変えずに導入可能</h3>
+                    <p>現在のお店の運営方法を大きく変えることなく、スムーズに導入できます。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card__icon">
+                        <i class="fas fa-yen-sign"></i>
+                    </div>
+                    <h3 class="feature-card__title">月額5,500円からの手頃な料金</h3>
+                    <p>10社限定の特別プランをご用意。2年間固定の安心価格で、すぐに投資回収が可能です。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 実績・効果セクション -->
+    <section class="section results" id="results">
+        <div class="container">
+            <h2>導入店舗の実績が証明する効果</h2>
+            <div class="results__grid">
+                <div class="result-card">
+                    <div class="result-card__number" data-value="152">0</div>
+                    <h3 class="result-card__title">クリスマス商戦でのWEB予約増加件数</h3>
+                    <p>クリスマス期間中に新たに獲得できたWEB予約の件数です。</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-card__number" data-value="128">0</div>
+                    <h3 class="result-card__title">営業時間外の予約件数</h3>
+                    <p>通常は受けられなかった営業時間外の予約件数です。</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-card__number" data-value="11">0</div>
+                    <h3 class="result-card__title">予約件数アップ率（%）</h3>
+                    <p>導入前と比較した予約件数の増加率です。</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-card__number" data-value="29">0</div>
+                    <h3 class="result-card__title">月間創出時間（時間）</h3>
+                    <p>電話対応や予約受付から解放される時間です。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 顧客の声セクション -->
+    <section class="section testimonials" id="testimonials">
+        <div class="container">
+            <h2>導入店舗からの声</h2>
+            <div class="testimonials__grid">
+                <div class="testimonial-card">
+                    <img src="assets/images/shop1.jpg" alt="パティスリー 飯田店舗" class="testimonial-card__image">
+                    <div class="testimonial-card__text">
+                        長期休業を経て再開店した時、新たにWEB予約をスタートしました。当初は店頭でさりげなくご案内していただけでしたが、予想以上にお客様がWEB予約を活用してくださり、その需要の高さに驚きました。
+                    </div>
+                    <div class="testimonial-card__author">パティスリー・レ・トロア・ソレイユ オーナー様</div>
+                </div>
+                <div class="testimonial-card">
+                    <img src="assets/images/shop2.jpg" alt="パティスリー ループ店舗" class="testimonial-card__image">
+                    <div class="testimonial-card__text">
+                        人手不足の影響と働き方改革で店休日を増したが、店休日に多くのTELお問い合わせで機会損失が気になっていました。そこでお客様の声に応え、24時間いつでもご予約いただけるWEBシステムを導入することにしました。
+                    </div>
+                    <div class="testimonial-card__author">パティスリー・ループ オーナー様</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 機能紹介セクション -->
+    <section class="section features" id="features">
+        <div class="container">
+            <h2>ケーキ店オーナーの声から生まれた機能</h2>
+            <div class="features__highlight">
+                <div class="feature-card" style="max-width: 600px; margin: 0 auto 40px;">
+                    <div class="feature-card__icon" style="font-size: 4rem;">
+                        <i class="fas fa-print"></i>
+                    </div>
+                    <h3 class="feature-card__title" style="font-size: 1.8rem;">注文印刷管理</h3>
+                    <p>一覧/個別印刷、汎用プリンター対応<br>現在、利用してもらっているケーキ屋オーナーが挙って希望した機能です</p>
+                </div>
+            </div>
+            <div class="features__grid">
+                <div class="features__item">
+                    <h3 class="features__item-title">メニュー管理</h3>
+                    <img src="assets/images/feature1.png" alt="メニュー管理機能" class="features__item-image">
+                    <p>ケーキの種類、価格、サイズなどを簡単に登録・管理できます。季節限定商品の追加も簡単です。</p>
+                </div>
+                <div class="features__item">
+                    <h3 class="features__item-title">オプション設定</h3>
+                    <img src="assets/images/feature2.png" alt="オプション設定機能" class="features__item-image">
+                    <p>ローソク、メッセージプレート、のしなど、様々なオプションを設定できます。</p>
+                </div>
+                <div class="features__item">
+                    <h3 class="features__item-title">原材料表示</h3>
+                    <img src="assets/images/feature3.png" alt="原材料表示機能" class="features__item-image">
+                    <p>アレルギー情報を含む原材料情報を登録し、お客様に正確な情報を提供できます。</p>
+                </div>
+                <div class="features__item">
+                    <h3 class="features__item-title">データ出力機能</h3>
+                    <img src="assets/images/feature4.png" alt="データ出力機能" class="features__item-image">
+                    <p>予約データをPDFやCSV形式で出力可能。データ分析や帳簿管理に活用できます。</p>
+                </div>
+                <div class="features__item">
+                    <h3 class="features__item-title">メーリングリスト</h3>
+                    <img src="assets/images/feature5.png" alt="メーリングリスト機能" class="features__item-image">
+                    <p>顧客情報をダウンロードし、販促メールの送信などに活用できます。</p>
+                </div>
+                <div class="features__item">
+                    <h3 class="features__item-title">在庫管理</h3>
+                    <img src="assets/images/feature6.png" alt="在庫管理機能" class="features__item-image">
+                    <p>商品の在庫状況を管理し、売り切れ防止や生産計画の最適化が可能です。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 市場データセクション -->
+    <section class="section market" id="market">
+        <div class="container">
+            <h2>成長するオンライン予約市場</h2>
+            <div class="market__content">
+                <div class="market__text">
+                    <h3>30代40代の高いEC利用率</h3>
+                    <p>総務省「情報通信白書」（2023年）では、30代のEC利用率：83.2%、40代のEC利用率：77.8%と高い利用率が示されています。【ネットショッピングの利用率】は
+                        どの世代でも利用率は70%～80%前後であり、世代間の差は少ないことから、インターネットショッピングはどの世代でもまんべんなく普及していると言えるでしょう。</p>
+                    
+                    <h3>フードデリバリー・テイクアウト予約市場</h3>
+                    <p>矢野経済研究所の調査では、フードデリバリー市場は6,834億円（2023年）に達し、2024年には7,253億円に拡大すると予測されています。</p>
+                    
+                    <h3>自社で1000人ユーザー調査</h3>
+                    <p>当社の調査では、75.8%の顧客がWEB予約に積極的な利用意向を示しており、特に30代では85.9%、40代では74.1%と高い数値を示しています。</p>
+                </div>
+                <div class="market__chart">
+                    <!-- ここに市場データのグラフを表示 -->
+                    <img src="assets/images/market-chart.png" alt="市場データグラフ" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 料金プランセクション -->
+    <section class="section pricing" id="pricing">
+        <div class="container">
+            <h2>シンプルな料金プラン</h2>
+            <div class="pricing__card">
+                <h3 class="pricing__title">基本プラン</h3>
+                <div class="pricing__price">月額 5,500円</div>
+                <p class="pricing__description">10社限定特別価格（2年間固定）</p>
+                <ul class="pricing__features">
+                    <li class="pricing__feature">店頭受取予約受付</li>
+                    <li class="pricing__feature">予約伝票印刷機能 ※別途プリンターの購入が必要</li>
+                    <li class="pricing__feature">メニュー・オプション管理</li>
+                    <li class="pricing__feature">データ出力機能（PDF、CSV）</li>
+                    <li class="pricing__feature">メーリングリストダウンロード</li>
+                    <li class="pricing__feature">在庫管理機能</li>
+                    <li class="pricing__feature">導入サポート</li>
+                </ul>
+                <p>※決済手数料は別途かかります</p>
+                <p>※詳細はお問い合わせください</p>
+                <a href="#contact" class="cta-button">無料相談・資料請求はこちら</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 導入の流れセクション -->
+    <section class="section process" id="process">
+        <div class="container">
+            <h2>かんたん3ステップで導入完了</h2>
+            <div class="process__steps">
+                <div class="process__step">
+                    <div class="process__step-number">1</div>
+                    <h3 class="process__step-title">お問い合わせ・無料相談</h3>
+                    <p>お問い合わせフォームまたはお電話にてご連絡ください。ご要望をヒアリングし、最適なプランをご提案します。</p>
+                </div>
+                <div class="process__step">
+                    <div class="process__step-number">2</div>
+                    <h3 class="process__step-title">システム設定・カスタマイズ</h3>
+                    <p>お店のメニューや営業情報を設定します。専任スタッフがサポートしますので安心です。</p>
+                </div>
+                <div class="process__step">
+                    <div class="process__step-number">3</div>
+                    <h3 class="process__step-title">運用開始・サポート</h3>
+                    <p>システム導入後も継続的にサポート。操作方法や活用法についてのご質問にお答えします。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ セクション -->
+    <section class="section faq" id="faq">
+        <div class="container">
+            <h2>よくある質問</h2>
+            <div class="faq__list">
+                <div class="faq__item">
+                    <div class="faq__question">既存のオペレーションへの影響はありますか？</div>
+                    <div class="faq__answer">
+                        <p>「いつでもケーキ」は既存のオペレーションを大きく変えることなく導入できるよう設計されています。特に予約伝票印刷機能により、従来の伝票運用をそのまま活かすことができます。</p>
+                    </div>
+                </div>
+                <div class="faq__item">
+                    <div class="faq__question">導入に必要な機器・環境は何ですか？</div>
+                    <div class="faq__answer">
+                        <p>インターネット環境とパソコンまたはタブレット、予約伝票を印刷するためのプリンターが必要です。特別な機器は必要なく、一般的なプリンターで対応可能です。</p>
+                    </div>
+                </div>
+                <div class="faq__item">
+                    <div class="faq__question">サポート体制はどうなっていますか？</div>
+                    <div class="faq__answer">
+                        <p>導入前の無料相談から、導入後の運用サポートまで一貫してサポートいたします。操作方法や活用法についてのご質問は、電話やメールで随時受け付けています。</p>
+                    </div>
+                </div>
+                <div class="faq__item">
+                    <div class="faq__question">契約期間や解約条件はどうなっていますか？</div>
+                    <div class="faq__answer">
+                        <p>基本プランは2年間の契約となります。契約期間中の料金は月額5,500円（税込）で固定です。解約については、契約満了の1ヶ月前までにご連絡いただければ手続き可能です。詳細は個別にご案内いたします。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA セクション -->
+    <section class="section cta" id="contact">
+        <div class="container">
+            <h2 class="cta__title">10社限定特別プラン実施中！<br>お早めにお問い合わせください</h2>
+            <p class="cta__description">ケーキ店の売上アップと業務効率化を実現する「いつでもケーキ」。まずは無料相談・資料請求からお気軽にどうぞ。</p>
+            
+            <form id="contact-form" class="contact-form">
+                <div class="form-group">
+                    <label for="shop-name">店舗名・会社名※個人の方はなしご記入ください <span class="required">*</span></label>
+                    <input type="text" id="shop-name" name="shop-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">お名前 <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">メールアドレス <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">電話番号</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="message">お問い合わせ内容</label>
+                    <textarea id="message" name="message" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="cta-button">送信する</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- フッターセクション -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__column">
+                    <h3 class="footer__title">いつでもケーキ</h3>
+                    <p>がだんだん株式会社</p>
+                    <p>代表取締役 福井佳亮</p>
+                    <p>〒458-0801<br>愛知県名古屋市緑区鳴海町砦19砦ビル301</p>
+                    <p>mail: info@gadandan.co.jp</p>
+                </div>
+                <div class="footer__column">
+                    <h3 class="footer__title">サービス</h3>
+                    <ul class="footer__links">
+                        <li class="footer__link"><a href="#service">サービス概要</a></li>
+                        <li class="footer__link"><a href="#features">機能紹介</a></li>
+                        <li class="footer__link"><a href="#pricing">料金プラン</a></li>
+                        <li class="footer__link"><a href="#process">導入の流れ</a></li>
+                    </ul>
+                </div>
+                <div class="footer__column">
+                    <h3 class="footer__title">会社情報</h3>
+                    <ul class="footer__links">
+                        <li class="footer__link"><a href="https://gadandan.co.jp/about/" target="_blank">会社概要</a></li>
+                        <li class="footer__link"><a href="privacy.html">プライバシーポリシー</a></li>
+                        <li class="footer__link"><a href="terms.html">利用規約</a></li>
+                        <li class="footer__link"><a href="tokusho.html">特定商取引法に基づく表記</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2025 いつでもケーキ All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- スタイルシート追加 -->
+    <style>
+        /* フォーム用スタイル */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Noto Sans JP', sans-serif;
+            text-align: center;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+        }
+        
+        .form-response {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--secondary-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+    </style>
+
+    <!-- JavaScript -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
