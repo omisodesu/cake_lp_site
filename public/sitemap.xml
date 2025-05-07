@@ -45,5 +45,29 @@
     <lastmod>2025-05-06</lastmod>
     <priority>0.6</priority>
   </url>
+
+  <!-- 法的ドキュメント -->
+  <url>
+    <loc>https://cake.lp.gadandan.co.jp/legal/privacy-policy.html</loc>
+    <lastmod>2025-05-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cake.lp.gadandan.co.jp/legal/terms-of-service.html</loc>
+    <lastmod>2025-05-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cake.lp.gadandan.co.jp/legal/tokusho.html</loc>
+    <lastmod>2025-05-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- 比較ページ -->
+  <url>
+    <loc>https://cake.lp.gadandan.co.jp/compare/reserve-system.html</loc>
+    <lastmod>2025-05-07</lastmod>
+    <priority>0.6</priority>
+  </url>
 </urlset>
 <!-- <link rel="alternate" type="text/plain" href="/llms.txt" /> -->

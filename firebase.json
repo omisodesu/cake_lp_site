@@ -21,6 +21,12 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "redirects": [
+      { "source": "/privacy.html", "destination": "/legal/privacy-policy.html", "type": 301 },
+      { "source": "/terms.html", "destination": "/legal/terms-of-service.html", "type": 301 },
+      { "source": "/tokusho.html", "destination": "/legal/tokusho.html", "type": 301 },
+      { "source": "/reserve-system-comparison.html", "destination": "/compare/reserve-system.html", "type": 301 }
     ]
   }
 }
