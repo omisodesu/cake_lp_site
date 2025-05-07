@@ -24,9 +24,9 @@
 
 ## 会社情報
 - [がだんだん株式会社 – 会社概要](https://gadandan.co.jp/about/): 運営会社・所在地・代表者  
-- [プライバシーポリシー](https://cake.lp.gadandan.co.jp/privacy.html)  
-- [利用規約](https://cake.lp.gadandan.co.jp/terms.html)  
-- [特定商取引法に基づく表記](https://cake.lp.gadandan.co.jp/tokusho.html)  
+- [プライバシーポリシー](https://cake.lp.gadandan.co.jp//legal/privacy-policy.html)  
+- [利用規約](https://cake.lp.gadandan.co.jp//legal/terms-of-service.html)  
+- [特定商取引法に基づく表記](https://cake.lp.gadandan.co.jp//legal/tokusho.html)  
 
 ## Optional
 - [市場データ](https://cake.lp.gadandan.co.jp/#market): EC 利用率・フードデリバリー市場推移  
