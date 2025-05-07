@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /reserve-system-comparison.html
+
+Sitemap: https://cake.lp.gadandan.co.jp/sitemap.xml

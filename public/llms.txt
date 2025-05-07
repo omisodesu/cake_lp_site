@@ -1,0 +1,32 @@
+# いつでもケーキ – 店頭受取予約システム
+
+> ケーキ店の “電話＆来店予約” を 24 時間 “Web 予約” に切り替え、  
+> 業務効率と売上を同時に高めるクラウド型店頭受取予約システムです。
+
+このファイルは LLM や検索エンジンが当サービスの全体像を迅速に把握できるよう、  
+重要ページへの最短リンクと要点をコンパクトにまとめています。  
+**キーワード例:** ケーキ店 / 洋菓子 / 店頭受取 / オンライン予約 / 複数店舗 / 業務効率化 / 電話予約削減
+
+## Quick Links
+- [サービス概要](https://cake.lp.gadandan.co.jp/#service): 機能一覧と導入メリット  
+- [機能紹介](https://cake.lp.gadandan.co.jp/#features): メニュー管理・伝票自動印刷など詳細  
+- [導入実績](https://cake.lp.gadandan.co.jp/#results): 導入店舗の効果データ  
+- [料金プラン](https://cake.lp.gadandan.co.jp/#pricing): 月額 9,900 円〜（10 社限定特価）  
+- [導入ステップ](https://cake.lp.gadandan.co.jp/#process): 3 ステップで開始  
+- [FAQ](https://cake.lp.gadandan.co.jp/#faq): よくある質問  
+- [無料相談・資料請求](https://cake.lp.gadandan.co.jp/#contact): お問い合わせフォーム  
+
+## システムが解決する課題
+- **営業時間外でも予約を逃さない:** EC 慣れした 30〜40 代客層を確実に取り込む  
+- **電話対応の削減:** ケーキ製造を中断せず品質維持 & 人手不足を緩和  
+- **複数店舗一元管理:** 2 店舗目以降の予約もダッシュボードで集中管理  
+- **既存オペレーションを継承:** 伝票自動印刷で従来フローをそのまま活用  
+
+## 会社情報
+- [がだんだん株式会社 – 会社概要](https://gadandan.co.jp/about/): 運営会社・所在地・代表者  
+- [プライバシーポリシー](https://cake.lp.gadandan.co.jp/privacy.html)  
+- [利用規約](https://cake.lp.gadandan.co.jp/terms.html)  
+- [特定商取引法に基づく表記](https://cake.lp.gadandan.co.jp/tokusho.html)  
+
+## Optional
+- [市場データ](https://cake.lp.gadandan.co.jp/#market): EC 利用率・フードデリバリー市場推移  

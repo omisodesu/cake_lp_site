@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- ルート -->
+  <url>
+    <loc>https://cake.lp.gadandan.co.jp/</loc>
+    <lastmod>2025-05-06</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- メインセクション -->
+  <url>
+    <loc>https://cake.lp.gadandan.co.jp/#service</loc>
+    <lastmod>2025-05-06</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cake.lp.gadandan.co.jp/#features</loc>
+    <lastmod>2025-05-06</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cake.lp.gadandan.co.jp/#pricing</loc>
+    <lastmod>2025-05-06</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cake.lp.gadandan.co.jp/#faq</loc>
+    <lastmod>2025-05-06</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://cake.lp.gadandan.co.jp/#contact</loc>
+    <lastmod>2025-05-06</lastmod>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 補助セクション -->
+  <url>
+    <loc>https://cake.lp.gadandan.co.jp/#results</loc>
+    <lastmod>2025-05-06</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://cake.lp.gadandan.co.jp/#process</loc>
+    <lastmod>2025-05-06</lastmod>
+    <priority>0.6</priority>
+  </url>
+</urlset>
+<!-- <link rel="alternate" type="text/plain" href="/llms.txt" /> -->

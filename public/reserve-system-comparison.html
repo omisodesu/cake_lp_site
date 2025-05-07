@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>いつでもケーキ | 競合システム比較 | ケーキ店向け予約システム</title>
+    <meta name="description" content="ケーキ店に最適な予約システムをお探しですか？「いつでもケーキ」「テイクイーツ」「デコレ」の特徴を比較し、ケーキ店に最適なシステムをご紹介します。">
+
+    <meta property="og:title" content="いつでもケーキ | 競合システム比較">
+    <meta property="og:description" content="ケーキ店に最適な予約システムをお探しですか？「いつでもケーキ」「テイクイーツ」「デコレ」の特徴を比較し、ケーキ店に最適なシステムをご紹介します。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cake.lp.gadandan.co.jp/comparison.html">
+    <meta property="og:image" content="https://cake.lp.gadandan.co.jp/assets/images/logo_ogp.jpg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <link rel="icon" href="assets/images/logo_03.jpg" type="image/jpeg">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "いつでもケーキ | 競合システム比較",
+      "description": "ケーキ店に最適な予約システムをお探しですか？「いつでもケーキ」「テイクイーツ」「デコレ」の特徴を比較し、ケーキ店に最適なシステムをご紹介します。",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "いつでもケーキ",
+        "url": "https://cake.lp.gadandan.co.jp/"
+      }
+    }
+    </script>
+
+    <style>
+        /* 比較表専用スタイル */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 30px 0;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            min-width: 800px;
+            border-collapse: collapse;
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+
+        .comparison-table th {
+            background-color: var(--accent-color);
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: var(--secondary-color);
+        }
+
+        .comparison-table tr:nth-child(odd) {
+            background-color: var(--white);
+        }
+
+        .comparison-table td:first-child {
+            text-align: left;
+            font-weight: bold;
+            background-color: #f8f8f8;
+        }
+
+        .comparison-table td.highlight {
+            background-color: rgba(255, 165, 0, 0.1);
+            font-weight: bold;
+        }
+
+        .system-logo {
+            max-width: 200px;
+            margin-bottom: 10px;
+        }
+
+        .comparison-intro,
+        .comparison-summary {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        .highlight-text {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .feature-list {
+            text-align: left;
+            list-style-position: inside;
+        }
+
+        .feature-list li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .feature-list li:before {
+            content: '•';
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* フォーム用スタイル */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Noto Sans JP', sans-serif;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .g-recaptcha {
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .form-group button[type="submit"] {
+           display: block;
+           margin-left: auto;
+           margin-right: auto;
+        }
+
+        .form-response {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--secondary-color);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="top">
+        <div class="container">
+            <div class="header__logo-wrap" style="text-align: center; margin-bottom: 20px;">
+                <img src="assets/images/logo_08.png"
+                     alt="ITSUDEMO CAKE いつでもケーキ"
+                     style="max-width: 300px;">
+            </div>
+            <div class="header__content">
+                <h1 class="header__title">ケーキ屋さんのための予約システム比較</h1>
+                <p class="header__subtitle">最適なシステム選びで、売上アップと業務効率化を実現</p>
+                <a href="#contact" class="cta-button">無料相談・資料請求はこちら</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="section comparison" id="comparison">
+        <div class="container">
+            <h2>予約システム比較</h2>
+            
+            <div class="comparison-intro">
+                <p>数ある予約システムの中から、あなたのケーキ屋さんに最適なものを選ぶのは大変ですよね。<strong>「いつでもケーキ」は、ケーキ屋さんのリアルな声に耳を傾け、共同で開発された、現場に寄り添う予約システム</strong>です。他システムと比較して、「いつでもケーキ」がどのようにあなたの店舗の業務効率化や売上向上に貢献できるか、ぜひこの比較表でご確認ください。</p>
+            </div>
+            
+            <div class="table-container">
+                <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>項目</th>
+                        <th>
+                            <img src="assets/images/logo_07.jpg" alt="いつでもケーキ" class="system-logo">
+                        </th>
+                        <th>テイクイーツ</th>
+                        <th>デコレ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>初期費用</td>
+                        <td class="highlight"><strong>0円</strong></td>
+                        <td>30,000円〜</td>
+                        <td>55,000円</td>
+                    </tr>
+                    <tr>
+                        <td>月額費用</td>
+                        <td class="highlight">
+                            <strong>5,500円</strong>（2年契約）<br>
+                            6,600円（1年契約）<br>
+                            7,700円（月契約）
+                        </td>
+                        <td>9,900円〜</td>
+                        <td>14,850円〜</td>
+                    </tr>
+                    <tr>
+                        <td>システム利用料<br>（売上に対し）</td>
+                        <td class="highlight">決済手数料に含む</td>
+                        <td>売上の4.9%</td>
+                        <td>売上の3.0%</td>
+                    </tr>
+                    <tr>
+                        <td>外部決済手数料</td>
+                        <td>3.6%</td>
+                        <td>3.6%</td>
+                        <td>不明</td>
+                    </tr>
+                    <tr>
+                        <td>対応決済方法<br>（オンライン）</td>
+                        <td>
+                            クレジットカード<br>
+                            コンビニ決済<br>
+                            キャリア決済
+                        </td>
+                        <td>
+                            クレジットカード<br>
+                            コンビニ決済<br>
+                            PayPay<br>
+                            d払い
+                        </td>
+                        <td>
+                            クレジットカード<br>
+                            コンビニ決済
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>店舗での支払い</td>
+                        <td class="highlight"><strong>可能</strong>（現金・クレジット・電子マネー等）</td>
+                        <td>可能（現金のみ）</td>
+                        <td>可能（現金のみ）</td>
+                    </tr>
+                    <tr>
+                        <td>予約伝票/一覧印刷</td>
+                        <td class="highlight"><strong>伝票印刷機能あり</strong><br>（既存オペレーションを維持）</td>
+                        <td>印刷機能あり</td>
+                        <td>印刷機能あり</td>
+                    </tr>
+                    <tr>
+                        <td>複数店舗管理</td>
+                        <td>対応</td>
+                        <td>対応</td>
+                        <td>対応</td>
+                    </tr>
+                    <tr>
+                        <td>顧客側会員登録</td>
+                        <td class="highlight">不要（電話番号でログイン）</td>
+                        <td>会員登録必須</td>
+                        <td>会員登録必須</td>
+                    </tr>
+                    <tr>
+                        <td>開発・焦点</td>
+                        <td class="highlight"><strong>ケーキ屋と共同開発</strong><br>ケーキ屋特化型</td>
+                        <td>飲食店向け<br>テイクアウト/デリバリー</td>
+                        <td>飲食店向け<br>テーブル予約</td>
+                    </tr>
+                    <tr>
+                        <td>特記事項</td>
+                        <td class="highlight">
+                            <ul class="feature-list">
+                                <li><strong>画像データ受付対応</strong></li>
+                                <li><strong>商品カテゴリ分け可能</strong></li>
+                                <li><strong>受付期限設定可能</strong></li>
+                                <li><strong>最短受取日設定可能</strong></li>
+                                <li><strong>オプション販売対応</strong></li>
+                                <li><strong>Google連携</strong></li>
+                                <li><strong>在庫管理機能</strong></li>
+                                <li><strong>定休日設定</strong></li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="feature-list">
+                                <li>テイクアウト/デリバリー機能</li>
+                                <li>メニュー作成機能</li>
+                                <li>在庫管理機能</li>
+                                <li>顧客管理機能</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul class="feature-list">
+                                <li>テーブル予約機能</li>
+                                <li>来店客管理</li>
+                                <li>顧客データベース</li>
+                                <li>Google連携</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <div class="comparison-summary">
+                <h3>「いつでもケーキ」を選ぶメリット</h3>
+                <p><strong>「いつでもケーキ」は、0円の初期費用と月額5,500円（2年契約）という導入しやすい価格で</strong>、ケーキ屋さんの既存のワークフローを尊重する<strong>伝票印刷機能</strong>や、<strong>画像データ受付対応</strong>など、ケーキ屋さんの「困った」に寄り添った機能を備えています。何より、<strong>ケーキ屋さんとの共同開発</strong>により、現場の声を反映した使いやすいシステムになっています。</p>
+                <p>他のシステムと比較して<strong>月額費用が低く</strong>、さらに初期費用がかからないため、導入のハードルが低いのが大きな特徴です。ケーキ屋さんのための特化型システムでありながら、コストパフォーマンスに優れているのは、現場をよく理解しているからこそ実現できました。</p>
+                <p>ぜひ、「いつでもケーキ」で、無理なく、効率的に、新しい予約の形を始めてみませんか？</p>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="#contact" class="cta-button">無料相談・資料請求はこちら</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section testimonials" id="testimonials">
+        <div class="container">
+            <h2>導入店舗からの声</h2>
+            <div class="testimonials__grid">
+                <div class="testimonial-card">
+                    <img src="assets/images/shop1.jpg" alt="パティスリー 飯田店舗" class="testimonial-card__image">
+                    <div class="testimonial-card__text">
+                        長期休業を経て再開店した時、新たにWEB予約をスタートしました。当初は店頭でさりげなくご案内していただけでしたが、予想以上にお客様がWEB予約を活用してくださり、その需要の高さに驚きました。
+                    </div>
+                    <div class="testimonial-card__author">パティスリー・レ・トロア・ソレイユ オーナー様</div>
+                </div>
+                <div class="testimonial-card">
+                    <img src="assets/images/shop2.jpg" alt="パティスリー ループ店舗" class="testimonial-card__image">
+                    <div class="testimonial-card__text">
+                        人手不足の影響と働き方改革で店休日を増したが、店休日に多くのTELお問い合わせで機会損失が気になっていました。そこでお客様の声に応え、24時間いつでもご予約いただけるWEBシステムを導入することにしました。
+                    </div>
+                    <div class="testimonial-card__author">パティスリー・ループ オーナー様</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section cta" id="contact">
+        <div class="container">
+            <h2 class="cta__title">10社限定特別プラン実施中！<br>お早めにお問い合わせください</h2>
+            <p class="cta__description">ケーキ店の売上アップと業務効率化を実現する「いつでもケーキ」。まずは無料相談・資料請求からお気軽にどうぞ。</p>
+
+            <form id="contact-form" class="contact-form">
+                <div class="form-group">
+                    <label for="shop-name">店舗名・会社名※個人の方はなしご記入ください <span class="required">*</span></label>
+                    <input type="text" id="shop-name" name="shop-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">お名前 <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">メールアドレス <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">電話番号</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+
+                <div class="form-group">
+                    <label for="inquiry-type">お問い合わせ <span class="required">*</span></label>
+                    <select id="inquiry-type" name="inquiry_type" required>
+                      <option value="">選択してください</option>
+                      <option value="request_documents">資料請求</option>
+                      <option value="request_contact">商品の説明が聞きたいので連絡が欲しい</option>
+                      <option value="other">その他</option>
+                    </select>
+                </div>
+
+                <div class="form-group hidden" id="other-inquiry-details-group">
+                    <label for="other-inquiry-details">お問い合わせ内容（その他）<span class="required">*</span></label>
+                    <textarea id="other-inquiry-details" name="other_inquiry_details" rows="4" maxlength="200" placeholder="具体的な内容を200文字以内でご記入ください"></textarea>
+                    <p id="char-count" style="text-align: right; font-size: 0.8em; margin-top: 4px;">0 / 200</p>
+                </div>
+
+                <div style="position: absolute; left: -9999px;" aria-hidden="true">
+                  <label for="website-url-hp">Website URL</label>
+                  <input type="text" id="website-url-hp" name="website_url" tabindex="-1" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <div class="g-recaptcha" data-sitekey="6Lcy-hMrAAAAAICemPU6C5wdIJIrvGfkhbjhzBYB"></div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="cta-button">送信する</button>
+                </div>
+            </form>
+            <div id="form-response-message" style="margin-top: 20px; text-align: center;"></div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__column">
+                    <h3 class="footer__title">いつでもケーキ</h3>
+                    <p>がだんだん株式会社</p>
+                    <p>代表取締役 福井佳亮</p>
+                    <p>〒458-0801<br>愛知県名古屋市緑区鳴海町砦19砦ビル301</p>
+                    <p>mail: info@gadandan.co.jp</p>
+                </div>
+                <div class="footer__column">
+                    <h3 class="footer__title">サービス</h3>
+                    <ul class="footer__links">
+                        <li class="footer__link"><a href="index.html#service">サービス概要</a></li>
+                        <li class="footer__link"><a href="index.html#features">機能紹介</a></li>
+                        <li class="footer__link"><a href="index.html#pricing">料金プラン</a></li>
+                        <li class="footer__link"><a href="index.html#process">導入の流れ</a></li>
+                    </ul>
+                </div>
+                <div class="footer__column">
+                    <h3 class="footer__title">会社情報</h3>
+                    <ul class="footer__links">
+                        <li class="footer__link"><a href="https://gadandan.co.jp/about/" target="_blank">会社概要</a></li>
+                        <li class="footer__link"><a href="privacy.html">プライバシーポリシー</a></li>
+                        <li class="footer__link"><a href="terms.html">利用規約</a></li>
+                        <li class="footer__link"><a href="tokusho.html">特定商取引法に基づく表記</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2025 いつでもケーキ All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J7YJZ4LDN4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-J7YJZ4LDN4');
+    </script>
+</body>
+</html>
