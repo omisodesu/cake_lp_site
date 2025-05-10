@@ -635,4 +635,32 @@ img {
   .section {
     padding: 40px 0;
   }
+/* 導入事例リンクボタン */
+.testimonial-card__action {
+  margin-top: 20px; /* 上の要素との間隔調整 */
+  text-align: right; /* 右寄せにする場合 */
+}
+
+.case-study-link {
+  color: var(--accent-color); /* #FF8C00 */
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block; /* ホバーエフェクトのため */
+  transition: color 0.3s ease, transform 0.3s ease; /* スムーズな変化 */
+}
+
+.case-study-link i {
+  margin-left: 5px;
+  transition: transform 0.3s ease; /* アイコンも動かす場合 */
+}
+
+.case-study-link:hover {
+  color: var(--main-color); /* #FFA500 - 少し明るいオレンジ */
+  text-decoration: underline; /* ホバー時に下線を表示 */
+}
+
+.case-study-link:hover i {
+  transform: translateX(3px); /* アイコンを少し右に動かす */
+}
+
 }

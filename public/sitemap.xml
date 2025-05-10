@@ -69,5 +69,12 @@
     <lastmod>2025-05-07</lastmod>
     <priority>0.6</priority>
   </url>
+
+  <!-- 導入事例 -->
+  <url>
+    <loc>https://cake.lp.gadandan.co.jp/cases/patisserie-loop/</loc>
+    <lastmod>2025-05-09</lastmod>
+    <priority>0.6</priority>
+  </url>
 </urlset>
 <!-- <link rel="alternate" type="text/plain" href="/llms.txt" /> -->

@@ -1,0 +1,163 @@
+
+/* サブページ専用ヘッダー */
+.case-study-header {
+  background-color: var(--secondary-color); /* 例: 薄いオレンジ */
+  padding: 40px 0;
+  text-align: center;
+}
+
+.case-study-header__shop-name {
+  font-size: 2.2rem; /* LPのH1より少し小さいなど調整 */
+  color: var(--heading-color);
+  margin-bottom: 0.5rem;
+}
+
+.case-study-header__problem-summary {
+  font-size: 1.1rem;
+  color: var(--text-color);
+  max-width: 700px; /* 長文になりすぎないように */
+  margin: 0 auto;
+}
+
+/* パンくずリスト */
+.breadcrumb-nav {
+  margin-bottom: 30px;
+  font-size: 0.9em;
+}
+.breadcrumb-nav ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.breadcrumb-nav li {
+  display: inline;
+}
+.breadcrumb-nav li + li:before {
+  content: ">";
+  padding: 0 8px;
+  color: #ccc;
+}
+.breadcrumb-nav a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+.breadcrumb-nav a:hover {
+  text-decoration: underline;
+}
+
+
+/* メインコンテンツエリア */
+.case-study-content .section {
+  padding: 60px 0; /* LPのセクションより少し控えめでも良い */
+}
+
+.case-study-article h2 {
+  font-size: 1.8rem; /* LPのH2より調整 */
+  margin-bottom: 1.5rem;
+  display: flex; /* アイコンとテキストを横並びにする場合 */
+  align-items: center;
+}
+
+.icon-style {
+  margin-right: 10px;
+  color: var(--accent-color);
+  font-size: 1.5rem; /* アイコンサイズ調整 */
+}
+
+.case-study-section {
+  margin-bottom: 40px;
+}
+
+.case-study-intro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  align-items: center;
+  margin-bottom: 40px;
+}
+.case-study-intro__visual {
+  flex: 1 1 300px; /* 画像エリアの基本サイズ */
+  max-width: 350px;
+}
+.case-study-owner-image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+.case-study-intro__details {
+  flex: 2 1 400px; /* テキストエリアの基本サイズ */
+}
+.case-study-shop-logo {
+  max-width: 200px;
+  margin-bottom: 20px;
+}
+
+
+.case-study-image {
+  width: 100%;
+  max-width: 700px; /* 画像の最大幅 */
+  height: auto;
+  border-radius: var(--border-radius);
+  margin: 20px auto; /* 中央寄せ */
+  display: block;
+  box-shadow: var(--shadow);
+}
+
+.shop-information p {
+  margin-bottom: 0.5rem;
+}
+
+/* ナビゲーション */
+.case-study-navigation {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.back-to-list-button,
+.prev-button,
+.next-button {
+  color: var(--text-color);
+  text-decoration: none;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-bottom: 10px; /* flex-wrap時の間隔 */
+}
+.back-to-list-button:hover,
+.prev-button:hover,
+.next-button:hover {
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
+}
+.prev-next-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+
+/* ページ下部CTA */
+.case-study-cta {
+  margin-top: 60px;
+  padding: 40px;
+  background-color: var(--secondary-color);
+  text-align: center;
+  border-radius: var(--border-radius);
+}
+.case-study-cta h3 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+.case-study-cta p {
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* .cta-button は既存のスタイルを流用 */
