@@ -108,6 +108,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         params.append(key, value);
                     }
                 }
+                // person-in-charge（担当者名）が未送信の場合は追加
+                if (!params.has('person-in-charge')) {
+                    const personInCharge = document.getElementById('person-in-charge')?.value || '';
+                    params.append('person-in-charge', personInCharge);
+                }
                 params.append('g-recaptcha-response', recaptchaResponse);
 
                 const functionUrl = 'https://us-central1-fir-app-df757.cloudfunctions.net/sendMail';

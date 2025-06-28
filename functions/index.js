@@ -152,6 +152,7 @@ exports.sendMail = onRequest(
           console.log("INFO: Validating request body...");
           // リクエストボディからデータを取得
           const shopName = req.body["shop-name"] || "";
+          const personInCharge = req.body["person-in-charge"] || "";
           const name = req.body.name || "";
           const email = req.body.email || "";
           const phone = req.body.phone || "";
@@ -245,6 +246,7 @@ exports.sendMail = onRequest(
 
           // メール本文を構築
           let mailBody = "店舗名: " + shopName + "\n" +
+                         (personInCharge ? `担当者名: ${personInCharge}\n` : "") +
                          "お名前: " + name + "\n" +
                          "メールアドレス: " + email + "\n" +
                          "電話番号: " + phone + "\n" +
