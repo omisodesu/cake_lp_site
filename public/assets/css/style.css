@@ -360,8 +360,17 @@ img {
   background-color: var(--white);
 }
 
+.pricing__plans {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .pricing__card {
-  max-width: 600px;
+  max-width: 400px;
+  flex: 1;
+  min-width: 300px;
   margin: 0 auto;
   background-color: var(--secondary-color);
   border-radius: var(--border-radius);

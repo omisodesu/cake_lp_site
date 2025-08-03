@@ -11,7 +11,7 @@
 - [サービス概要](https://cake.lp.gadandan.co.jp/#service): 機能一覧と導入メリット  
 - [機能紹介](https://cake.lp.gadandan.co.jp/#features): メニュー管理・伝票自動印刷など詳細  
 - [導入実績](https://cake.lp.gadandan.co.jp/#results): 導入店舗の効果データ  
-- [料金プラン](https://cake.lp.gadandan.co.jp/#pricing): 月額 9,900 円〜（10 社限定特価）  
+- [料金プラン](https://cake.lp.gadandan.co.jp/#pricing): 月額 5,500 円〜（10 社限定特価）  
 - [導入ステップ](https://cake.lp.gadandan.co.jp/#process): 3 ステップで開始  
 - [FAQ](https://cake.lp.gadandan.co.jp/#faq): よくある質問  
 - [無料相談・資料請求](https://cake.lp.gadandan.co.jp/#contact): お問い合わせフォーム  

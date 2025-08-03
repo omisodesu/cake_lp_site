@@ -3,24 +3,24 @@
   <!-- ルート -->
   <url>
     <loc>https://cake.lp.gadandan.co.jp/</loc>
-    <lastmod>2025-05-06</lastmod>
+    <lastmod>2025-08-03</lastmod>
     <priority>1.0</priority>
   </url>
 
   <!-- メインセクション -->
   <url>
     <loc>https://cake.lp.gadandan.co.jp/#service</loc>
-    <lastmod>2025-05-06</lastmod>
+    <lastmod>2025-08-03</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://cake.lp.gadandan.co.jp/#features</loc>
-    <lastmod>2025-05-06</lastmod>
+    <lastmod>2025-08-03</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://cake.lp.gadandan.co.jp/#pricing</loc>
-    <lastmod>2025-05-06</lastmod>
+    <lastmod>2025-08-03</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
