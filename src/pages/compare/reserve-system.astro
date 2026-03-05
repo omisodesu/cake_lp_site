@@ -1,0 +1,287 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/common/Header.astro';
+import Testimonials from '../../components/sections/Testimonials.astro';
+import ContactForm from '../../components/forms/ContactForm.astro';
+import { Image } from 'astro:assets';
+import logoImage from '../../images/logo_07.jpg';
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "いつでもケーキ | 競合システム比較",
+  "description": "ケーキ店に最適な予約システムをお探しですか？「いつでもケーキ」「テイクイーツ」「デコレ」の特徴を比較し、ケーキ店に最適なシステムをご紹介します。",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "いつでもケーキ",
+    "url": "https://cake.lp.gadandan.co.jp/"
+  }
+};
+---
+<BaseLayout
+  title="いつでもケーキ | 競合システム比較 | ケーキ店向け予約システム"
+  description="ケーキ店に最適な予約システムをお探しですか？「いつでもケーキ」「テイクイーツ」「デコレ」の特徴を比較し、ケーキ店に最適なシステムをご紹介します。"
+  noIndex={true}
+  structuredData={structuredData}
+>
+  <Header slot="header">
+    <div class="header__content">
+      <h1 class="header__title">ケーキ屋さんのための予約システム比較</h1>
+      <p class="header__subtitle">最適なシステム選びで、売上アップと業務効率化を実現</p>
+      <a href="#contact" class="cta-button">無料相談・資料請求はこちら</a>
+    </div>
+  </Header>
+
+  <section class="section comparison" id="comparison">
+    <div class="container">
+      <h2>予約システム比較</h2>
+
+      <div class="comparison-intro">
+        <p>数ある予約システムの中から、あなたのケーキ屋さんに最適なものを選ぶのは大変ですよね。<strong>「いつでもケーキ」は、ケーキ屋さんのリアルな声に耳を傾け、共同で開発された、現場に寄り添う予約システム</strong>です。他システムと比較して、「いつでもケーキ」がどのようにあなたの店舗の業務効率化や売上向上に貢献できるか、ぜひこの比較表でご確認ください。</p>
+      </div>
+
+      <div class="table-container">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>項目</th>
+              <th>
+                <Image src={logoImage} alt="いつでもケーキ" class="system-logo" width={200} />
+              </th>
+              <th>テイクイーツ</th>
+              <th>デコレ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>初期費用</td>
+              <td class="highlight"><strong>0円</strong></td>
+              <td>30,000円〜</td>
+              <td>55,000円</td>
+            </tr>
+            <tr>
+              <td>月額費用</td>
+              <td class="highlight"><strong>0円</strong>（従量課金制）</td>
+              <td>5,500円〜</td>
+              <td>14,850円〜</td>
+            </tr>
+            <tr>
+              <td>システム利用料<br />（売上に対し）</td>
+              <td class="highlight"><strong>5.5%</strong>（税込）</td>
+              <td>売上の4.9%</td>
+              <td>売上の3.0%</td>
+            </tr>
+            <tr>
+              <td>外部決済手数料</td>
+              <td>3.6%</td>
+              <td>3.6%</td>
+              <td>不明</td>
+            </tr>
+            <tr>
+              <td>対応決済方法<br />（オンライン）</td>
+              <td>クレジットカード<br />コンビニ決済<br />キャリア決済</td>
+              <td>クレジットカード<br />コンビニ決済<br />PayPay<br />d払い</td>
+              <td>クレジットカード<br />コンビニ決済</td>
+            </tr>
+            <tr>
+              <td>店舗での支払い</td>
+              <td class="highlight"><strong>可能</strong>（現金・クレジット・電子マネー等）</td>
+              <td>可能（現金のみ）</td>
+              <td>可能（現金のみ）</td>
+            </tr>
+            <tr>
+              <td>予約伝票/一覧印刷</td>
+              <td class="highlight"><strong>伝票印刷機能あり</strong><br />（既存オペレーションを維持）</td>
+              <td>印刷機能あり</td>
+              <td>印刷機能あり</td>
+            </tr>
+            <tr>
+              <td>複数店舗管理</td>
+              <td>対応</td>
+              <td>対応</td>
+              <td>対応</td>
+            </tr>
+            <tr>
+              <td>顧客側会員登録</td>
+              <td class="highlight">不要（電話番号でログイン）</td>
+              <td>会員登録必須</td>
+              <td>会員登録必須</td>
+            </tr>
+            <tr>
+              <td>開発・焦点</td>
+              <td class="highlight"><strong>ケーキ屋と共同開発</strong><br />ケーキ屋特化型</td>
+              <td>飲食店向け<br />テイクアウト/デリバリー</td>
+              <td>飲食店向け<br />テーブル予約</td>
+            </tr>
+            <tr>
+              <td>特記事項</td>
+              <td class="highlight">
+                <ul class="feature-list">
+                  <li><strong>画像データ受付対応</strong></li>
+                  <li><strong>商品カテゴリ分け可能</strong></li>
+                  <li><strong>受付期限設定可能</strong></li>
+                  <li><strong>最短受取日設定可能</strong></li>
+                  <li><strong>オプション販売対応</strong></li>
+                  <li><strong>Google連携</strong></li>
+                  <li><strong>在庫管理機能</strong></li>
+                  <li><strong>定休日設定</strong></li>
+                </ul>
+              </td>
+              <td>
+                <ul class="feature-list">
+                  <li>テイクアウト/デリバリー機能</li>
+                  <li>メニュー作成機能</li>
+                  <li>在庫管理機能</li>
+                  <li>顧客管理機能</li>
+                </ul>
+              </td>
+              <td>
+                <ul class="feature-list">
+                  <li>テーブル予約機能</li>
+                  <li>来店客管理</li>
+                  <li>顧客データベース</li>
+                  <li>Google連携</li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="comparison-summary">
+        <h3>「いつでもケーキ」を選ぶメリット</h3>
+        <p><strong>「いつでもケーキ」は、初期費用無料・月額固定費ゼロの従量課金制</strong>で、ケーキ屋さんの既存のワークフローを尊重する<strong>伝票印刷機能</strong>や、<strong>画像データ受付対応</strong>など、ケーキ屋さんの「困った」に寄り添った機能を備えています。何より、<strong>ケーキ屋さんとの共同開発</strong>により、現場の声を反映した使いやすいシステムになっています。</p>
+        <p>他のシステムと比較して<strong>初期費用も月額固定費もかからない</strong>ため、導入のハードルが低いのが大きな特徴です。ケーキ屋さんのための特化型システムでありながら、コストパフォーマンスに優れているのは、現場をよく理解しているからこそ実現できました。</p>
+        <p>ぜひ、「いつでもケーキ」で、無理なく、効率的に、新しい予約の形を始めてみませんか？</p>
+        <div style="text-align: center; margin-top: 30px;">
+          <a href="#contact" class="cta-button">無料相談・資料請求はこちら</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Testimonials />
+
+  <section class="section cta" id="contact">
+    <div class="container">
+      <h2 class="cta__title">初期費用無料で始めよう！<br />お気軽にお問い合わせください</h2>
+      <p class="cta__description">ケーキ店の売上アップと業務効率化を実現する「いつでもケーキ」。まずは無料相談・資料請求からお気軽にどうぞ。</p>
+      <ContactForm showPersonInCharge={false} />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .header__content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .header__title {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--heading-color);
+  }
+
+  .header__subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+  }
+
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    margin: 30px 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .comparison-table {
+    width: 100%;
+    min-width: 800px;
+    border-collapse: collapse;
+    box-shadow: var(--shadow);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #eee;
+  }
+
+  .comparison-table th {
+    background-color: var(--accent-color);
+    color: var(--white);
+    font-weight: bold;
+  }
+
+  .comparison-table tr:nth-child(even) {
+    background-color: var(--secondary-color);
+  }
+
+  .comparison-table tr:nth-child(odd) {
+    background-color: var(--white);
+  }
+
+  .comparison-table td:first-child {
+    text-align: left;
+    font-weight: bold;
+    background-color: #f8f8f8;
+  }
+
+  .comparison-table td.highlight {
+    background-color: rgba(255, 165, 0, 0.1);
+    font-weight: bold;
+  }
+
+  .system-logo {
+    max-width: 200px;
+    margin-bottom: 10px;
+  }
+
+  .comparison-intro,
+  .comparison-summary {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    line-height: 1.8;
+  }
+
+  .feature-list {
+    text-align: left;
+    list-style: none;
+    padding: 0;
+  }
+
+  .feature-list li {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 20px;
+  }
+
+  .feature-list li:before {
+    content: '•';
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+  }
+
+  .cta {
+    background-color: var(--main-color);
+    text-align: center;
+    padding: 80px 0;
+  }
+
+  .cta__title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .cta__description {
+    max-width: 600px;
+    margin: 0 auto 30px;
+  }
+</style>

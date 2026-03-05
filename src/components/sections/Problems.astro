@@ -1,0 +1,57 @@
+---
+import { problems } from '../../data/problems';
+---
+<section class="section problems" id="problems">
+  <div class="container">
+    <h2>こんな課題はありませんか？</h2>
+    <div class="problems__list">
+      {problems.map((problem) => (
+        <div class="problem-card">
+          <div class="problem-card__icon">
+            <i class={problem.icon}></i>
+          </div>
+          <h3 class="problem-card__title">{problem.title}</h3>
+          <p>{problem.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .problems {
+    background-color: var(--white);
+  }
+
+  .problems__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+  }
+
+  .problem-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .problem-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .problem-card__icon {
+    font-size: 3rem;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+  }
+
+  .problem-card__title {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+</style>

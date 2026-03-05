@@ -1,0 +1,60 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/common/Header.astro';
+import { SITE } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const pageTitle = `${title} | いつでもケーキ`;
+---
+<BaseLayout
+  title={pageTitle}
+  description={description}
+  ogTitle="いつでもケーキ"
+  ogDescription={title}
+>
+  <Header slot="header" simple={true} />
+
+  <main class="legal-content">
+    <div class="container">
+      <section class="section">
+        <h2><slot name="heading" /></h2>
+        <slot />
+      </section>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .legal-content {
+    padding: 40px 0;
+  }
+
+  .legal-content :global(h3) {
+    margin-top: 2rem;
+  }
+
+  .legal-content :global(ul) {
+    margin-left: 20px;
+    margin-bottom: 1rem;
+  }
+
+  .legal-content :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .legal-content :global(dt) {
+    font-weight: bold;
+    margin-top: 1.5rem;
+    color: var(--heading-color);
+  }
+
+  .legal-content :global(dd) {
+    margin-left: 0;
+    margin-bottom: 0.5rem;
+  }
+</style>

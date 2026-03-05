@@ -1,0 +1,197 @@
+---
+import '../../styles/form.css';
+import { SITE } from '../../data/site';
+
+interface Props {
+  showPersonInCharge?: boolean;
+}
+
+const { showPersonInCharge = true } = Astro.props;
+---
+<form id="contact-form" class="contact-form" data-function-url={SITE.cloudFunctionUrl}>
+  <div class="form-group">
+    <label for="shop-name">店舗名・会社名※個人の方はなしご記入ください <span class="required">*</span></label>
+    <input type="text" id="shop-name" name="shop-name" required>
+  </div>
+
+  {showPersonInCharge && (
+    <div class="form-group">
+      <label for="person-in-charge">担当者名</label>
+      <input type="text" id="person-in-charge" name="person-in-charge">
+    </div>
+  )}
+
+  <div class="form-group">
+    <label for="name">お名前 <span class="required">*</span></label>
+    <input type="text" id="name" name="name" required>
+  </div>
+  <div class="form-group">
+    <label for="email">メールアドレス <span class="required">*</span></label>
+    <input type="email" id="email" name="email" required>
+  </div>
+  <div class="form-group">
+    <label for="phone">電話番号</label>
+    <input type="tel" id="phone" name="phone">
+  </div>
+
+  <div class="form-group">
+    <label for="inquiry-type">お問い合わせ <span class="required">*</span></label>
+    <select id="inquiry-type" name="inquiry_type" required>
+      <option value="">選択してください</option>
+      <option value="request_documents">資料請求</option>
+      <option value="request_contact">商品の説明が聞きたいので連絡が欲しい</option>
+      <option value="other">その他</option>
+    </select>
+  </div>
+
+  <div class="form-group hidden" id="other-inquiry-details-group">
+    <label for="other-inquiry-details">お問い合わせ内容（その他）<span class="required">*</span></label>
+    <textarea id="other-inquiry-details" name="other_inquiry_details" rows="4" maxlength="200" placeholder="具体的な内容を200文字以内でご記入ください"></textarea>
+    <p id="char-count" class="char-count">0 / 200</p>
+  </div>
+
+  <div style="position: absolute; left: -9999px;" aria-hidden="true">
+    <label for="website-url-hp">Website URL</label>
+    <input type="text" id="website-url-hp" name="website_url" tabindex="-1" autocomplete="off">
+  </div>
+
+  <div class="form-group">
+    <div class="g-recaptcha" data-sitekey={SITE.recaptchaSiteKey}></div>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="cta-button">送信する</button>
+  </div>
+</form>
+<div id="form-response-message" class="form-response-message"></div>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById('contact-form') as HTMLFormElement | null;
+    const inquiryTypeSelect = document.getElementById('inquiry-type') as HTMLSelectElement | null;
+    const otherDetailsGroup = document.getElementById('other-inquiry-details-group');
+    const otherDetailsTextarea = document.getElementById('other-inquiry-details') as HTMLTextAreaElement | null;
+    const charCountElement = document.getElementById('char-count');
+    const formResponseMessage = document.getElementById('form-response-message');
+
+    if (inquiryTypeSelect && otherDetailsGroup && otherDetailsTextarea && charCountElement) {
+      const maxLength = otherDetailsTextarea.maxLength;
+      charCountElement.textContent = `${otherDetailsTextarea.value.length} / ${maxLength}`;
+
+      inquiryTypeSelect.addEventListener('change', () => {
+        if (inquiryTypeSelect.value === 'other') {
+          otherDetailsGroup.classList.remove('hidden');
+          otherDetailsTextarea.required = true;
+        } else {
+          otherDetailsGroup.classList.add('hidden');
+          otherDetailsTextarea.required = false;
+          otherDetailsTextarea.value = '';
+          charCountElement.textContent = `0 / ${maxLength}`;
+        }
+      });
+
+      otherDetailsTextarea.addEventListener('input', () => {
+        charCountElement.textContent = `${otherDetailsTextarea.value.length} / ${maxLength}`;
+      });
+    }
+
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const submitButton = contactForm.querySelector('button[type="submit"]') as HTMLButtonElement;
+        const recaptchaResponse = (typeof grecaptcha !== 'undefined') ? grecaptcha.getResponse() : '';
+        if (!recaptchaResponse) {
+          if (formResponseMessage) {
+            formResponseMessage.textContent = 'エラー: reCAPTCHAをチェックしてください。';
+            formResponseMessage.style.color = 'red';
+          } else {
+            alert('reCAPTCHAをチェックしてください。');
+          }
+          return;
+        }
+
+        submitButton.disabled = true;
+        submitButton.textContent = '送信中...';
+        if (formResponseMessage) formResponseMessage.textContent = '';
+
+        try {
+          const formData = new FormData(contactForm);
+          const params = new URLSearchParams();
+          for (const [key, value] of formData.entries()) {
+            if (key !== 'website_url') {
+              params.append(key, value as string);
+            }
+          }
+          if (!params.has('person-in-charge')) {
+            const personInCharge = (document.getElementById('person-in-charge') as HTMLInputElement)?.value || '';
+            params.append('person-in-charge', personInCharge);
+          }
+          params.append('g-recaptcha-response', recaptchaResponse);
+
+          const functionUrl = contactForm.dataset.functionUrl!;
+          const response = await fetch(functionUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params.toString(),
+          });
+
+          const responseBodyText = await response.text();
+
+          if (!response.ok) {
+            let errorMsg = `HTTP error! status: ${response.status}`;
+            try {
+              const errData = JSON.parse(responseBodyText);
+              errorMsg = errData.error || errorMsg;
+            } catch {}
+            throw new Error(errorMsg);
+          }
+
+          const data = JSON.parse(responseBodyText);
+
+          if (data.success) {
+            if (typeof gtag === 'function') {
+              const inquiryTypeValue = inquiryTypeSelect?.value || 'unknown';
+              gtag('event', 'contact_form_submit', {
+                event_category: 'contact',
+                event_label: inquiryTypeValue,
+              });
+            }
+            if (formResponseMessage) {
+              formResponseMessage.textContent = 'お問い合わせありがとうございます。送信完了しました。';
+              formResponseMessage.style.color = 'green';
+            } else {
+              alert('お問い合わせありがとうございます。送信完了しました。');
+            }
+            contactForm.reset();
+            if (otherDetailsGroup && otherDetailsTextarea && charCountElement) {
+              otherDetailsGroup.classList.add('hidden');
+              otherDetailsTextarea.required = false;
+              otherDetailsTextarea.value = '';
+              charCountElement.textContent = `0 / ${otherDetailsTextarea.maxLength}`;
+            }
+          } else {
+            throw new Error(data.error || '送信に失敗しました。');
+          }
+        } catch (error: any) {
+          console.error('Form submission error:', error);
+          if (formResponseMessage) {
+            formResponseMessage.textContent = '送信中にエラーが発生しました。' + (error.message || '');
+            formResponseMessage.style.color = 'red';
+          } else {
+            alert('送信中にエラーが発生しました。');
+          }
+        } finally {
+          if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+          submitButton.disabled = false;
+          submitButton.textContent = '送信する';
+        }
+      });
+    }
+  });
+
+  declare const grecaptcha: any;
+  declare function gtag(...args: any[]): void;
+</script>

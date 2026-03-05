@@ -1,0 +1,85 @@
+---
+---
+<section class="section pricing" id="pricing">
+  <div class="container">
+    <h2>料金プラン</h2>
+    <div class="pricing__plans">
+      <div class="pricing__card">
+        <h3 class="pricing__title">いつでもケーキ</h3>
+        <div class="pricing__price">初期費用 無料</div>
+        <p class="pricing__description">注文代金の <strong>5.5%</strong>（税込）の従量課金制</p>
+        <ul class="pricing__features">
+          <li class="pricing__feature">店頭受取予約受付</li>
+          <li class="pricing__feature">WEB事前決済</li>
+          <li class="pricing__feature">メニュー・オプション管理</li>
+          <li class="pricing__feature">データ出力機能（PDF、CSV）</li>
+          <li class="pricing__feature">メーリングリストダウンロード</li>
+          <li class="pricing__feature">在庫管理機能</li>
+          <li class="pricing__feature">導入サポート</li>
+        </ul>
+        <p>※WEB事前決済ご利用時は別途決済手数料3.6%が発生します</p>
+        <a href="#contact" class="cta-button">無料相談・資料請求はこちら</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing {
+    background-color: var(--white);
+  }
+
+  .pricing__plans {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .pricing__card {
+    max-width: 500px;
+    flex: 1;
+    min-width: 300px;
+    margin: 0 auto;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    padding: 40px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+
+  .pricing__title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: var(--accent-color);
+  }
+
+  .pricing__price {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .pricing__description {
+    margin-bottom: 30px;
+  }
+
+  .pricing__features {
+    text-align: left;
+    margin-bottom: 30px;
+  }
+
+  .pricing__feature {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 30px;
+  }
+
+  .pricing__feature:before {
+    content: '✓';
+    color: var(--accent-color);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+  }
+</style>

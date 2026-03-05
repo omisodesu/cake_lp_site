@@ -1,0 +1,86 @@
+---
+import { faqItems } from '../../data/faq';
+---
+<section class="section faq" id="faq">
+  <div class="container">
+    <h2>よくある質問</h2>
+    <div class="faq__list">
+      {faqItems.map((item) => (
+        <div class="faq__item">
+          <div class="faq__question" role="button" aria-expanded="false">{item.question}</div>
+          <div class="faq__answer" role="region" aria-hidden="true">
+            <p>{item.answer}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const faqQuestions = document.querySelectorAll('.faq__question');
+    faqQuestions.forEach(question => {
+      question.addEventListener('click', () => {
+        question.classList.toggle('active');
+        const answer = question.nextElementSibling;
+        if (answer) {
+          answer.classList.toggle('active');
+          const isExpanded = question.classList.contains('active');
+          question.setAttribute('aria-expanded', String(isExpanded));
+          answer.setAttribute('aria-hidden', String(!isExpanded));
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .faq {
+    background-color: var(--white);
+  }
+
+  .faq__list {
+    max-width: 800px;
+    margin: 40px auto 0;
+  }
+
+  .faq__item {
+    margin-bottom: 20px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .faq__question {
+    background-color: var(--secondary-color);
+    padding: 20px;
+    cursor: pointer;
+    position: relative;
+    font-weight: bold;
+  }
+
+  .faq__question:after {
+    content: '+';
+    position: absolute;
+    right: 20px;
+    transition: all 0.3s ease;
+  }
+
+  .faq__question.active:after {
+    transform: rotate(45deg);
+  }
+
+  .faq__answer {
+    background-color: var(--white);
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .faq__answer.active {
+    padding: 20px;
+    max-height: 1000px;
+  }
+</style>

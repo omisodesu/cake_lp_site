@@ -67,3 +67,13 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+# Astro build output
+dist/
+.astro/
+
+# 旧サイトバックアップ
+public_old/
+
+# OS files
+.DS_Store

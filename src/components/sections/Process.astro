@@ -1,0 +1,96 @@
+---
+const steps = [
+  {
+    number: 1,
+    title: 'お問い合わせ・無料相談',
+    description: 'お問い合わせフォームよりご連絡ください。ご要望をヒアリングし、最適なプランをご提案します。',
+  },
+  {
+    number: 2,
+    title: 'システム設定・カスタマイズ',
+    description: 'お店のメニューや営業情報を設定します。専任スタッフがサポートしますので安心です。',
+  },
+  {
+    number: 3,
+    title: '運用開始・サポート',
+    description: 'システム導入後も継続的にサポート。操作方法や活用法についてのご質問にお答えします。',
+  },
+];
+---
+<section class="section process" id="process">
+  <div class="container">
+    <h2>かんたん3ステップで導入完了</h2>
+    <div class="process__steps">
+      {steps.map((step) => (
+        <div class="process__step">
+          <div class="process__step-number">{step.number}</div>
+          <h3 class="process__step-title">{step.title}</h3>
+          <p>{step.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .process {
+    background-color: var(--secondary-color);
+  }
+
+  .process__steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 40px;
+    position: relative;
+  }
+
+  .process__steps:before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent-color);
+    z-index: 1;
+  }
+
+  .process__step {
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    padding: 0 15px;
+  }
+
+  .process__step-number {
+    width: 80px;
+    height: 80px;
+    background-color: var(--accent-color);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0 auto 20px;
+  }
+
+  .process__step-title {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+
+  @media (max-width: 768px) {
+    .process__steps:before {
+      display: none;
+    }
+
+    .process__step {
+      margin-bottom: 40px;
+    }
+  }
+</style>

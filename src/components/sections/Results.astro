@@ -1,0 +1,96 @@
+---
+import { results } from '../../data/results';
+---
+<section class="section results" id="results">
+  <div class="container">
+    <h2>導入店舗の実績が証明する効果</h2>
+    <div class="results__grid">
+      {results.map((result) => (
+        <div class="result-card">
+          <div class="result-card__number" data-value={result.value}>0</div>
+          <h3 class="result-card__title">{result.title}</h3>
+          <p>{result.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const resultNumbers = document.querySelectorAll('.result-card__number');
+    if (resultNumbers.length > 0 && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const target = entry.target as HTMLElement;
+            const finalValue = parseInt(target.getAttribute('data-value') || '0', 10);
+            if (isNaN(finalValue) || target.classList.contains('counted')) return;
+            target.classList.add('counted');
+
+            let currentValue = 0;
+            const duration = 2000;
+            const frameDuration = 16;
+            const totalFrames = Math.round(duration / frameDuration);
+            const increment = finalValue / totalFrames;
+            let currentFrame = 0;
+
+            const timer = setInterval(() => {
+              currentFrame++;
+              currentValue += increment;
+              if (currentFrame >= totalFrames) {
+                clearInterval(timer);
+                currentValue = finalValue;
+              }
+              target.textContent = Math.floor(currentValue).toLocaleString();
+            }, frameDuration);
+
+            obs.unobserve(target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      resultNumbers.forEach(number => observer.observe(number));
+    } else if (resultNumbers.length > 0) {
+      resultNumbers.forEach(number => {
+        const finalValue = parseInt(number.getAttribute('data-value') || '0', 10);
+        if (!isNaN(finalValue)) {
+          number.textContent = finalValue.toLocaleString();
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .results {
+    background-color: var(--white);
+  }
+
+  .results__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+  }
+
+  .result-card {
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+
+  .result-card__number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+  }
+
+  .result-card__title {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+</style>

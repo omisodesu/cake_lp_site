@@ -1,0 +1,76 @@
+---
+import logoImage from '../../images/logo_08.png';
+import { Image } from 'astro:assets';
+
+interface Props {
+  simple?: boolean;
+}
+
+const { simple = false } = Astro.props;
+---
+{simple ? (
+  <header class="header header--simple" id="top">
+    <div class="container">
+      <div class="header__logo-wrap">
+        <a href="/">
+          <Image src={logoImage} alt="ITSUDEMO CAKE いつでもケーキ" width={250} />
+        </a>
+      </div>
+    </div>
+  </header>
+) : (
+  <header class="header" id="top">
+    <div class="container">
+      <div class="header__logo-wrap">
+        <Image src={logoImage} alt="ITSUDEMO CAKE いつでもケーキ" width={300} />
+      </div>
+      <slot />
+    </div>
+  </header>
+)}
+
+<style>
+  .header {
+    background-color: var(--main-color);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8));
+    background-size: cover;
+    background-position: center;
+    padding: 100px 0;
+    text-align: center;
+  }
+
+  .header--simple {
+    padding: 20px 0;
+    background-color: var(--white);
+    border-bottom: 3px solid var(--main-color);
+  }
+
+  .header__logo-wrap {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .header--simple .header__logo-wrap {
+    margin-bottom: 0;
+  }
+
+  .header__logo-wrap img {
+    max-width: 300px;
+  }
+
+  .header--simple .header__logo-wrap img {
+    max-width: 200px;
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      padding: 60px 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header {
+      padding: 40px 0;
+    }
+  }
+</style>

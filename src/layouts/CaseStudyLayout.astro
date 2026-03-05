@@ -1,0 +1,201 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/common/Header.astro';
+import { Image } from 'astro:assets';
+import logoImage from '../images/logo_08.png';
+
+interface Props {
+  title: string;
+  description: string;
+  shopName: string;
+  problemSummary: string;
+}
+
+const { title, description, shopName, problemSummary } = Astro.props;
+const pageTitle = `【導入事例】${shopName} | いつでもケーキ`;
+---
+<BaseLayout title={pageTitle} description={description}>
+  <header class="header case-study-header" id="top" slot="header">
+    <div class="container">
+      <div class="header__logo-wrap">
+        <a href="/">
+          <Image src={logoImage} alt="ITSUDEMO CAKE いつでもケーキ" width={250} />
+        </a>
+      </div>
+      <div class="case-study-header__shop-info">
+        <h1 class="case-study-header__shop-name">{shopName}</h1>
+        <p class="case-study-header__problem-summary">「{problemSummary}」</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="case-study-content">
+    <section class="section">
+      <div class="container">
+        <nav aria-label="breadcrumb" class="breadcrumb-nav">
+          <ol>
+            <li><a href="/">ホーム</a></li>
+            <li><a href="/#testimonials">導入事例一覧</a></li>
+            <li>{shopName}</li>
+          </ol>
+        </nav>
+
+        <article class="case-study-article">
+          <slot />
+        </article>
+
+        <slot name="navigation" />
+
+        <div class="case-study-cta">
+          <h3>「いつでもケーキ」にご興味をお持ちいただけましたか？</h3>
+          <p>詳しい資料のご請求や、導入に関するご相談など、お気軽にお問い合わせください。</p>
+          <a href="/#contact" class="cta-button">無料相談・資料請求はこちら</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .case-study-header {
+    background-color: var(--secondary-color);
+    padding: 40px 0;
+    text-align: center;
+  }
+
+  .header__logo-wrap {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .header__logo-wrap img {
+    max-width: 250px;
+  }
+
+  .case-study-header__shop-name {
+    font-size: 2.2rem;
+    color: var(--heading-color);
+    margin-bottom: 0.5rem;
+  }
+
+  .case-study-header__problem-summary {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .breadcrumb-nav {
+    margin-bottom: 30px;
+    font-size: 0.9em;
+  }
+
+  .breadcrumb-nav ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .breadcrumb-nav li {
+    display: inline;
+  }
+
+  .breadcrumb-nav li + li:before {
+    content: ">";
+    padding: 0 8px;
+    color: #ccc;
+  }
+
+  .breadcrumb-nav a {
+    color: var(--accent-color);
+    text-decoration: none;
+  }
+
+  .breadcrumb-nav a:hover {
+    text-decoration: underline;
+  }
+
+  .case-study-content .section {
+    padding: 60px 0;
+  }
+
+  .case-study-article :global(h2) {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .case-study-article :global(.icon-style) {
+    margin-right: 10px;
+    color: var(--accent-color);
+    font-size: 1.5rem;
+  }
+
+  .case-study-article :global(.case-study-section) {
+    margin-bottom: 40px;
+  }
+
+  .case-study-article :global(.case-study-intro) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  .case-study-article :global(.case-study-intro__visual) {
+    flex: 1 1 300px;
+    max-width: 350px;
+  }
+
+  .case-study-article :global(.case-study-owner-image) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+  }
+
+  .case-study-article :global(.case-study-intro__details) {
+    flex: 2 1 400px;
+  }
+
+  .case-study-article :global(.case-study-shop-logo) {
+    max-width: 200px;
+    margin-bottom: 20px;
+  }
+
+  .case-study-article :global(.case-study-image) {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin: 20px auto;
+    display: block;
+    box-shadow: var(--shadow);
+  }
+
+  .case-study-article :global(.shop-information p) {
+    margin-bottom: 0.5rem;
+  }
+
+  .case-study-cta {
+    margin-top: 60px;
+    padding: 40px;
+    background-color: var(--secondary-color);
+    text-align: center;
+    border-radius: var(--border-radius);
+  }
+
+  .case-study-cta h3 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .case-study-cta p {
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>

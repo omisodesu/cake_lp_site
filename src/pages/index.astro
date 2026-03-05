@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/common/Header.astro';
+import Problems from '../components/sections/Problems.astro';
+import Service from '../components/sections/Service.astro';
+import Results from '../components/sections/Results.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import Features from '../components/sections/Features.astro';
+import Market from '../components/sections/Market.astro';
+import Pricing from '../components/sections/Pricing.astro';
+import Process from '../components/sections/Process.astro';
+import FAQ from '../components/sections/FAQ.astro';
+import ContactForm from '../components/forms/ContactForm.astro';
+import { SITE } from '../data/site';
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "いつでもケーキ",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "JPY"
+  },
+  "description": "ケーキ店向け店頭受取予約システム"
+};
+---
+<BaseLayout
+  title={SITE.title}
+  description={SITE.description}
+  ogTitle={SITE.ogTitle}
+  ogDescription={SITE.ogDescription}
+  structuredData={structuredData}
+>
+  <Header slot="header">
+    <div class="header__content">
+      <h1 class="header__title">お客様は24時間『予約がしたい！』<br>あなたはその声、聞いていますか？</h1>
+      <p class="header__subtitle">初期費用無料。使った分だけの従量課金制</p>
+      <a href="#contact" class="cta-button">無料相談・資料請求はこちら</a>
+    </div>
+  </Header>
+
+  <Problems />
+  <Service />
+  <Results />
+  <Testimonials />
+  <Features />
+  <Market />
+  <Pricing />
+  <Process />
+  <FAQ />
+
+  <section class="section cta" id="contact">
+    <div class="container">
+      <h2 class="cta__title">初期費用無料で始めよう！<br>まずはお気軽にお問い合わせください</h2>
+      <p class="cta__description">ケーキ店の売上アップと業務効率化を実現する「いつでもケーキ」。まずは無料相談・資料請求からお気軽にどうぞ。</p>
+      <ContactForm showPersonInCharge={true} />
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // スムーススクロール
+  document.addEventListener('DOMContentLoaded', () => {
+    const scrollLinks = document.querySelectorAll('a[href^="#"]');
+    scrollLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = (link as HTMLAnchorElement).getAttribute('href');
+        if (targetId === '#') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+        const targetElement = document.querySelector(targetId!);
+        if (targetElement) {
+          const headerOffset = 100;
+          const elementPosition = targetElement.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .header__content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .header__title {
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--heading-color);
+  }
+
+  .header__subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+  }
+
+  .cta {
+    background-color: var(--main-color);
+    text-align: center;
+    padding: 80px 0;
+  }
+
+  .cta__title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .cta__description {
+    max-width: 600px;
+    margin: 0 auto 30px;
+  }
+
+  @media (max-width: 768px) {
+    .header__title {
+      font-size: 2.2rem;
+    }
+
+    .header__subtitle {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header__title {
+      font-size: 1.8rem;
+    }
+
+    .header__subtitle {
+      font-size: 1rem;
+    }
+  }
+</style>

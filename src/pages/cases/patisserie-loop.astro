@@ -1,0 +1,86 @@
+---
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import { Image } from 'astro:assets';
+import shopImage from '../../images/shop2.jpg';
+import caseLoopAfterImage from '../../images/case_loop_after.jpg';
+import logoLoop from '../../images/logo_patisserie_loop.png';
+---
+<CaseStudyLayout
+  title="パティスリー・ループ様 導入事例"
+  description="パティスリー・ループ様の「いつでもケーキ」導入事例。なぜ導入を決めたのか、導入後の変化などをご紹介します。"
+  shopName="パティスリー・ループ 様"
+  problemSummary="定休日を増やしてもお客様にご迷惑をかけないシステムが必要でした"
+>
+  <div class="case-study-section">
+    <div class="case-study-intro">
+      <div class="case-study-intro__details">
+        <Image src={logoLoop} alt="パティスリー・ループ ロゴ" class="case-study-shop-logo" width={200} />
+        <p>パティスリー ループ（patisserie LOOP）は、愛知県名古屋市緑区でケーキ・スイーツ等の販売（洋菓子）とカフェを営んでいます。新鮮な季節のフルーツをふんだんに使い、女性はもちろん、男性でも美味しく召し上がっていただけるスイーツ作りを心がけています。お近くにお越しの際は是非パティスリー ループにお立ち寄りください。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="case-study-section">
+    <h2><i class="fas fa-question-circle icon-style"></i> 導入前の課題</h2>
+    <p>（「こんなことで悩んでいました」という具体的な内容を400～600字程度で記述。必要に応じて専用写真も挿入）</p>
+    <Image src={shopImage} alt="導入前の状況" class="case-study-image" width={700} />
+  </div>
+
+  <div class="case-study-section">
+    <h2><i class="fas fa-lightbulb icon-style"></i> 導入のきっかけ・決め手</h2>
+    <p>（「『いつでもケーキ』を選んだ理由」を具体的に記述。専用写真も挿入）</p>
+  </div>
+
+  <div class="case-study-section">
+    <h2><i class="fas fa-chart-line icon-style"></i> 導入後の変化・成果</h2>
+    <p>（「導入してこう変わった！」という具体的な成果やお客様の反応などを記述。数値データやグラフ画像などがあれば効果的。専用写真も挿入）</p>
+    <Image src={caseLoopAfterImage} alt="導入後の成果" class="case-study-image" width={700} />
+  </div>
+
+  <div class="case-study-section">
+    <h2><i class="fas fa-comment-dots icon-style"></i> オーナー様の声・今後の展望</h2>
+    <p>（LP掲載文より詳細なコメントや、今後の「いつでもケーキ」の活用についてなどを記述。）</p>
+  </div>
+
+  <div class="case-study-section shop-information">
+    <h2><i class="fas fa-store icon-style"></i> 店舗情報</h2>
+    <p><strong>店舗名：</strong> パティスリー・ループ</p>
+    <p><strong>住所：</strong> 〒458-0903 愛知県名古屋市緑区有松愛宕1201</p>
+    <p><strong>電話番号：</strong> 052-622-7890</p>
+    <p><strong>営業時間：</strong> 9:30～19:00</p>
+    <p><strong>定休日：</strong> 月曜日・火曜日（祝日の場合は営業）</p>
+    <p><strong>公式サイト：</strong> <a href="https://looploop.net/" target="_blank" rel="noopener noreferrer">https://looploop.net/</a></p>
+  </div>
+
+  <div class="case-study-navigation" slot="navigation">
+    <a href="/#testimonials" class="nav-button"><i class="fas fa-arrow-left"></i> 導入事例一覧へ戻る</a>
+    <a href="/cases/patisserie-les-trois-soleils/" class="nav-button">次の事例へ <i class="fas fa-chevron-right"></i></a>
+  </div>
+</CaseStudyLayout>
+
+<style>
+  .case-study-navigation {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .nav-button {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-bottom: 10px;
+  }
+
+  .nav-button:hover {
+    background-color: var(--secondary-color);
+    color: var(--accent-color);
+  }
+</style>

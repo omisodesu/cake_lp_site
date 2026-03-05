@@ -1,0 +1,60 @@
+---
+import { detailFeatures } from '../../data/features';
+import { Image } from 'astro:assets';
+
+const images = import.meta.glob<{ default: ImageMetadata }>('../../images/feature*.png', { eager: true });
+---
+<section class="section features" id="features">
+  <div class="container">
+    <h2>ケーキ店オーナーの声から生まれた機能</h2>
+    <div class="features__grid">
+      {detailFeatures.map((feature) => {
+        const imagePath = `../../images/${feature.image}`;
+        const imageModule = images[imagePath];
+        return (
+          <div class="features__item">
+            <h3 class="features__item-title">{feature.title}</h3>
+            {imageModule && (
+              <Image src={imageModule.default} alt={feature.alt} class="features__item-image" width={500} />
+            )}
+            <p>{feature.description}</p>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .features {
+    background-color: var(--white);
+  }
+
+  .features__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+  }
+
+  .features__item {
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+  }
+
+  .features__item-title {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: var(--accent-color);
+  }
+
+  .features__item-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+  }
+</style>

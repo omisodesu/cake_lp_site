@@ -1,0 +1,74 @@
+---
+import { testimonials } from '../../data/testimonials';
+import { Image } from 'astro:assets';
+
+const images = import.meta.glob<{ default: ImageMetadata }>('../../images/shop*.jpg', { eager: true });
+---
+<section class="section testimonials" id="testimonials">
+  <div class="container">
+    <h2>導入店舗からの声</h2>
+    <div class="testimonials__grid">
+      {testimonials.map((testimonial) => {
+        const imagePath = `../../images/${testimonial.image}`;
+        const imageModule = images[imagePath];
+        return (
+          <div class="testimonial-card">
+            {imageModule && (
+              <Image src={imageModule.default} alt={testimonial.alt} class="testimonial-card__image" width={600} />
+            )}
+            <div class="testimonial-card__text">
+              {testimonial.text}
+            </div>
+            <div class="testimonial-card__author">{testimonial.author}</div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    background-color: var(--secondary-color);
+  }
+
+  .testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-top: 40px;
+  }
+
+  .testimonial-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+  }
+
+  .testimonial-card__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+  }
+
+  .testimonial-card__text {
+    font-style: italic;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .testimonial-card__text:before,
+  .testimonial-card__text:after {
+    content: '"';
+    font-size: 1.5rem;
+    color: var(--accent-color);
+  }
+
+  .testimonial-card__author {
+    font-weight: bold;
+    text-align: right;
+  }
+</style>

@@ -16,17 +16,23 @@
     }
   ],
   "hosting": {
-    "public": "public",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
     "redirects": [
-      { "source": "/privacy.html", "destination": "/legal/privacy-policy.html", "type": 301 },
-      { "source": "/terms.html", "destination": "/legal/terms-of-service.html", "type": 301 },
-      { "source": "/tokusho.html", "destination": "/legal/tokusho.html", "type": 301 },
-      { "source": "/reserve-system-comparison.html", "destination": "/compare/reserve-system.html", "type": 301 }
+      { "source": "/privacy.html", "destination": "/legal/privacy-policy/", "type": 301 },
+      { "source": "/terms.html", "destination": "/legal/terms-of-service/", "type": 301 },
+      { "source": "/tokusho.html", "destination": "/legal/tokusho/", "type": 301 },
+      { "source": "/reserve-system-comparison.html", "destination": "/compare/reserve-system/", "type": 301 },
+      { "source": "/legal/privacy-policy.html", "destination": "/legal/privacy-policy/", "type": 301 },
+      { "source": "/legal/terms-of-service.html", "destination": "/legal/terms-of-service/", "type": 301 },
+      { "source": "/legal/tokusho.html", "destination": "/legal/tokusho/", "type": 301 },
+      { "source": "/compare/reserve-system.html", "destination": "/compare/reserve-system/", "type": 301 },
+      { "source": "/cases/patisserie-loop/index.html", "destination": "/cases/patisserie-loop/", "type": 301 },
+      { "source": "/cases/patisserie-les-trois-soleils/index.html", "destination": "/cases/patisserie-les-trois-soleils/", "type": 301 }
     ]
   }
 }
