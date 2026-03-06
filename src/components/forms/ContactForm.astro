@@ -35,6 +35,24 @@ const { showPersonInCharge = true } = Astro.props;
   </div>
 
   <div class="form-group">
+    <label for="lead-source">どこで当サービスを知りましたか？</label>
+    <select id="lead-source" name="lead_source">
+      <option value="">選択してください</option>
+      <option value="google_search">Google検索</option>
+      <option value="sns">SNS</option>
+      <option value="referral">知人の紹介</option>
+      <option value="trade_show">展示会</option>
+      <option value="other">その他</option>
+    </select>
+  </div>
+
+  <div class="form-group hidden" id="lead-source-other-group">
+    <label for="lead-source-other-details">流入元（その他）</label>
+    <textarea id="lead-source-other-details" name="lead_source_other_details" rows="2" maxlength="200" placeholder="具体的にご記入ください（200文字以内）"></textarea>
+    <p id="lead-source-char-count" class="char-count">0 / 200</p>
+  </div>
+
+  <div class="form-group">
     <label for="inquiry-type">お問い合わせ <span class="required">*</span></label>
     <select id="inquiry-type" name="inquiry_type" required>
       <option value="">選択してください</option>
@@ -75,6 +93,10 @@ const { showPersonInCharge = true } = Astro.props;
     const otherDetailsGroup = document.getElementById('other-inquiry-details-group');
     const otherDetailsTextarea = document.getElementById('other-inquiry-details') as HTMLTextAreaElement | null;
     const charCountElement = document.getElementById('char-count');
+    const leadSourceSelect = document.getElementById('lead-source') as HTMLSelectElement | null;
+    const leadSourceOtherGroup = document.getElementById('lead-source-other-group');
+    const leadSourceOtherTextarea = document.getElementById('lead-source-other-details') as HTMLTextAreaElement | null;
+    const leadSourceCharCount = document.getElementById('lead-source-char-count');
     const formSuccessMessage = document.getElementById('form-success-message');
     const formErrorMessage = document.getElementById('form-error-message');
 
@@ -121,6 +143,25 @@ const { showPersonInCharge = true } = Astro.props;
 
       otherDetailsTextarea.addEventListener('input', () => {
         charCountElement.textContent = `${otherDetailsTextarea.value.length} / ${maxLength}`;
+      });
+    }
+
+    if (leadSourceSelect && leadSourceOtherGroup && leadSourceOtherTextarea && leadSourceCharCount) {
+      const leadSourceMaxLength = leadSourceOtherTextarea.maxLength;
+      leadSourceCharCount.textContent = `${leadSourceOtherTextarea.value.length} / ${leadSourceMaxLength}`;
+
+      leadSourceSelect.addEventListener('change', () => {
+        if (leadSourceSelect.value === 'other') {
+          leadSourceOtherGroup.classList.remove('hidden');
+        } else {
+          leadSourceOtherGroup.classList.add('hidden');
+          leadSourceOtherTextarea.value = '';
+          leadSourceCharCount.textContent = `0 / ${leadSourceMaxLength}`;
+        }
+      });
+
+      leadSourceOtherTextarea.addEventListener('input', () => {
+        leadSourceCharCount.textContent = `${leadSourceOtherTextarea.value.length} / ${leadSourceMaxLength}`;
       });
     }
 
@@ -176,9 +217,11 @@ const { showPersonInCharge = true } = Astro.props;
           if (data.success) {
             if (typeof gtag === 'function') {
               const inquiryTypeValue = inquiryTypeSelect?.value || 'unknown';
+              const leadSourceValue = leadSourceSelect?.value || '';
               gtag('event', 'contact_form_submit', {
                 event_category: 'contact',
                 event_label: inquiryTypeValue,
+                ...(leadSourceValue && { lead_source: leadSourceValue }),
               });
             }
             showSuccess('お問い合わせありがとうございます。送信完了しました。');
@@ -188,6 +231,11 @@ const { showPersonInCharge = true } = Astro.props;
               otherDetailsTextarea.required = false;
               otherDetailsTextarea.value = '';
               charCountElement.textContent = `0 / ${otherDetailsTextarea.maxLength}`;
+            }
+            if (leadSourceOtherGroup && leadSourceOtherTextarea && leadSourceCharCount) {
+              leadSourceOtherGroup.classList.add('hidden');
+              leadSourceOtherTextarea.value = '';
+              leadSourceCharCount.textContent = `0 / ${leadSourceOtherTextarea.maxLength}`;
             }
           } else {
             throw new Error(data.error || '送信に失敗しました。');

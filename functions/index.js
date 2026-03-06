@@ -29,6 +29,25 @@ const ALLOWED_INQUIRY_TYPES = [ // 許可するお問い合わせ種別の値
   "request_contact",
   "other",
 ];
+const ALLOWED_LEAD_SOURCES = [ // 許可する流入元の値
+  "google_search",
+  "sns",
+  "referral",
+  "trade_show",
+  "other",
+];
+const INQUIRY_TYPE_LABELS = { // メール本文用の日本語ラベル
+  "request_documents": "資料請求",
+  "request_contact": "商品の説明が聞きたいので連絡が欲しい",
+  "other": "その他",
+};
+const LEAD_SOURCE_LABELS = { // メール本文用の日本語ラベル
+  "google_search": "Google検索",
+  "sns": "SNS",
+  "referral": "知人の紹介",
+  "trade_show": "展示会",
+  "other": "その他",
+};
 const OTHER_DETAILS_MAX_LENGTH = 200; // 「その他」詳細の最大文字数 (適宜調整)
 const ALLOWED_HOSTNAMES = ["cake.lp.gadandan.co.jp"];
 
@@ -173,6 +192,9 @@ exports.sendMail = onRequest(
           const phone = req.body.phone || "";
           const inquiryType = req.body.inquiry_type || "";
           const otherDetails = req.body.other_inquiry_details || "";
+          const leadSource = req.body.lead_source || "";
+          const leadSourceOtherDetails =
+              req.body.lead_source_other_details || "";
 
           // --- バリデーション実行 ---
 
@@ -224,6 +246,34 @@ exports.sendMail = onRequest(
             }
           }
 
+          // 流入元の値チェック（任意項目だが、値がある場合は許可リストで検証）
+          if (leadSource &&
+              !ALLOWED_LEAD_SOURCES.includes(leadSource)) {
+            console.warn(
+                "Validation failed: Invalid lead source:",
+                leadSource,
+            );
+            return res.status(400).json({
+              success: false,
+              error: "流入元の値が無効です。",
+            });
+          }
+
+          // 流入元「その他」の場合の補足欄チェック
+          if (leadSource === "other" &&
+              leadSourceOtherDetails.length >
+              OTHER_DETAILS_MAX_LENGTH) {
+            console.warn(
+                "Validation failed: Lead source other details too long.",
+            );
+            return res.status(400).json({
+              success: false,
+              error: `流入元（その他）は` +
+                     `${OTHER_DETAILS_MAX_LENGTH}文字以内で` +
+                     `入力してください。`,
+            });
+          }
+
           // メールアドレス形式チェック (Line 108 max-len fix)
           if (!validator.isEmail(email)) {
             console.warn("Validation failed: Invalid email format:", email);
@@ -265,10 +315,22 @@ exports.sendMail = onRequest(
                          "お名前: " + name + "\n" +
                          "メールアドレス: " + email + "\n" +
                          "電話番号: " + phone + "\n" +
-                         "お問い合わせ種別: " + inquiryType;
+                         "お問い合わせ種別: " +
+                         (INQUIRY_TYPE_LABELS[inquiryType] ||
+                          inquiryType);
 
           if (inquiryType === "other") {
             mailBody += "\n内容（その他）:\n" + otherDetails;
+          }
+
+          if (leadSource) {
+            mailBody += "\n流入元: " +
+                        (LEAD_SOURCE_LABELS[leadSource] ||
+                         leadSource);
+            if (leadSource === "other" && leadSourceOtherDetails) {
+              mailBody += "\n流入元（その他）:\n" +
+                          leadSourceOtherDetails;
+            }
           }
 
           // メールオプションを設定
