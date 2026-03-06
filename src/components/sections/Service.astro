@@ -4,17 +4,17 @@ import { serviceFeatures } from '../../data/features';
 <section class="section service" id="service">
   <div class="container">
     <h2>「いつでもケーキ」が解決します</h2>
-    <div class="service__features">
+    <ul class="service__features">
       {serviceFeatures.map((feature) => (
-        <div class="feature-card">
+        <li class="feature-card">
           <div class="feature-card__icon">
-            <i class={feature.icon}></i>
+            <i class={feature.icon} aria-hidden="true"></i>
           </div>
           <h3 class="feature-card__title">{feature.title}</h3>
           <p>{feature.description}</p>
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   </div>
 </section>
 
@@ -28,6 +28,8 @@ import { serviceFeatures } from '../../data/features';
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
     margin-top: 40px;
+    list-style: none;
+    padding: 0;
   }
 
   .feature-card {

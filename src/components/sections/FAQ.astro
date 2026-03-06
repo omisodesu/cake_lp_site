@@ -5,10 +5,14 @@ import { faqItems } from '../../data/faq';
   <div class="container">
     <h2>よくある質問</h2>
     <div class="faq__list">
-      {faqItems.map((item) => (
+      {faqItems.map((item, index) => (
         <div class="faq__item">
-          <div class="faq__question" role="button" tabindex="0" aria-expanded="false">{item.question}</div>
-          <div class="faq__answer" role="region" aria-hidden="true">
+          <h3 class="faq__heading">
+            <button class="faq__question" type="button" id={`faq-question-${index}`} aria-expanded="false" aria-controls={`faq-answer-${index}`}>
+              {item.question}
+            </button>
+          </h3>
+          <div class="faq__answer" id={`faq-answer-${index}`} role="region" aria-labelledby={`faq-question-${index}`} hidden>
             <p>{item.answer}</p>
           </div>
         </div>
@@ -20,25 +24,34 @@ import { faqItems } from '../../data/faq';
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const faqQuestions = document.querySelectorAll('.faq__question');
-    function toggleFaq(question) {
-      question.classList.toggle('active');
-      const answer = question.nextElementSibling;
-      if (answer) {
-        answer.classList.toggle('active');
-        const isExpanded = question.classList.contains('active');
-        question.setAttribute('aria-expanded', String(isExpanded));
-        answer.setAttribute('aria-hidden', String(!isExpanded));
+    function toggleFaq(button: Element) {
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      const answerId = button.getAttribute('aria-controls');
+      const answer = answerId ? document.getElementById(answerId) : null;
+
+      if (isExpanded) {
+        // 閉じる: hidden を即座に設定し支援技術からも隠す
+        button.setAttribute('aria-expanded', 'false');
+        button.classList.remove('active');
+        if (answer) {
+          answer.classList.remove('active');
+          answer.hidden = true;
+        }
+      } else {
+        // 開く: hidden を外してから active を付けてアニメーション
+        button.setAttribute('aria-expanded', 'true');
+        button.classList.add('active');
+        if (answer) {
+          answer.hidden = false;
+          requestAnimationFrame(() => {
+            answer.classList.add('active');
+          });
+        }
       }
     }
 
     faqQuestions.forEach(question => {
       question.addEventListener('click', () => toggleFaq(question));
-      question.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          toggleFaq(question);
-        }
-      });
     });
   });
 </script>
@@ -60,12 +73,21 @@ import { faqItems } from '../../data/faq';
     box-shadow: var(--shadow);
   }
 
+  .faq__heading {
+    margin: 0;
+  }
+
   .faq__question {
+    display: block;
+    width: 100%;
     background-color: var(--secondary-color);
     padding: 20px;
     cursor: pointer;
     position: relative;
+    font: inherit;
     font-weight: bold;
+    border: none;
+    text-align: left;
   }
 
   .faq__question:after {

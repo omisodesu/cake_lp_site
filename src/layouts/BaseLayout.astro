@@ -45,6 +45,9 @@ const canonicalUrl = ogUrl || new URL(Astro.url.pathname, SITE.url).toString();
   <meta property="og:url" content={canonicalUrl}>
   <meta property="og:image" content={ogImage}>
 
+  <!-- Canonical URL -->
+  <link rel="canonical" href={canonicalUrl}>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

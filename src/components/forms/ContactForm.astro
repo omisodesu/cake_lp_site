@@ -63,7 +63,8 @@ const { showPersonInCharge = true } = Astro.props;
     <button type="submit" class="cta-button">送信する</button>
   </div>
 </form>
-<div id="form-response-message" class="form-response-message"></div>
+<div id="form-success-message" class="form-response-message" role="status" aria-live="polite"></div>
+<div id="form-error-message" class="form-response-message" role="alert"></div>
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
@@ -74,7 +75,33 @@ const { showPersonInCharge = true } = Astro.props;
     const otherDetailsGroup = document.getElementById('other-inquiry-details-group');
     const otherDetailsTextarea = document.getElementById('other-inquiry-details') as HTMLTextAreaElement | null;
     const charCountElement = document.getElementById('char-count');
-    const formResponseMessage = document.getElementById('form-response-message');
+    const formSuccessMessage = document.getElementById('form-success-message');
+    const formErrorMessage = document.getElementById('form-error-message');
+
+    function showSuccess(message: string) {
+      if (formErrorMessage) formErrorMessage.textContent = '';
+      if (formSuccessMessage) {
+        formSuccessMessage.textContent = message;
+        formSuccessMessage.style.color = 'green';
+      } else {
+        alert(message);
+      }
+    }
+
+    function showError(message: string) {
+      if (formSuccessMessage) formSuccessMessage.textContent = '';
+      if (formErrorMessage) {
+        formErrorMessage.textContent = message;
+        formErrorMessage.style.color = 'red';
+      } else {
+        alert(message);
+      }
+    }
+
+    function clearMessages() {
+      if (formSuccessMessage) formSuccessMessage.textContent = '';
+      if (formErrorMessage) formErrorMessage.textContent = '';
+    }
 
     if (inquiryTypeSelect && otherDetailsGroup && otherDetailsTextarea && charCountElement) {
       const maxLength = otherDetailsTextarea.maxLength;
@@ -105,18 +132,13 @@ const { showPersonInCharge = true } = Astro.props;
         const turnstileInput = contactForm.querySelector<HTMLInputElement>('input[name="cf-turnstile-response"]');
         const turnstileToken = turnstileInput ? turnstileInput.value : '';
         if (!turnstileToken) {
-          if (formResponseMessage) {
-            formResponseMessage.textContent = 'エラー: セキュリティ検証が完了していません。しばらく待ってから再度お試しください。';
-            formResponseMessage.style.color = 'red';
-          } else {
-            alert('セキュリティ検証が完了していません。しばらく待ってから再度お試しください。');
-          }
+          showError('エラー: セキュリティ検証が完了していません。しばらく待ってから再度お試しください。');
           return;
         }
 
         submitButton.disabled = true;
         submitButton.textContent = '送信中...';
-        if (formResponseMessage) formResponseMessage.textContent = '';
+        clearMessages();
 
         try {
           const formData = new FormData(contactForm);
@@ -159,12 +181,7 @@ const { showPersonInCharge = true } = Astro.props;
                 event_label: inquiryTypeValue,
               });
             }
-            if (formResponseMessage) {
-              formResponseMessage.textContent = 'お問い合わせありがとうございます。送信完了しました。';
-              formResponseMessage.style.color = 'green';
-            } else {
-              alert('お問い合わせありがとうございます。送信完了しました。');
-            }
+            showSuccess('お問い合わせありがとうございます。送信完了しました。');
             contactForm.reset();
             if (otherDetailsGroup && otherDetailsTextarea && charCountElement) {
               otherDetailsGroup.classList.add('hidden');
@@ -177,12 +194,7 @@ const { showPersonInCharge = true } = Astro.props;
           }
         } catch (error: any) {
           console.error('Form submission error:', error);
-          if (formResponseMessage) {
-            formResponseMessage.textContent = '送信中にエラーが発生しました。' + (error.message || '');
-            formResponseMessage.style.color = 'red';
-          } else {
-            alert('送信中にエラーが発生しました。');
-          }
+          showError('送信中にエラーが発生しました。' + (error.message || ''));
         } finally {
           const turnstileWidget = contactForm.querySelector('.cf-turnstile');
           if (turnstileWidget && typeof turnstile !== 'undefined') {

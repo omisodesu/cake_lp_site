@@ -20,15 +20,15 @@ const steps = [
 <section class="section process" id="process">
   <div class="container">
     <h2>かんたん3ステップで導入完了</h2>
-    <div class="process__steps">
+    <ol class="process__steps">
       {steps.map((step) => (
-        <div class="process__step">
-          <div class="process__step-number">{step.number}</div>
+        <li class="process__step">
+          <div class="process__step-number" aria-hidden="true">{step.number}</div>
           <h3 class="process__step-title">{step.title}</h3>
           <p>{step.description}</p>
-        </div>
+        </li>
       ))}
-    </div>
+    </ol>
   </div>
 </section>
 
@@ -43,6 +43,8 @@ const steps = [
     justify-content: space-between;
     margin-top: 40px;
     position: relative;
+    list-style: none;
+    padding: 0;
   }
 
   .process__steps:before {

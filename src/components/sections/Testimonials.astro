@@ -7,24 +7,26 @@ const images = import.meta.glob<{ default: ImageMetadata }>('../../images/shop*.
 <section class="section testimonials" id="testimonials">
   <div class="container">
     <h2>導入店舗からの声</h2>
-    <div class="testimonials__grid">
+    <ul class="testimonials__grid">
       {testimonials.map((testimonial) => {
         const imagePath = `../../images/${testimonial.image}`;
         const imageModule = images[imagePath];
         return (
-          <div class="testimonial-card">
-            {imageModule && (
-              <Image src={imageModule.default} alt={testimonial.alt} class="testimonial-card__image" width={600} />
-            )}
-            <div class="testimonial-card__text">
-              {testimonial.text}
-            </div>
-            <div class="testimonial-card__author">{testimonial.author}</div>
-            <a href={testimonial.link} class="testimonial-card__link">導入事例を詳しく見る →</a>
-          </div>
+          <li class="testimonial-card">
+            <article>
+              {imageModule && (
+                <Image src={imageModule.default} alt={testimonial.alt} class="testimonial-card__image" width={600} />
+              )}
+              <blockquote class="testimonial-card__text">
+                <p>{testimonial.text}</p>
+              </blockquote>
+              <p class="testimonial-card__author"><cite>{testimonial.author}</cite></p>
+              <a href={testimonial.link} class="testimonial-card__link">導入事例を詳しく見る →</a>
+            </article>
+          </li>
         );
       })}
-    </div>
+    </ul>
   </div>
 </section>
 
@@ -38,6 +40,8 @@ const images = import.meta.glob<{ default: ImageMetadata }>('../../images/shop*.
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 40px;
     margin-top: 40px;
+    list-style: none;
+    padding: 0;
   }
 
   .testimonial-card {
@@ -57,7 +61,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>('../../images/shop*.
 
   .testimonial-card__text {
     font-style: italic;
-    margin-bottom: 20px;
+    margin: 0 0 20px;
     position: relative;
   }
 

@@ -4,15 +4,17 @@ import { results } from '../../data/results';
 <section class="section results" id="results">
   <div class="container">
     <h2>導入店舗の実績が証明する効果</h2>
-    <div class="results__grid">
+    <dl class="results__grid">
       {results.map((result) => (
         <div class="result-card">
-          <div class="result-card__number" data-value={result.value}>0</div>
-          <h3 class="result-card__title">{result.title}</h3>
-          <p>{result.description}</p>
+          <dt class="result-card__title">{result.title}</dt>
+          <dd class="result-card__value">
+            <span class="result-card__number" data-value={result.value}>{result.value}</span>
+          </dd>
+          <dd class="result-card__description">{result.description}</dd>
         </div>
       ))}
-    </div>
+    </dl>
   </div>
 </section>
 
@@ -28,6 +30,8 @@ import { results } from '../../data/results';
             if (isNaN(finalValue) || target.classList.contains('counted')) return;
             target.classList.add('counted');
 
+            // アニメーション開始: 0 から実際の値へカウントアップ
+            target.textContent = '0';
             let currentValue = 0;
             const duration = 2000;
             const frameDuration = 16;
@@ -51,13 +55,6 @@ import { results } from '../../data/results';
       }, { threshold: 0.5 });
 
       resultNumbers.forEach(number => observer.observe(number));
-    } else if (resultNumbers.length > 0) {
-      resultNumbers.forEach(number => {
-        const finalValue = parseInt(number.getAttribute('data-value') || '0', 10);
-        if (!isNaN(finalValue)) {
-          number.textContent = finalValue.toLocaleString();
-        }
-      });
     }
   });
 </script>
@@ -72,9 +69,12 @@ import { results } from '../../data/results';
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
     margin-top: 40px;
+    padding: 0;
   }
 
   .result-card {
+    display: flex;
+    flex-direction: column;
     background-color: var(--secondary-color);
     border-radius: var(--border-radius);
     padding: 30px;
@@ -82,15 +82,26 @@ import { results } from '../../data/results';
     text-align: center;
   }
 
+  .result-card__value {
+    order: -1;
+    margin: 0;
+  }
+
   .result-card__number {
     font-size: 3rem;
     font-weight: bold;
     color: var(--accent-color);
     margin-bottom: 10px;
+    display: block;
   }
 
   .result-card__title {
     font-size: 1.3rem;
     margin-bottom: 15px;
+    font-weight: bold;
+  }
+
+  .result-card__description {
+    margin: 0;
   }
 </style>
