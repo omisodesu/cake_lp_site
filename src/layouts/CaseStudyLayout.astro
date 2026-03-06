@@ -46,11 +46,11 @@ const pageTitle = `【導入事例】${shopName} | いつでもケーキ`;
 
         <slot name="navigation" />
 
-        <div class="case-study-cta">
-          <h3>「いつでもケーキ」にご興味をお持ちいただけましたか？</h3>
+        <aside class="case-study-cta">
+          <h2>「いつでもケーキ」にご興味をお持ちいただけましたか？</h2>
           <p>詳しい資料のご請求や、導入に関するご相談など、お気軽にお問い合わせください。</p>
           <a href="/#contact" class="cta-button">無料相談・資料請求はこちら</a>
-        </div>
+        </aside>
       </div>
     </section>
   </main>
@@ -175,8 +175,19 @@ const pageTitle = `【導入事例】${shopName} | いつでもケーキ`;
     box-shadow: var(--shadow);
   }
 
-  .case-study-article :global(.shop-information p) {
-    margin-bottom: 0.5rem;
+  .case-study-article :global(.shop-information dl) {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.25rem 1rem;
+    margin: 0;
+  }
+
+  .case-study-article :global(.shop-information dt) {
+    font-weight: bold;
+  }
+
+  .case-study-article :global(.shop-information dd) {
+    margin: 0;
   }
 
   .case-study-cta {
@@ -187,7 +198,7 @@ const pageTitle = `【導入事例】${shopName} | いつでもケーキ`;
     border-radius: var(--border-radius);
   }
 
-  .case-study-cta h3 {
+  .case-study-cta h2 {
     font-size: 1.6rem;
     margin-bottom: 1rem;
   }
