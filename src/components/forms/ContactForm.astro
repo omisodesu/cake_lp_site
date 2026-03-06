@@ -56,7 +56,7 @@ const { showPersonInCharge = true } = Astro.props;
   </div>
 
   <div class="form-group">
-    <div class="g-recaptcha" data-sitekey={SITE.recaptchaSiteKey}></div>
+    <div class="cf-turnstile" data-sitekey={SITE.turnstileSiteKey} data-refresh-expired="auto"></div>
   </div>
 
   <div class="form-group">
@@ -65,7 +65,7 @@ const { showPersonInCharge = true } = Astro.props;
 </form>
 <div id="form-response-message" class="form-response-message"></div>
 
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -102,13 +102,14 @@ const { showPersonInCharge = true } = Astro.props;
         e.preventDefault();
 
         const submitButton = contactForm.querySelector('button[type="submit"]') as HTMLButtonElement;
-        const recaptchaResponse = (typeof grecaptcha !== 'undefined') ? grecaptcha.getResponse() : '';
-        if (!recaptchaResponse) {
+        const turnstileInput = contactForm.querySelector<HTMLInputElement>('input[name="cf-turnstile-response"]');
+        const turnstileToken = turnstileInput ? turnstileInput.value : '';
+        if (!turnstileToken) {
           if (formResponseMessage) {
-            formResponseMessage.textContent = 'エラー: reCAPTCHAをチェックしてください。';
+            formResponseMessage.textContent = 'エラー: セキュリティ検証が完了していません。しばらく待ってから再度お試しください。';
             formResponseMessage.style.color = 'red';
           } else {
-            alert('reCAPTCHAをチェックしてください。');
+            alert('セキュリティ検証が完了していません。しばらく待ってから再度お試しください。');
           }
           return;
         }
@@ -129,7 +130,6 @@ const { showPersonInCharge = true } = Astro.props;
             const personInCharge = (document.getElementById('person-in-charge') as HTMLInputElement)?.value || '';
             params.append('person-in-charge', personInCharge);
           }
-          params.append('g-recaptcha-response', recaptchaResponse);
 
           const functionUrl = contactForm.dataset.functionUrl!;
           const response = await fetch(functionUrl, {
@@ -184,7 +184,10 @@ const { showPersonInCharge = true } = Astro.props;
             alert('送信中にエラーが発生しました。');
           }
         } finally {
-          if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+          const turnstileWidget = contactForm.querySelector('.cf-turnstile');
+          if (turnstileWidget && typeof turnstile !== 'undefined') {
+            turnstile.reset(turnstileWidget);
+          }
           submitButton.disabled = false;
           submitButton.textContent = '送信する';
         }
@@ -192,6 +195,6 @@ const { showPersonInCharge = true } = Astro.props;
     }
   });
 
-  declare const grecaptcha: any;
+  declare const turnstile: any;
   declare function gtag(...args: any[]): void;
 </script>

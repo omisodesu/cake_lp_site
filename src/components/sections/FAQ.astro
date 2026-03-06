@@ -7,7 +7,7 @@ import { faqItems } from '../../data/faq';
     <div class="faq__list">
       {faqItems.map((item) => (
         <div class="faq__item">
-          <div class="faq__question" role="button" aria-expanded="false">{item.question}</div>
+          <div class="faq__question" role="button" tabindex="0" aria-expanded="false">{item.question}</div>
           <div class="faq__answer" role="region" aria-hidden="true">
             <p>{item.answer}</p>
           </div>
@@ -20,15 +20,23 @@ import { faqItems } from '../../data/faq';
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const faqQuestions = document.querySelectorAll('.faq__question');
+    function toggleFaq(question) {
+      question.classList.toggle('active');
+      const answer = question.nextElementSibling;
+      if (answer) {
+        answer.classList.toggle('active');
+        const isExpanded = question.classList.contains('active');
+        question.setAttribute('aria-expanded', String(isExpanded));
+        answer.setAttribute('aria-hidden', String(!isExpanded));
+      }
+    }
+
     faqQuestions.forEach(question => {
-      question.addEventListener('click', () => {
-        question.classList.toggle('active');
-        const answer = question.nextElementSibling;
-        if (answer) {
-          answer.classList.toggle('active');
-          const isExpanded = question.classList.contains('active');
-          question.setAttribute('aria-expanded', String(isExpanded));
-          answer.setAttribute('aria-hidden', String(!isExpanded));
+      question.addEventListener('click', () => toggleFaq(question));
+      question.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleFaq(question);
         }
       });
     });

@@ -39,9 +39,8 @@
   resize: vertical;
 }
 
-.g-recaptcha {
+.cf-turnstile {
   margin-bottom: 20px;
-  display: inline-block;
 }
 
 .form-group button[type="submit"] {

@@ -6,7 +6,7 @@ export const SITE = {
   ogTitle: 'いつでもケーキ | ケーキ店向け店頭受取予約システム',
   ogDescription: '「いつでもケーキ」は、ケーキ店向け店頭受取予約システムです。営業時間外の予約受付、業務効率化、売上アップを実現します。初期費用無料の従量課金制。使った分だけの安心料金。',
   gaId: 'G-J7YJZ4LDN4',
-  recaptchaSiteKey: '6Lcy-hMrAAAAAICemPU6C5wdIJIrvGfkhbjhzBYB',
+  turnstileSiteKey: '0x4AAAAAACmxEf6xZSRNdRD8',
   cloudFunctionUrl: 'https://us-central1-fir-app-df757.cloudfunctions.net/sendMail',
 } as const;
 

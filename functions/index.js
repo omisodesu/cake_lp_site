@@ -11,7 +11,7 @@ const {defineString, defineSecret} = require("firebase-functions/params");
 const nodemailer = require("nodemailer");
 const cors = require("cors")({origin: true}); // CORSミドルウェアを初期化
 const validator = require("validator"); // validator ライブラリをインポート
-/** const axios = require("axios"); // ★ axios をインポート*/
+const axios = require("axios");
 
 // --- パラメータ定義 ---
 // 環境変数 GMAIL_USER を参照 (functions/.env ファイルに記述)
@@ -20,8 +20,8 @@ const gmailUserParam = defineString("GMAIL_USER", {
 });
 // Secret Manager の GMAIL_APP_PASSWORD を参照 (Secret Managerに作成し、権限付与が必要)
 const gmailPasswordParam = defineSecret("GMAIL_APP_PASSWORD");
-// ★ Secret Manager の RECAPTCHA_SECRET_KEY を参照
-/** const recaptchaSecretKeyParam = defineSecret("RECAPTCHA_SECRET_KEY");*/
+// ★ Secret Manager の TURNSTILE_SECRET_KEY を参照
+const turnstileSecretKeyParam = defineSecret("TURNSTILE_SECRET_KEY");
 
 // --- 定数定義 ---
 const ALLOWED_INQUIRY_TYPES = [ // 許可するお問い合わせ種別の値
@@ -30,11 +30,12 @@ const ALLOWED_INQUIRY_TYPES = [ // 許可するお問い合わせ種別の値
   "other",
 ];
 const OTHER_DETAILS_MAX_LENGTH = 200; // 「その他」詳細の最大文字数 (適宜調整)
+const ALLOWED_HOSTNAMES = ["cake.lp.gadandan.co.jp"];
 
 // --- HTTPS 関数のエクスポート ---
 exports.sendMail = onRequest(
     // 実行時オプション: 使用するシークレットを宣言
-    {secrets: ["GMAIL_APP_PASSWORD", "RECAPTCHA_SECRET_KEY"]},
+    {secrets: ["GMAIL_APP_PASSWORD", "TURNSTILE_SECRET_KEY"]},
 
     // リクエストハンドラ (非同期処理のため async)
     async (req, res) => {
@@ -57,68 +58,82 @@ exports.sendMail = onRequest(
           return res.json({success: true, messageId: "honeypot-triggered"});
         }
 
-        /**
+        // --- Turnstile サーバー側検証 ---
         try {
-          const recaptchaToken = req.body["g-recaptcha-response"];
-          console.log("▶︎ BODY PAYLOAD:", req.body);
-          console.log("▶︎ TOKEN FIELD:", req.body["g-recaptcha-response"]);
+          const turnstileToken =
+              req.body && req.body["cf-turnstile-response"];
 
-          // フロントエンドから送られたトークン
-          const secretKey = recaptchaSecretKeyParam.value();
-          // Secret Managerからキーを取得
+          const secretKey = turnstileSecretKeyParam.value();
 
-          if (!recaptchaToken) {
-            console.warn("WARN: Missing reCAPTCHA token.");
+          if (!turnstileToken) {
+            console.warn("WARN: Missing Turnstile token.");
             return res.status(400).json({
-              success: false, error: "reCAPTCHA トークンが必要です。",
+              success: false,
+              error: "Turnstile トークンが必要です。",
             });
           }
           if (!secretKey) {
-            console.error("ERROR: Missing reCAPTCHA secret key configuration.");
+            console.error(
+                "ERROR: Missing Turnstile secret key configuration.",
+            );
             return res.status(500).json({
-              success: false, error: "サーバー設定エラー (reCAPTCHA secret)",
+              success: false,
+              error: "サーバー設定エラー (Turnstile secret)",
             });
           }
 
-          const verificationUrl = "https://www.google.com/recaptcha/api/siteverify";
-          console.log("INFO: Verifying reCAPTCHA token...");
+          const verificationUrl =
+              "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+          console.log("INFO: Verifying Turnstile token...");
 
-          // GoogleのAPIに検証リクエストを送信
           const verificationRes = await axios.post(
               verificationUrl,
-              // application/x-www-form-urlencoded 形式で送信
               "secret=" + encodeURIComponent(secretKey) +
-            "&response=" + encodeURIComponent(recaptchaToken),
+              "&response=" + encodeURIComponent(turnstileToken),
               {
                 headers: {
                   "Content-Type": "application/x-www-form-urlencoded",
                 },
-                timeout: 5000, // タイムアウトを5秒に設定 (任意)
+                timeout: 5000,
               },
           );
-
-          // 検証結果を確認
           if (!verificationRes.data.success) {
             console.warn(
-                "WARN: reCAPTCHA verification failed:",
+                "WARN: Turnstile verification failed:",
                 verificationRes.data["error-codes"],
             );
             return res.status(400).json({
-              success: false, error: "reCAPTCHA の認証に失敗しました。",
+              success: false,
+              error: "セキュリティ検証に失敗しました。" +
+                     "再度お試しください。",
             });
           }
-          console.log("INFO: reCAPTCHA verification successful.");
-        } catch (recaptchaError) {
+
+          const responseHostname = verificationRes.data.hostname;
+          if (!ALLOWED_HOSTNAMES.includes(responseHostname)) {
+            console.warn(
+                "WARN: Turnstile hostname mismatch:",
+                responseHostname,
+            );
+            return res.status(400).json({
+              success: false,
+              error: "セキュリティ検証に失敗しました。" +
+                     "再度お試しください。",
+            });
+          }
+        } catch (turnstileError) {
           console.error(
-              "ERROR during reCAPTCHA verification request:", recaptchaError,
+              "ERROR during Turnstile verification:",
+              turnstileError,
           );
-          // axios のタイムアウトなどもここで捕捉される
           return res.status(500).json({
-            success: false, error: "reCAPTCHA サーバーとの通信中にエラーが発生しました。",
+            success: false,
+            error: "セキュリティ検証サーバーとの通信中に" +
+                   "エラーが発生しました。",
           });
         }
-        // --- reCAPTCHA 検証 OK ---
-*/
+        // --- Turnstile 検証 OK ---
+
         let transporter;
 
         // --- ① トランスポーターの初期化 ---
