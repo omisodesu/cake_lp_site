@@ -4,6 +4,7 @@ import { SITE } from '../../data/site';
 <script is:inline define:vars={{ gaId: SITE.gaId }}>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  window.gtag = gtag;
   gtag('js', new Date());
   gtag('config', gaId);
 </script>
