@@ -6,5 +6,9 @@ import { SITE } from '../../data/site';
   function gtag(){dataLayer.push(arguments);}
   window.gtag = gtag;
   gtag('js', new Date());
-  gtag('config', gaId);
+  if (new URLSearchParams(window.location.search).has('debug_mode')) {
+    gtag('config', gaId, { debug_mode: true });
+  } else {
+    gtag('config', gaId);
+  }
 </script>
