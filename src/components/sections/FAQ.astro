@@ -8,7 +8,7 @@ import { faqItems } from '../../data/faq';
       {faqItems.map((item, index) => (
         <div class="faq__item">
           <h3 class="faq__heading">
-            <button class="faq__question" type="button" id={`faq-question-${index}`} aria-expanded="false" aria-controls={`faq-answer-${index}`}>
+            <button class="faq__question" type="button" id={`faq-question-${index}`} aria-expanded="false" aria-controls={`faq-answer-${index}`} data-faq-id={item.id}>
               {item.question}
             </button>
           </h3>
@@ -47,6 +47,11 @@ import { faqItems } from '../../data/faq';
             answer.classList.add('active');
           });
         }
+        if (typeof gtag === 'function') {
+          gtag('event', 'faq_open', {
+            question: (button as HTMLElement).dataset.faqId || '',
+          });
+        }
       }
     }
 
@@ -54,6 +59,8 @@ import { faqItems } from '../../data/faq';
       question.addEventListener('click', () => toggleFaq(question));
     });
   });
+
+  declare function gtag(...args: any[]): void;
 </script>
 
 <style>

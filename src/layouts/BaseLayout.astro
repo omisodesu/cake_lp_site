@@ -72,6 +72,7 @@ const canonicalUrl = ogUrl || new URL(Astro.url.pathname, SITE.url).toString();
   <slot />
   <Footer />
   <script async src={`https://www.googletagmanager.com/gtag/js?id=${SITE.gaId}`}></script>
+  <script src="../scripts/ga4-events.ts"></script>
   <slot name="scripts" />
 </body>
 </html>

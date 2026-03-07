@@ -1,15 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/common/Header.astro';
+import ResultsSummary from '../components/sections/ResultsSummary.astro';
 import Problems from '../components/sections/Problems.astro';
-import Service from '../components/sections/Service.astro';
-import Results from '../components/sections/Results.astro';
 import Testimonials from '../components/sections/Testimonials.astro';
+import Service from '../components/sections/Service.astro';
 import Features from '../components/sections/Features.astro';
 import Market from '../components/sections/Market.astro';
 import Pricing from '../components/sections/Pricing.astro';
 import Process from '../components/sections/Process.astro';
 import FAQ from '../components/sections/FAQ.astro';
+import TrustSignals from '../components/sections/TrustSignals.astro';
 import ContactForm from '../components/forms/ContactForm.astro';
 import { SITE } from '../data/site';
 
@@ -36,22 +37,39 @@ const structuredData = {
 >
   <Header slot="header">
     <div class="header__content">
-      <h1 class="header__title">お客様は24時間『予約がしたい！』<br>あなたはその声、聞いていますか？</h1>
-      <p class="header__subtitle">初期費用無料。使った分だけの従量課金制</p>
-      <a href="#contact" class="cta-button">無料相談・資料請求はこちら</a>
+      <h1 class="header__title">ケーキ店の電話予約、<br>もう手が止まらなくていい。</h1>
+      <p class="header__subtitle">24時間WEB予約で、売上も時間も取り戻す。</p>
+      <ul class="header__badges">
+        <li>初期費用0円</li>
+        <li>固定費なし</li>
+        <li>24時間WEB予約受付</li>
+      </ul>
+      <div class="header__cta-group">
+        <a href="#contact" class="cta-button" data-cta-location="hero" data-cta-type="consultation">まずは無料で相談する</a>
+        <a href="#contact" class="cta-button cta-button--secondary" data-cta-location="hero" data-cta-type="inquiry">資料請求・お問い合わせ</a>
+      </div>
     </div>
   </Header>
 
   <main>
+    <ResultsSummary />
     <Problems />
-    <Service />
-    <Results />
     <Testimonials />
+
+    <section class="section section--cta-mid">
+      <div class="container cta-mid__inner">
+        <p class="cta-mid__text">導入のご相談・資料請求はお気軽にどうぞ</p>
+        <a href="#contact" class="cta-button" data-cta-location="mid_page" data-cta-type="consultation">無料相談はこちら</a>
+      </div>
+    </section>
+
+    <Service />
     <Features />
     <Market />
     <Pricing />
     <Process />
     <FAQ />
+    <TrustSignals />
 
     <section class="section cta" id="contact">
       <div class="container">
@@ -95,14 +113,56 @@ const structuredData = {
 
   .header__title {
     font-size: 2.8rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     color: var(--heading-color);
   }
 
   .header__subtitle {
     font-size: 1.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     color: var(--text-color);
+  }
+
+  .header__badges {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .header__badges li {
+    background-color: var(--accent-color);
+    color: var(--white);
+    padding: 0.5rem 1.2rem;
+    border-radius: 2rem;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .header__cta-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .section--cta-mid {
+    background-color: var(--main-color);
+    padding: 40px 0;
+  }
+
+  .cta-mid__inner {
+    text-align: center;
+  }
+
+  .cta-mid__text {
+    color: var(--white);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
   }
 
   .cta {
@@ -138,6 +198,11 @@ const structuredData = {
 
     .header__subtitle {
       font-size: 1rem;
+    }
+
+    .header__badges li {
+      font-size: 0.9rem;
+      padding: 0.4rem 1rem;
     }
   }
 </style>

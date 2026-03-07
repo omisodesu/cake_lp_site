@@ -117,6 +117,17 @@ img {
   color: var(--white);
 }
 
+.cta-button--secondary {
+  background-color: var(--white);
+  color: var(--accent-color);
+  border: 2px solid var(--accent-color);
+}
+
+.cta-button--secondary:hover {
+  background-color: var(--secondary-color);
+  color: var(--accent-color);
+}
+
 /* フッター */
 .footer {
   background-color: var(--heading-color);

@@ -3,6 +3,38 @@
 <section class="section pricing" id="pricing">
   <div class="container">
     <h2>料金プラン</h2>
+    <div class="pricing__comparison">
+      <h3>他社との違い</h3>
+      <div class="pricing__table-wrap">
+        <table class="pricing__table">
+          <thead>
+            <tr>
+              <th scope="col">比較項目</th>
+              <th scope="col">いつでもケーキ</th>
+              <th scope="col">一般的な予約システム</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>初期費用</td>
+              <td><strong>0円</strong></td>
+              <td>10万〜50万円</td>
+            </tr>
+            <tr>
+              <td>月額固定費</td>
+              <td><strong>0円</strong></td>
+              <td>1万〜5万円/月</td>
+            </tr>
+            <tr>
+              <td>繁忙期のみ利用</td>
+              <td><strong>可能</strong></td>
+              <td>年間契約が必要</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     <div class="pricing__plans">
       <div class="pricing__card">
         <h3 class="pricing__title">いつでもケーキ</h3>
@@ -18,8 +50,20 @@
           <li class="pricing__feature">導入サポート</li>
         </ul>
         <p>※WEB事前決済ご利用時は別途決済手数料3.6%が発生します</p>
-        <a href="#contact" class="cta-button">無料相談・資料請求はこちら</a>
+        <a href="#contact" class="cta-button" data-cta-location="pricing" data-cta-type="consultation">無料相談・資料請求はこちら</a>
       </div>
+    </div>
+
+    <div class="pricing__simulation">
+      <h3>料金シミュレーション</h3>
+      <dl class="pricing__simulation-example">
+        <dt>例: 平均単価3,000円 × 月50件のWEB予約の場合</dt>
+        <dd>
+          <p>売上: 50件 × 3,000円 = <strong>150,000円</strong></p>
+          <p>手数料: 150,000円 × 5.5% = <strong>8,250円</strong></p>
+          <p class="pricing__simulation-result">予約1件あたり <strong>165円</strong></p>
+        </dd>
+      </dl>
     </div>
   </div>
 </section>
@@ -81,5 +125,65 @@
     position: absolute;
     left: 0;
     font-weight: bold;
+  }
+
+  .pricing__comparison {
+    max-width: 700px;
+    margin: 0 auto 40px;
+    text-align: center;
+  }
+
+  .pricing__table-wrap {
+    overflow-x: auto;
+  }
+
+  .pricing__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  .pricing__table th,
+  .pricing__table td {
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+  }
+
+  .pricing__table thead th {
+    background-color: var(--secondary-color);
+    font-weight: bold;
+  }
+
+  .pricing__table tbody td:nth-child(2) {
+    color: var(--accent-color);
+    font-weight: bold;
+  }
+
+  .pricing__simulation {
+    max-width: 600px;
+    margin: 40px auto 0;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    text-align: center;
+  }
+
+  .pricing__simulation-example dt {
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .pricing__simulation-example dd {
+    margin: 0;
+    text-align: left;
+  }
+
+  .pricing__simulation-result {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px solid var(--accent-color);
+    font-size: 1.2rem;
+    text-align: center;
   }
 </style>

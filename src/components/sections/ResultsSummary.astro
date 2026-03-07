@@ -1,0 +1,80 @@
+---
+import { results } from '../../data/results';
+
+const summaryItems = [
+  { ...results[0], unit: '件' },
+  { ...results[1], unit: '件' },
+  { ...results[3], unit: '時間' },
+];
+---
+<section class="section results-summary" aria-label="導入実績サマリー">
+  <div class="container">
+    <ul class="results-summary__badges">
+      {summaryItems.map((item) => (
+        <li class="results-summary__badge">
+          <span class="results-summary__value">{item.value.toLocaleString()}<span class="results-summary__unit">{item.unit}</span></span>
+          <span class="results-summary__label">{item.title}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .results-summary {
+    background-color: var(--white);
+    padding: 40px 0;
+  }
+
+  .results-summary__badges {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+
+  .results-summary__badge {
+    text-align: center;
+    padding: 1.2rem 2rem;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    min-width: 180px;
+  }
+
+  .results-summary__value {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+  }
+
+  .results-summary__unit {
+    font-size: 1.2rem;
+  }
+
+  .results-summary__label {
+    display: block;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    color: var(--text-color);
+  }
+
+  @media (max-width: 480px) {
+    .results-summary__badges {
+      gap: 1rem;
+    }
+
+    .results-summary__badge {
+      min-width: 140px;
+      padding: 1rem 1.2rem;
+    }
+
+    .results-summary__value {
+      font-size: 2rem;
+    }
+  }
+</style>

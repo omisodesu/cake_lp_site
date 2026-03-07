@@ -21,7 +21,12 @@ const images = import.meta.glob<{ default: ImageMetadata }>('../../images/shop*.
                 <p>{testimonial.text}</p>
               </blockquote>
               <p class="testimonial-card__author"><cite>{testimonial.author}</cite></p>
-              <a href={testimonial.link} class="testimonial-card__link">導入事例を詳しく見る →</a>
+              {testimonial.improvement && (
+                <p class="testimonial-card__improvement">
+                  <strong>導入効果:</strong> {testimonial.improvement}
+                </p>
+              )}
+              <a href={testimonial.link} class="testimonial-card__link" data-case-name={testimonial.id}>導入事例を詳しく見る →</a>
             </article>
           </li>
         );
@@ -32,7 +37,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>('../../images/shop*.
 
 <style>
   .testimonials {
-    background-color: var(--secondary-color);
+    background-color: var(--white);
   }
 
   .testimonials__grid {
@@ -84,6 +89,15 @@ const images = import.meta.glob<{ default: ImageMetadata }>('../../images/shop*.
     text-decoration: none;
     font-weight: bold;
     transition: opacity 0.3s ease;
+  }
+
+  .testimonial-card__improvement {
+    background-color: var(--secondary-color);
+    padding: 12px 16px;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--accent-color);
+    margin-top: 16px;
+    font-style: normal;
   }
 
   .testimonial-card__link:hover {
