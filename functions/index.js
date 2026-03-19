@@ -18,7 +18,7 @@ const axios = require("axios");
 const gmailUserParam = defineString("GMAIL_USER", {
   description: "Gmail account used for sending emails",
 });
-// Secret Manager の GMAIL_APP_PASSWORD を参照 (Secret Managerに作成し、権限付与が必要)
+// Secret Manager の GMAIL_APP_PASSWORD を参照
 const gmailPasswordParam = defineSecret("GMAIL_APP_PASSWORD");
 // ★ Secret Manager の TURNSTILE_SECRET_KEY を参照
 const turnstileSecretKeyParam = defineSecret("TURNSTILE_SECRET_KEY");
@@ -50,6 +50,54 @@ const LEAD_SOURCE_LABELS = { // メール本文用の日本語ラベル
 };
 const OTHER_DETAILS_MAX_LENGTH = 200; // 「その他」詳細の最大文字数 (適宜調整)
 const ALLOWED_HOSTNAMES = ["cake.lp.gadandan.co.jp"];
+
+/**
+ * 自動返信メールの本文を組み立てる
+ * @param {object} params - メールパラメータ
+ * @return {string} メール本文
+ */
+function buildAutoReplyBody({
+  name, email, phone, inquiryType, otherDetails,
+}) {
+  const inquiryLabel =
+      INQUIRY_TYPE_LABELS[inquiryType] || inquiryType;
+
+  let body = `${name} 様\n\n` +
+    "この度は「いつでもケーキ」に" +
+    "お問い合わせいただき、\n" +
+    "誠にありがとうございます。\n\n" +
+    "以下の内容でお問い合わせを" +
+    "受け付けいたしました。\n\n" +
+    "─────────────────────────────────\n" +
+    "■ お問い合わせ内容\n" +
+    "─────────────────────────────────\n" +
+    `お名前: ${name}\n` +
+    `メールアドレス: ${email}\n` +
+    `電話番号: ${phone || "未入力"}\n` +
+    `お問い合わせ種別: ${inquiryLabel}\n`;
+
+  if (inquiryType === "other" && otherDetails) {
+    body += `内容（その他）:\n${otherDetails}\n`;
+  }
+
+  body +=
+    "─────────────────────────────────\n\n" +
+    "内容を確認のうえ、担当者より" +
+    "折り返しご連絡いたします。\n" +
+    "通常2営業日以内にご返信いたしますので、\n" +
+    "しばらくお待ちくださいませ。\n\n" +
+    "※本メールは自動送信されています。\n" +
+    "　このメールに直接ご返信いただいても\n" +
+    "　お答えできない場合がございます。\n\n" +
+    "──────────────────────────────\n" +
+    "いつでもケーキ\n" +
+    "がだんだん株式会社\n" +
+    "メール: info@gadandan.co.jp\n" +
+    "サイト: https://cake.lp.gadandan.co.jp\n" +
+    "──────────────────────────────\n";
+
+  return body;
+}
 
 // --- HTTPS 関数のエクスポート ---
 exports.sendMail = onRequest(
@@ -160,8 +208,7 @@ exports.sendMail = onRequest(
           const user = gmailUserParam.value();
           const password = gmailPasswordParam.value();
           if (!user || !password) {
-            // エラーログは簡潔に
-            console.error("ERROR: Missing Gmail credentials.");
+            console.error("ERROR: Missing SMTP credentials.");
             return res.status(500).json({
               success: false,
               error: "Server configuration error (credentials missing).",
@@ -335,7 +382,7 @@ exports.sendMail = onRequest(
 
           // メールオプションを設定
           const mailOptions = {
-            from: `"${name}" <${gmailUserParam.value()}>`,
+            from: `"${name}" <info@gadandan.co.jp>`,
             replyTo: email,
             to: "info@gadandan.co.jp",
             subject: `【いつでもケーキお問い合わせ】 ${name} 様から`,
@@ -345,7 +392,43 @@ exports.sendMail = onRequest(
           console.log("INFO: Calling transporter.sendMail...");
           const info = await transporter.sendMail(mailOptions);
 
-          console.log("OK: Email sent successfully:", info.response);
+          console.log(
+              "OK: Admin notification sent:",
+              info.response,
+          );
+
+          // --- 自動返信メール送信 ---
+          try {
+            const autoReplyBody = buildAutoReplyBody({
+              name, email, phone, inquiryType, otherDetails,
+            });
+
+            const autoReplyOptions = {
+              from: `"いつでもケーキ" <info@gadandan.co.jp>`,
+              replyTo: "info@gadandan.co.jp",
+              to: email,
+              subject: "【いつでもケーキ】" +
+                       "お問い合わせありがとうございます",
+              text: autoReplyBody,
+            };
+
+            console.log(
+                "INFO: Sending auto-reply to:",
+                email,
+            );
+            const autoReplyInfo =
+                await transporter.sendMail(autoReplyOptions);
+            console.log(
+                "OK: Auto-reply sent:",
+                autoReplyInfo.response,
+            );
+          } catch (autoReplyError) {
+            console.error(
+                "ERROR: Failed to send auto-reply:",
+                autoReplyError,
+            );
+          }
+
           res.json({success: true, messageId: info.messageId});
         } catch (error) {
           // バリデーションやメール送信中の予期せぬエラー
