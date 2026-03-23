@@ -1,5 +1,6 @@
 ---
 import { serviceFeatures } from '../../data/features';
+import Icon from '../common/Icon.astro';
 ---
 <section class="section service" id="service">
   <div class="container">
@@ -8,7 +9,7 @@ import { serviceFeatures } from '../../data/features';
       {serviceFeatures.map((feature) => (
         <li class="feature-card">
           <div class="feature-card__icon">
-            <i class={feature.icon} aria-hidden="true"></i>
+            <Icon name={feature.icon} />
           </div>
           <h3 class="feature-card__title">{feature.title}</h3>
           <p>{feature.description}</p>

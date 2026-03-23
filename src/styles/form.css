@@ -30,7 +30,7 @@
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: inherit;
   box-sizing: border-box;
   text-align: center;
 }
@@ -41,6 +41,18 @@
 
 .cf-turnstile {
   margin-bottom: 20px;
+}
+
+.turnstile-status {
+  text-align: center;
+  font-size: 0.85em;
+  color: var(--text-color);
+  margin-bottom: 8px;
+  min-height: 1.2em;
+}
+
+.turnstile-status--error {
+  color: #e74c3c;
 }
 
 .form-group button[type="submit"] {

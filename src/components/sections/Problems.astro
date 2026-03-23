@@ -1,5 +1,6 @@
 ---
 import { problems } from '../../data/problems';
+import Icon from '../common/Icon.astro';
 ---
 <section class="section problems" id="problems">
   <div class="container">
@@ -8,7 +9,7 @@ import { problems } from '../../data/problems';
       {problems.map((problem) => (
         <li class="problem-card">
           <div class="problem-card__icon">
-            <i class={problem.icon} aria-hidden="true"></i>
+            <Icon name={problem.icon} />
           </div>
           <h3 class="problem-card__title">{problem.title}</h3>
           <p>{problem.description}</p>

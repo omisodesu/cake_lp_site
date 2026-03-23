@@ -12,6 +12,11 @@
   --border-radius: 8px;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -19,14 +24,14 @@
 }
 
 body {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "BIZ UDPGothic", Meiryo, sans-serif;
   color: var(--text-color);
   line-height: 1.6;
   background-color: var(--white);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-family: "Hiragino Maru Gothic ProN", "BIZ UDPGothic", Meiryo, sans-serif;
   color: var(--heading-color);
   margin-bottom: 1rem;
   line-height: 1.3;

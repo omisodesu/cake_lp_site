@@ -5,58 +5,28 @@ import { faqItems } from '../../data/faq';
   <div class="container">
     <h2>よくある質問</h2>
     <div class="faq__list">
-      {faqItems.map((item, index) => (
-        <div class="faq__item">
-          <h3 class="faq__heading">
-            <button class="faq__question" type="button" id={`faq-question-${index}`} aria-expanded="false" aria-controls={`faq-answer-${index}`} data-faq-id={item.id}>
-              {item.question}
-            </button>
-          </h3>
-          <div class="faq__answer" id={`faq-answer-${index}`} role="region" aria-labelledby={`faq-question-${index}`} hidden>
+      {faqItems.map((item) => (
+        <details class="faq__item" data-faq-id={item.id}>
+          <summary class="faq__question">
+            {item.question}
+          </summary>
+          <div class="faq__answer">
             <p>{item.answer}</p>
           </div>
-        </div>
+        </details>
       ))}
     </div>
   </div>
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const faqQuestions = document.querySelectorAll('.faq__question');
-    function toggleFaq(button: Element) {
-      const isExpanded = button.getAttribute('aria-expanded') === 'true';
-      const answerId = button.getAttribute('aria-controls');
-      const answer = answerId ? document.getElementById(answerId) : null;
-
-      if (isExpanded) {
-        // 閉じる: hidden を即座に設定し支援技術からも隠す
-        button.setAttribute('aria-expanded', 'false');
-        button.classList.remove('active');
-        if (answer) {
-          answer.classList.remove('active');
-          answer.hidden = true;
-        }
-      } else {
-        // 開く: hidden を外してから active を付けてアニメーション
-        button.setAttribute('aria-expanded', 'true');
-        button.classList.add('active');
-        if (answer) {
-          answer.hidden = false;
-          requestAnimationFrame(() => {
-            answer.classList.add('active');
-          });
-        }
-        if (typeof gtag === 'function') {
-          gtag('event', 'faq_open', {
-            question: (button as HTMLElement).dataset.faqId || '',
-          });
-        }
+  document.querySelectorAll<HTMLDetailsElement>('.faq__item').forEach(details => {
+    details.addEventListener('toggle', () => {
+      if (details.open && typeof gtag === 'function') {
+        gtag('event', 'faq_open', {
+          question: details.dataset.faqId || '',
+        });
       }
-    }
-
-    faqQuestions.forEach(question => {
-      question.addEventListener('click', () => toggleFaq(question));
     });
   });
 
@@ -80,10 +50,6 @@ import { faqItems } from '../../data/faq';
     box-shadow: var(--shadow);
   }
 
-  .faq__heading {
-    margin: 0;
-  }
-
   .faq__question {
     display: block;
     width: 100%;
@@ -91,33 +57,29 @@ import { faqItems } from '../../data/faq';
     padding: 20px;
     cursor: pointer;
     position: relative;
-    font: inherit;
     font-weight: bold;
-    border: none;
-    text-align: left;
+    list-style: none;
   }
 
-  .faq__question:after {
+  .faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__question::after {
     content: '+';
     position: absolute;
     right: 20px;
-    transition: all 0.3s ease;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
   }
 
-  .faq__question.active:after {
-    transform: rotate(45deg);
+  .faq__item[open] .faq__question::after {
+    transform: translateY(-50%) rotate(45deg);
   }
 
   .faq__answer {
     background-color: var(--white);
-    padding: 0 20px;
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.3s ease;
-  }
-
-  .faq__answer.active {
     padding: 20px;
-    max-height: 1000px;
   }
 </style>

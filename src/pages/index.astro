@@ -81,30 +81,6 @@ const structuredData = {
   </main>
 </BaseLayout>
 
-<script>
-  // スムーススクロール
-  document.addEventListener('DOMContentLoaded', () => {
-    const scrollLinks = document.querySelectorAll('a[href^="#"]');
-    scrollLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = (link as HTMLAnchorElement).getAttribute('href');
-        if (targetId === '#') {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          return;
-        }
-        const targetElement = document.querySelector(targetId!);
-        if (targetElement) {
-          const headerOffset = 100;
-          const elementPosition = targetElement.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-        }
-      });
-    });
-  });
-</script>
-
 <style>
   .header__content {
     max-width: 800px;

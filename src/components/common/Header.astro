@@ -13,7 +13,7 @@ const { simple = false } = Astro.props;
     <div class="container">
       <div class="header__logo-wrap">
         <a href="/">
-          <Image src={logoImage} alt="ITSUDEMO CAKE いつでもケーキ" width={250} />
+          <Image src={logoImage} alt="ITSUDEMO CAKE いつでもケーキ" width={250} loading="eager" fetchpriority="high" />
         </a>
       </div>
     </div>
@@ -22,7 +22,7 @@ const { simple = false } = Astro.props;
   <header class="header" id="top">
     <div class="container">
       <div class="header__logo-wrap">
-        <Image src={logoImage} alt="ITSUDEMO CAKE いつでもケーキ" width={300} />
+        <Image src={logoImage} alt="ITSUDEMO CAKE いつでもケーキ" width={300} loading="eager" fetchpriority="high" />
       </div>
       <slot />
     </div>

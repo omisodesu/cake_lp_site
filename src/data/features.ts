@@ -1,21 +1,21 @@
 export const serviceFeatures = [
   {
-    icon: 'fas fa-calendar-check',
+    icon: 'calendar-check',
     title: '24時間オンライン予約受付',
     description: 'お店が閉まっている時間帯でも、お客様はいつでもケーキの予約ができます。営業時間外の需要を取り込み、売上アップにつながります。',
   },
   {
-    icon: 'fas fa-print',
+    icon: 'print',
     title: '予約情報の自動メール通知機能',
     description: 'オンラインで受けた予約は自動的にメールで手元のスマートフォンに届くので予約確認が簡単。',
   },
   {
-    icon: 'fas fa-cogs',
+    icon: 'cogs',
     title: '既存オペレーションを変えずに導入可能',
     description: '現在のお店の運営方法を大きく変えることなく、スムーズに導入できます。',
   },
   {
-    icon: 'fas fa-yen-sign',
+    icon: 'yen-sign',
     title: '初期費用・固定費ゼロの料金体系',
     description: '使った分だけの従量課金制。初期費用も月額費用もかからないので、リスクなく始められます。',
   },

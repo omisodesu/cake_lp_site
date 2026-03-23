@@ -1,17 +1,19 @@
 ---
+import Icon from '../common/Icon.astro';
+
 const signals = [
   {
-    icon: 'fas fa-clock',
+    icon: 'clock',
     title: '1営業日以内に返信',
     description: 'お問い合わせいただいてから1営業日以内にご連絡いたします。',
   },
   {
-    icon: 'fas fa-file-alt',
+    icon: 'file-alt',
     title: '資料請求だけでもOK',
     description: 'まずは資料だけ見たいという方も大歓迎です。',
   },
   {
-    icon: 'fas fa-hand-peace',
+    icon: 'hand-peace',
     title: 'しつこい営業は一切なし',
     description: 'お客様のペースを大切にします。無理な勧誘は一切いたしません。',
   },
@@ -24,7 +26,7 @@ const signals = [
       {signals.map((signal) => (
         <li class="trust-signal">
           <div class="trust-signal__icon" aria-hidden="true">
-            <i class={signal.icon}></i>
+            <Icon name={signal.icon} />
           </div>
           <h3 class="trust-signal__title">{signal.title}</h3>
           <p>{signal.description}</p>

@@ -74,19 +74,99 @@ const { showPersonInCharge = true } = Astro.props;
   </div>
 
   <div class="form-group">
-    <div class="cf-turnstile" data-sitekey={SITE.turnstileSiteKey} data-refresh-expired="auto"></div>
+    <div class="cf-turnstile" data-sitekey={SITE.turnstileSiteKey} data-refresh-expired="auto" data-callback="__onTurnstileSuccess" data-expired-callback="__onTurnstileExpired"></div>
   </div>
 
+  <p id="turnstile-status" class="turnstile-status" role="status" aria-live="polite">
+    セキュリティ確認を読み込んでいます。数秒お待ちください。
+  </p>
+
   <div class="form-group">
-    <button type="submit" class="cta-button">送信する</button>
+    <button type="submit" class="cta-button" disabled>送信する</button>
   </div>
 </form>
 <div id="form-success-message" class="form-response-message" role="status" aria-live="polite"></div>
 <div id="form-error-message" class="form-response-message" role="alert"></div>
 
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
 <script>
+  // Turnstile 準備タイムアウト用タイマー
+  let __turnstileTimerId: ReturnType<typeof setTimeout> | undefined;
+
+  function startTurnstileTimer() {
+    if (__turnstileTimerId !== undefined) {
+      clearTimeout(__turnstileTimerId);
+    }
+    __turnstileTimerId = setTimeout(() => {
+      __turnstileTimerId = undefined;
+      const btn = document.querySelector('#contact-form button[type="submit"]') as HTMLButtonElement | null;
+      if (btn && btn.disabled) {
+        const status = document.getElementById('turnstile-status');
+        if (status && !status.classList.contains('turnstile-status--error')) {
+          status.textContent = 'セキュリティ確認の準備に時間がかかっています。しばらく待つか、ページを再読み込みしてください。';
+          status.classList.add('turnstile-status--error');
+        }
+      }
+    }, 15000);
+  }
+
+  // Turnstile コールバック（ウィジェット準備完了 / トークン失効で送信ボタン + 案内テキストを制御）
+  (window as any).__onTurnstileSuccess = function() {
+    if (__turnstileTimerId !== undefined) {
+      clearTimeout(__turnstileTimerId);
+      __turnstileTimerId = undefined;
+    }
+    const btn = document.querySelector('#contact-form button[type="submit"]') as HTMLButtonElement | null;
+    if (btn) btn.disabled = false;
+    const status = document.getElementById('turnstile-status');
+    if (status) status.textContent = '';
+  };
+  (window as any).__onTurnstileExpired = function() {
+    const btn = document.querySelector('#contact-form button[type="submit"]') as HTMLButtonElement | null;
+    if (btn) btn.disabled = true;
+    const status = document.getElementById('turnstile-status');
+    if (status) {
+      status.textContent = 'セキュリティ確認を読み込んでいます。数秒お待ちください。';
+      status.classList.remove('turnstile-status--error');
+    }
+    startTurnstileTimer();
+  };
+
+  // Turnstile 遅延読み込み（IO 非対応 or contact セクション不在時は即時ロード）
+  (function loadTurnstileLazy() {
+    function loadScript() {
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      script.async = true;
+      script.onerror = function() {
+        const status = document.getElementById('turnstile-status');
+        if (status) {
+          status.textContent = 'セキュリティ確認の読み込みに失敗しました。ページを再読み込みしてお試しください。';
+          status.classList.add('turnstile-status--error');
+        }
+      };
+      document.head.appendChild(script);
+      startTurnstileTimer();
+    }
+
+    const contactSection = document.getElementById('contact');
+    if (!contactSection || typeof IntersectionObserver === 'undefined') {
+      loadScript();
+      return;
+    }
+
+    let loaded = false;
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting && !loaded) {
+          loaded = true;
+          loadScript();
+          observer.disconnect();
+        }
+      }
+    }, { rootMargin: '500px 0px' });
+    observer.observe(contactSection);
+  })();
+
   document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contact-form') as HTMLFormElement | null;
     const inquiryTypeSelect = document.getElementById('inquiry-type') as HTMLSelectElement | null;
@@ -248,8 +328,14 @@ const { showPersonInCharge = true } = Astro.props;
           if (turnstileWidget && typeof turnstile !== 'undefined') {
             turnstile.reset(turnstileWidget);
           }
-          submitButton.disabled = false;
+          submitButton.disabled = true;
           submitButton.textContent = '送信する';
+          const statusEl = document.getElementById('turnstile-status');
+          if (statusEl) {
+            statusEl.textContent = 'セキュリティ確認を読み込んでいます。数秒お待ちください。';
+            statusEl.classList.remove('turnstile-status--error');
+          }
+          startTurnstileTimer();
         }
       });
     }
