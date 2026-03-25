@@ -35,6 +35,12 @@ export const detailFeatures = [
     description: 'ローソク、メッセージプレート、のしなど、様々なオプションを設定できます。',
   },
   {
+    title: '在庫管理',
+    image: 'feature6.png',
+    alt: '在庫管理機能',
+    description: '商品の在庫状況をリアルタイムで管理。売り切れ防止や生産計画の最適化に役立ちます。',
+  },
+  {
     title: '原材料表示',
     image: 'feature3.png',
     alt: '原材料表示機能',
@@ -51,11 +57,5 @@ export const detailFeatures = [
     image: 'feature5.png',
     alt: 'メーリングリスト機能',
     description: '顧客情報をダウンロードし、販促メールの送信などに活用できます。',
-  },
-  {
-    title: '在庫管理',
-    image: 'feature6.png',
-    alt: '在庫管理機能',
-    description: '商品の在庫状況を管理し、売り切れ防止や生産計画の最適化が可能です。',
   },
 ] as const;
