@@ -1,0 +1,110 @@
+---
+---
+<div class="announcement-bar" id="announcement-bar" aria-label="展示会のお知らせ">
+  <div class="announcement-bar__inner">
+    <p class="announcement-bar__text">
+      <span class="announcement-bar__emoji" aria-hidden="true">🎪</span>
+      【展示会出展】<a href="https://gadandan.co.jp/news/fabex-tokyo-2026-exhibition/" class="announcement-bar__link" target="_blank" rel="noopener noreferrer">FABEX東京 スイーツ&ベーカリー展</a>（4/15-17）・<a href="https://gadandan.co.jp/news/chubu-pack-2026-exhibition/" class="announcement-bar__link" target="_blank" rel="noopener noreferrer">中部パック</a>（4/22-25）に出展します！
+    </p>
+    <button
+      class="announcement-bar__close"
+      type="button"
+      aria-label="お知らせバーを閉じる"
+      data-announcement-close
+    >
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M12 4L4 12M4 4l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  const bar = document.getElementById('announcement-bar');
+  if (bar) {
+    if (sessionStorage.getItem('announcement-bar-closed') === '1') {
+      bar.hidden = true;
+    }
+    const closeBtn = bar.querySelector('[data-announcement-close]');
+    closeBtn?.addEventListener('click', () => {
+      bar.hidden = true;
+      sessionStorage.setItem('announcement-bar-closed', '1');
+    });
+  }
+</script>
+
+<style>
+  .announcement-bar {
+    background-color: #8B4513;
+    color: var(--white);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    position: relative;
+    z-index: 1100;
+  }
+
+  .announcement-bar[hidden] {
+    display: none;
+  }
+
+  .announcement-bar__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 8px 48px 8px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .announcement-bar__text {
+    margin: 0;
+    text-align: center;
+    color: var(--white);
+  }
+
+  .announcement-bar__emoji {
+    margin-right: 0.25em;
+  }
+
+  .announcement-bar__link {
+    color: var(--white);
+    text-decoration: underline;
+    font-weight: bold;
+  }
+
+  .announcement-bar__link:hover {
+    color: #FFE4C4;
+  }
+
+  .announcement-bar__close {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--white);
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .announcement-bar__close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .announcement-bar__inner {
+      padding: 8px 40px 8px 16px;
+    }
+
+    .announcement-bar__text {
+      font-size: 0.8rem;
+    }
+  }
+</style>

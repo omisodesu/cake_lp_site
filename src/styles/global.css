@@ -10,11 +10,13 @@
   --white: #ffffff;
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --border-radius: 8px;
+  --nav-height: 62px;
+  --scroll-offset: calc(var(--nav-height) + 16px);
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 100px;
+  scroll-padding-top: var(--scroll-offset);
 }
 
 * {
@@ -93,10 +95,6 @@ img {
 
 .section {
   padding: 80px 0;
-}
-
-.section:nth-child(even) {
-  background-color: var(--secondary-color);
 }
 
 /* CTA ボタン */

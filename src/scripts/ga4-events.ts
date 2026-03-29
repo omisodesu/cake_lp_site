@@ -13,6 +13,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // --- ナビクリックイベント ---
+  document.querySelectorAll('[data-nav-name]').forEach((el) => {
+    el.addEventListener('click', () => {
+      if (typeof gtag !== 'function') return;
+      const element = el as HTMLElement;
+      gtag('event', 'nav_click', {
+        nav_name: element.dataset.navName || '',
+      });
+    });
+  });
+
+  // --- お知らせバー閉じるイベント ---
+  document.querySelector('[data-announcement-close]')?.addEventListener('click', () => {
+    if (typeof gtag !== 'function') return;
+    gtag('event', 'announcement_bar_close');
+  });
+
   // --- 導入事例クリックイベント ---
   document.querySelectorAll('.testimonial-card__link').forEach((el) => {
     el.addEventListener('click', () => {

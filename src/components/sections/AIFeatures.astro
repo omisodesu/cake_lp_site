@@ -1,0 +1,185 @@
+---
+const cards = [
+  {
+    title: 'バースデーソング生成',
+    status: '稼働中',
+    statusColor: '#22C55E',
+    description: 'お客様の名前入りオリジナルソングをAIが自動生成。子供向け・大人向けの2種類から選べます。楽曲はがだんだんからお客様のメールアドレスへ直接お届けします。',
+    value: '体験価値の向上 × 追加売上',
+    icon: 'music',
+  },
+  {
+    title: 'AI画像生成',
+    status: '稼働中',
+    statusColor: '#22C55E',
+    description: '商品写真やSNS投稿用バナーをAIが自動作成。撮影やデザイン外注のコストと手間を削減します。',
+    value: 'SNS発信の負担を軽減',
+    icon: 'image',
+  },
+  {
+    title: 'デジタル手紙',
+    status: '開発中',
+    statusColor: '#F97316',
+    description: '贈り主の気持ちをデジタルレターでお届け。ギフト需要の取りこぼしを防ぎ、客単価を向上させます。',
+    value: 'ギフト需要 × 客単価UP',
+    icon: 'letter',
+  },
+  {
+    title: 'AI自動販促メール',
+    status: '開発中',
+    statusColor: '#F97316',
+    description: '購入履歴や季節に合わせたメールをAIが自動配信。手間をかけずにリピート率を高めます。',
+    value: '手間なくリピート促進',
+    icon: 'sparkle',
+  },
+];
+---
+<section class="section ai-features" id="ai-features">
+  <div class="container">
+    <h2 class="ai-features__title">AIの力で、お店の「体験価値」と「売上」を伸ばす</h2>
+    <p class="ai-features__subtitle">ケーキ店専用 EC＋AI販促プラットフォーム</p>
+
+    <div class="ai-features__grid">
+      {cards.map((card) => (
+        <article class="ai-card">
+          <div class="ai-card__header">
+            <div class="ai-card__icon" aria-hidden="true">
+              {card.icon === 'music' && (
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 18V5l12-2v13"/>
+                  <circle cx="6" cy="18" r="3"/>
+                  <circle cx="18" cy="16" r="3"/>
+                </svg>
+              )}
+              {card.icon === 'image' && (
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <circle cx="8.5" cy="8.5" r="1.5"/>
+                  <path d="m21 15-5-5L5 21"/>
+                </svg>
+              )}
+              {card.icon === 'letter' && (
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2"/>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                </svg>
+              )}
+              {card.icon === 'sparkle' && (
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+                </svg>
+              )}
+            </div>
+            <div>
+              <h3 class="ai-card__title">{card.title}</h3>
+              <span class="ai-card__status" style={`--status-color: ${card.statusColor}`}>{card.status}</span>
+            </div>
+          </div>
+          <p class="ai-card__description">{card.description}</p>
+          <p class="ai-card__value">→ {card.value}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="ai-features__cta">
+      <a href="#contact" class="cta-button" data-cta-location="ai_features" data-cta-type="ai_inquiry">AI機能について詳しく聞く</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ai-features {
+    background-color: #f7f7f7;
+  }
+
+  .ai-features__title {
+    text-align: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .ai-features__subtitle {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-bottom: 3rem;
+  }
+
+  .ai-features__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .ai-card {
+    background-color: var(--white);
+    border: 1px solid #e5e5e5;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .ai-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .ai-card__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .ai-card__icon {
+    color: var(--accent-color);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .ai-card__title {
+    font-size: 1.15rem;
+    margin-bottom: 0.35rem;
+    text-align: left;
+  }
+
+  .ai-card__title::after {
+    display: none;
+  }
+
+  .ai-card__status {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--status-color);
+    background-color: color-mix(in srgb, var(--status-color) 12%, transparent);
+    padding: 0.15rem 0.6rem;
+    border-radius: 1rem;
+  }
+
+  .ai-card__description {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
+  }
+
+  .ai-card__value {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 0;
+  }
+
+  .ai-features__cta {
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .ai-features__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

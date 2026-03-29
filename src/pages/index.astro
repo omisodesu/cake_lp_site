@@ -1,11 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import AnnouncementBar from '../components/common/AnnouncementBar.astro';
+import GlobalNav from '../components/common/GlobalNav.astro';
 import Header from '../components/common/Header.astro';
 import ResultsSummary from '../components/sections/ResultsSummary.astro';
 import Problems from '../components/sections/Problems.astro';
 import Testimonials from '../components/sections/Testimonials.astro';
 import Service from '../components/sections/Service.astro';
 import Features from '../components/sections/Features.astro';
+import AIFeatures from '../components/sections/AIFeatures.astro';
 import Market from '../components/sections/Market.astro';
 import Pricing from '../components/sections/Pricing.astro';
 import Process from '../components/sections/Process.astro';
@@ -30,7 +33,12 @@ const structuredData = {
   ogDescription={SITE.ogDescription}
   structuredData={structuredData}
 >
-  <Header slot="header">
+  <Fragment slot="header">
+    <AnnouncementBar />
+    <GlobalNav />
+  </Fragment>
+
+  <Header slot="header" showLogo={false}>
     <div class="header__content">
       <h1 class="header__title">ケーキ店の電話予約、<br>もう手が止まらなくていい。</h1>
       <p class="header__subtitle">ケーキ店専門の予約管理システムで、売上も時間も取り戻す。</p>
@@ -62,6 +70,7 @@ const structuredData = {
 
     <Service />
     <Features />
+    <AIFeatures />
     <Market />
     <Pricing />
     <Process />
