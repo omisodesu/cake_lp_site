@@ -1,5 +1,6 @@
 ---
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import CaseStudyCTA from '../../components/sections/CaseStudyCTA.astro';
 import Icon from '../../components/common/Icon.astro';
 import { Image } from 'astro:assets';
 import logoSoleils from '../../images/logo_soleils.png';
@@ -74,6 +75,15 @@ import customerImage from '../../images/case_soleils_customer.png';
     <a href="/cases/patisserie-loop/" class="nav-button"><Icon name="chevron-left" size="0.9em" /> 前の事例へ</a>
     <a href="/#testimonials" class="nav-button">導入事例一覧へ戻る</a>
   </nav>
+
+  <CaseStudyCTA
+    slot="cta"
+    title="「いつでもケーキ」にご興味をお持ちいただけましたか？"
+    description="初期費用0円・月額固定費0円。予約が入ったときだけ費用が発生するので、小さなお店でもリスクなく始められます。"
+    primaryHref="/#contact"
+    primaryLabel="無料相談・資料請求はこちら"
+    dataLocation="case_soleils_bottom"
+  />
 </CaseStudyLayout>
 
 <style>

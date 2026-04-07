@@ -1,0 +1,100 @@
+---
+interface Props {
+  items: { id: string; question: string; answer: string }[];
+}
+
+const { items } = Astro.props;
+---
+<section class="case-faq">
+  <h2 class="case-faq__title">よくある質問</h2>
+  <div class="case-faq__list">
+    {items.map((item) => (
+      <details class="case-faq__item" data-faq-id={item.id}>
+        <summary class="case-faq__question">
+          {item.question}
+        </summary>
+        <div class="case-faq__answer">
+          <p>{item.answer}</p>
+        </div>
+      </details>
+    ))}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLDetailsElement>('.case-faq__item').forEach(details => {
+    details.addEventListener('toggle', () => {
+      if (details.open && typeof gtag === 'function') {
+        gtag('event', 'faq_open', {
+          question: details.dataset.faqId || '',
+        });
+      }
+    });
+  });
+
+  declare function gtag(...args: any[]): void;
+</script>
+
+<style>
+  .case-faq {
+    margin: 48px 0;
+  }
+
+  .case-faq__title {
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+  }
+
+  .case-faq__list {
+    max-width: 100%;
+  }
+
+  .case-faq__item {
+    margin-bottom: 16px;
+    border-radius: var(--border-radius, 8px);
+    overflow: hidden;
+    box-shadow: var(--shadow, 0 4px 6px rgba(0, 0, 0, 0.1));
+  }
+
+  .case-faq__question {
+    display: block;
+    width: 100%;
+    background-color: var(--secondary-color, #FFEFD5);
+    padding: 18px 48px 18px 20px;
+    cursor: pointer;
+    position: relative;
+    font-weight: bold;
+    list-style: none;
+    line-height: 1.6;
+  }
+
+  .case-faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .case-faq__question::after {
+    content: '+';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+    font-size: 1.2rem;
+  }
+
+  .case-faq__item[open] .case-faq__question::after {
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .case-faq__answer {
+    background-color: var(--white, #ffffff);
+    padding: 20px;
+    line-height: 1.8;
+  }
+
+  .case-faq__answer p {
+    margin: 0;
+  }
+</style>

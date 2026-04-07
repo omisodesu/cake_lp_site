@@ -1,59 +1,137 @@
 ---
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import CaseStudyCTA from '../../components/sections/CaseStudyCTA.astro';
+import CaseStudyFAQ from '../../components/sections/CaseStudyFAQ.astro';
 import Icon from '../../components/common/Icon.astro';
 import { Image } from 'astro:assets';
 import shopImage from '../../images/shop2.jpg';
 import caseLoopAfterImage from '../../images/case_loop_after.jpg';
 import logoLoop from '../../images/logo_patisserie_loop.png';
-import effectImage from '../../images/case_loop_effect.png';
+
+const faqItems = [
+  {
+    id: 'loop_equipment',
+    question: 'Web予約を導入するのに、特別な機材は必要ですか？',
+    answer: 'いいえ、スマホかパソコンがあれば導入できます。ホームページがある場合はバナーを設置するだけ、ホームページがなくてもSNSやチラシにURLを載せるだけで予約受付が始められます。',
+  },
+  {
+    id: 'loop_image_cost',
+    question: '画像添付機能は追加費用がかかりますか？',
+    answer: '「いつでもケーキ」をご利用のすべてのお店で追加費用なしでお使いいただけます。お客様がスマートフォンから写真を添付して予約するだけなので、お店側の操作も簡単です。',
+  },
+  {
+    id: 'loop_pricing',
+    question: '費用はどれくらいかかりますか？',
+    answer: '初期費用0円、月額固定費0円です。予約が入ったときだけ、注文代金の5.5%（税込）と決済手数料3.6%が発生します。予約がなければ費用はかかりませんので、お試しで始めることもできます。',
+  },
+  {
+    id: 'loop_phone',
+    question: '電話予約はやめたほうがいいですか？',
+    answer: 'いいえ、電話予約と併用するお店がほとんどです。Web予約という選択肢が増えることで、電話の件数が自然に減っていきます。いきなり電話をなくす必要はありませんのでご安心ください。',
+  },
+];
+
+const blogUrl = 'https://gadandan.co.jp/news/case-study-patisserie-loop/';
 ---
 <CaseStudyLayout
   title="パティスリー・ループ様 導入事例"
-  description="パティスリー・ループ様の「いつでもケーキ」導入事例。人手不足と働き方改革による店休日増加に伴う機会損失の解消と、老朽化システムからの移行についてご紹介します。"
+  description="名古屋市緑区のパティスリーループ様が、Web予約で「週休2日」と「売上キープ」を両立するまでの導入事例。休日予約0件→週8件、画像添付機能で月数時間の業務削減を実現。"
   shopName="パティスリー・ループ 様"
-  problemSummary="人手不足と働き方改革で店休日を増やしたものの、電話問い合わせによる機会損失が懸念されていました"
+  problemSummary="週休2日にしたい。でも営業日が減れば、お客様も減ってしまう——"
 >
+  <!-- 店舗紹介 -->
   <div class="case-study-section">
     <div class="case-study-intro">
       <div class="case-study-intro__details">
         <Image src={logoLoop} alt="パティスリー・ループ ロゴ" class="case-study-shop-logo" width={200} />
-        <p>パティスリー ループ（patisserie LOOP）は、愛知県名古屋市緑区でケーキ・スイーツ等の販売（洋菓子）とカフェを営んでいます。新鮮な季節のフルーツをふんだんに使い、女性はもちろん、男性でも美味しく召し上がっていただけるスイーツ作りを心がけています。お近くにお越しの際は是非パティスリー ループにお立ち寄りください。</p>
+        <p>名古屋市緑区でキャラクターデコレーションケーキが人気のパティスリー。クリスマスケーキだけで数百台を販売される地元の人気店です。お子さんの誕生日にはいつもループさんのケーキが食卓に並ぶ——そんなご家庭も多いお店です。</p>
       </div>
     </div>
   </div>
 
+  <!-- 導入前の課題 -->
   <section class="case-study-section">
     <h2><Icon name="question-circle" class="icon-style" /> 導入前の課題</h2>
-    <p>人手不足の影響と働き方改革により店休日を増加させましたが、店休日に多くの電話でのお問い合わせをいただくため、機会損失が懸念されていました。また、現在利用しているシステムが老朽化しており、利用が困難になる前に新しいシステムへの切り替えを検討していました。</p>
+    <p>ループ様がWeb予約を検討されたきっかけは、<strong>パティシエの働く環境を良くしたい</strong>という想いでした。2025年2月から週休2日体制に移行されましたが、営業日が1日減ればお客様がお店に来られる機会も減る。「スタッフの休みを増やしつつ、お客様の利便性は落とさない」——この両立が課題でした。</p>
+    <p>それまで、<strong>お休みの日に予約が入ることはほぼゼロ</strong>。メールで注文が届いても年間で数件。お店が閉まっている日は、予約の窓口そのものが閉じてしまっていたのです。</p>
     <Image src={shopImage} alt="パティスリー・ループ 店舗外観" class="case-study-image" width={700} />
   </section>
 
-  <section class="case-study-section">
-    <h2><Icon name="lightbulb" class="icon-style" /> 実現内容</h2>
-    <ul>
-      <li>24時間365日対応のWEB受取予約システム</li>
-      <li>店休日・営業時間外での注文、予約受付</li>
-      <li>商品選択から受取日時指定まで完結</li>
-      <li>スマートフォン対応</li>
-      <li>老朽化システムからの完全移行</li>
-    </ul>
-  </section>
-
+  <!-- 導入効果 -->
   <section class="case-study-section">
     <h2><Icon name="chart-line" class="icon-style" /> 導入効果</h2>
-    <ul>
-      <li>店休日中の売上機会確保</li>
-      <li>電話対応業務の削減</li>
-      <li>お客様の利便性向上</li>
-      <li>人手不足解決への貢献</li>
-      <li>システム老朽化問題の解決</li>
-      <li>業務効率化</li>
-      <li>非接触ニーズへの対応</li>
-    </ul>
-    <Image src={caseLoopAfterImage} alt="導入後の成果" class="case-study-image" width={700} />
-    <Image src={effectImage} alt="パティスリー・ループ 店内の様子" class="case-study-image" width={700} />
+    <p>ホームページにバナーをひとつ設置し、Web予約を開始。変化はすぐに現れました。<strong>お休みの日にも、予約注文が入るようになったのです。</strong></p>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-number">3〜4<span class="stat-unit">件</span></div>
+        <div class="stat-label">お休み1日あたりの予約数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">6〜8<span class="stat-unit">件</span></div>
+        <div class="stat-label">お休み2日間の合計予約数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">0→8<span class="stat-unit">件</span></div>
+        <div class="stat-label">導入前後の休日予約の変化</div>
+      </div>
+    </div>
+
+    <Image src={caseLoopAfterImage} alt="Web予約導入後のイメージ" class="case-study-image" width={700} />
   </section>
 
+  <!-- お客様の声 -->
+  <section class="case-study-section">
+    <h2><Icon name="store" class="icon-style" /> お客様の声</h2>
+    <blockquote class="customer-voice">
+      <p>「本来なら営業日に入っていたはずの10件のうち、8件はカバーできている感覚がある」</p>
+      <cite>パティスリー・ループ オーナー様</cite>
+    </blockquote>
+    <p>定休日が増えても、お客様とのつながりは途切れない。お客様にとっても、夜寝る前にスマホからポチっと予約できる。お店が開いているかどうかを気にする必要がなくなりました。</p>
+  </section>
+
+  <!-- 画像添付機能 -->
+  <section class="case-study-section">
+    <h2><Icon name="lightbulb" class="icon-style" /> 画像添付機能で現場負担を削減</h2>
+    <p>ループ様では、お客様から預かった画像をもとにキャラクターをケーキに描くサービスが人気で、週に十数件の注文があります。しかし、この画像のやり取りが現場にとって大きな負担になっていました。</p>
+
+    <div class="compare-box">
+      <div class="compare-col compare-col--before">
+        <p class="compare-col__title">以前の流れ</p>
+        <ol class="compare-list">
+          <li>店頭でメールアドレスを案内（5〜10分）</li>
+          <li>届いたメールと注文を手動で突合（5分）</li>
+          <li>画質の悪い写真を手作業で修正</li>
+          <li>1件あたり合計10〜15分</li>
+        </ol>
+      </div>
+      <div class="compare-col compare-col--after">
+        <p class="compare-col__title">画像添付機能の導入後</p>
+        <ul class="compare-list">
+          <li>お客様がスマホで写真を添付して予約</li>
+          <li>注文と写真が自動で紐づく</li>
+          <li>スタッフの案内・突合作業がゼロに</li>
+          <li>届いた写真をすぐ制作に使える</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>1件あたり10〜15分の作業が自動化され、<strong>月間では数時間分の業務がまるまる浮いた</strong>計算になります。デコレーションに集中できる時間、お客様にもう一言声をかけられる時間——数字では測れない価値がそこにあります。</p>
+  </section>
+
+  <!-- 関連ブログ導線 -->
+  <section class="case-study-section">
+    <div class="story-link-box">
+      <p class="story-link-box__title">詳しいストーリーはこちら</p>
+      <p>展示会での出会いから画像添付機能が生まれるまで、ループ様との歩みをブログで詳しくご紹介しています。</p>
+      <a href={blogUrl} class="story-link" data-case-link-kind="story" data-case-name="loop" target="_blank" rel="noopener noreferrer">導入ストーリーを読む →</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <CaseStudyFAQ items={faqItems} />
+
+  <!-- 店舗情報 -->
   <section class="case-study-section shop-information">
     <h2><Icon name="store" class="icon-style" /> 店舗情報</h2>
     <dl>
@@ -76,9 +154,20 @@ import effectImage from '../../images/case_loop_effect.png';
     <a href="/#testimonials" class="nav-button"><Icon name="arrow-left" size="0.9em" /> 導入事例一覧へ戻る</a>
     <a href="/cases/patisserie-les-trois-soleils/" class="nav-button">次の事例へ <Icon name="chevron-right" size="0.9em" /></a>
   </nav>
+
+  <CaseStudyCTA
+    slot="cta"
+    title="現場の困りごと、聞かせてください。"
+    description="初期費用0円・月額固定費0円。予約が入ったときだけ費用が発生するので、小さなお店でもリスクなく始められます。"
+    primaryHref="/#contact"
+    primaryLabel="まずは無料で相談する →"
+    note="お問い合わせ後、無理な営業は一切いたしません。"
+    dataLocation="case_loop_bottom"
+  />
 </CaseStudyLayout>
 
 <style>
+  /* --- ナビゲーション --- */
   .case-study-navigation {
     margin-top: 40px;
     padding-top: 30px;
@@ -102,5 +191,163 @@ import effectImage from '../../images/case_loop_effect.png';
   .nav-button:hover {
     background-color: var(--secondary-color);
     color: var(--accent-color);
+  }
+
+  /* --- 数値カード --- */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 28px 0;
+  }
+
+  .stat-card {
+    background: #fff;
+    border: 1px solid #ede8e0;
+    border-radius: 14px;
+    padding: 22px 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .stat-number {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .stat-unit {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent-color);
+  }
+
+  .stat-label {
+    font-size: 0.82rem;
+    color: #777;
+    margin-top: 4px;
+  }
+
+  /* --- お客様の声 --- */
+  .customer-voice {
+    background: var(--secondary-color);
+    border-left: 5px solid var(--accent-color);
+    padding: 24px 28px;
+    border-radius: 0 12px 12px 0;
+    margin: 0 0 20px;
+    position: relative;
+  }
+
+  .customer-voice p {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin: 0 0 8px;
+    line-height: 1.7;
+  }
+
+  .customer-voice cite {
+    font-size: 0.9rem;
+    color: #888;
+    font-style: normal;
+  }
+
+  /* --- ビフォーアフター --- */
+  .compare-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .compare-col {
+    border-radius: 14px;
+    padding: 22px;
+  }
+
+  .compare-col--before {
+    background: #fdf2f2;
+    border: 1px solid #f0c8c8;
+  }
+
+  .compare-col--after {
+    background: #f0faf0;
+    border: 1px solid #c8e8c8;
+  }
+
+  .compare-col__title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0 0 12px;
+  }
+
+  .compare-col--before .compare-col__title {
+    color: #c0392b;
+  }
+
+  .compare-col--after .compare-col__title {
+    color: #27ae60;
+  }
+
+  .compare-list {
+    padding-left: 1.2em;
+    margin: 0;
+  }
+
+  .compare-list li {
+    font-size: 0.9rem;
+    padding: 4px 0;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  /* --- ブログ導線 --- */
+  .story-link-box {
+    background: #faf7f2;
+    border: 1px solid #e8dcc8;
+    border-radius: 14px;
+    padding: 24px 28px;
+  }
+
+  .story-link-box__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #5a4a3a;
+    margin: 0 0 8px;
+  }
+
+  .story-link-box p {
+    margin: 0 0 12px;
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  .story-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .story-link:hover {
+    text-decoration: underline;
+  }
+
+  /* --- レスポンシブ --- */
+  @media (max-width: 600px) {
+    .stat-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .compare-box {
+      grid-template-columns: 1fr;
+    }
+
+    .customer-voice {
+      padding: 20px 22px;
+    }
   }
 </style>

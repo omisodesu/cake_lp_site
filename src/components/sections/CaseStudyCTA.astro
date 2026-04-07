@@ -1,0 +1,104 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  primaryHref: string;
+  primaryLabel: string;
+  note?: string;
+  dataLocation: string;
+}
+
+const { title, description, primaryHref, primaryLabel, note, dataLocation } = Astro.props;
+---
+<aside class="case-cta">
+  <h2 class="case-cta__heading">{title}</h2>
+  <p class="case-cta__description">{description}</p>
+  <a
+    href={primaryHref}
+    class="case-cta__button"
+    data-cta-location={dataLocation}
+    data-cta-type="case_study"
+  >
+    {primaryLabel}
+  </a>
+  {note && <p class="case-cta__note">{note}</p>}
+</aside>
+
+<style>
+  .case-cta {
+    background: linear-gradient(135deg, #fff5f0 0%, #ffe8d6 50%, #ffddc1 100%);
+    border: 2px solid #e8c0a0;
+    border-radius: 18px;
+    padding: 40px 32px;
+    margin: 48px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .case-cta::before {
+    content: "";
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(255, 140, 0, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .case-cta__heading {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--heading-color, #3a3a3a);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .case-cta__description {
+    font-size: 1rem;
+    color: var(--text-color, #4a4a4a);
+    margin-bottom: 24px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.8;
+  }
+
+  .case-cta__button {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent-color, #FF8C00), var(--main-color, #FFA500));
+    color: #fff;
+    padding: 16px 48px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.04em;
+    box-shadow: 0 4px 16px rgba(255, 140, 0, 0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .case-cta__button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 140, 0, 0.45);
+  }
+
+  .case-cta__note {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 16px;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 600px) {
+    .case-cta {
+      padding: 32px 20px;
+    }
+
+    .case-cta__button {
+      padding: 14px 32px;
+      font-size: 1rem;
+    }
+  }
+</style>

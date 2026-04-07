@@ -41,6 +41,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // --- 事例ページ関連リンククリックイベント ---
+  document.querySelectorAll('[data-case-link-kind]').forEach((el) => {
+    el.addEventListener('click', () => {
+      if (typeof gtag !== 'function') return;
+      const element = el as HTMLElement;
+      gtag('event', 'case_related_click', {
+        case_link_kind: element.dataset.caseLinkKind || '',
+        case_name: element.dataset.caseName || '',
+      });
+    });
+  });
+
   // --- スクロール深度イベント（LPトップページのみ） ---
   if (window.location.pathname === '/') {
     const scrollThresholds = [25, 50, 75, 100];
