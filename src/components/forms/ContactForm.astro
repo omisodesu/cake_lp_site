@@ -75,7 +75,7 @@ const { showPersonInCharge = true } = Astro.props;
   </div>
 
   <div class="form-group">
-    <div class="cf-turnstile" data-sitekey={SITE.turnstileSiteKey} data-refresh-expired="auto" data-callback="__onTurnstileSuccess" data-expired-callback="__onTurnstileExpired"></div>
+    <div class="cf-turnstile" data-sitekey={SITE.turnstileSiteKey} data-refresh-expired="auto" data-callback="__onTurnstileSuccess" data-expired-callback="__onTurnstileExpired" data-error-callback="__onTurnstileError"></div>
   </div>
 
   <p id="turnstile-status" class="turnstile-status" role="status" aria-live="polite">
@@ -90,6 +90,9 @@ const { showPersonInCharge = true } = Astro.props;
 <div id="form-error-message" class="form-response-message" role="alert"></div>
 
 <script>
+  // フォーム送信成功後は終端状態とし、Turnstile の状態更新を無視する
+  let __formSubmitted = false;
+
   // Turnstile 準備タイムアウト用タイマー
   let __turnstileTimerId: ReturnType<typeof setTimeout> | undefined;
 
@@ -110,8 +113,9 @@ const { showPersonInCharge = true } = Astro.props;
     }, 15000);
   }
 
-  // Turnstile コールバック（ウィジェット準備完了 / トークン失効で送信ボタン + 案内テキストを制御）
+  // Turnstile コールバック（ウィジェット準備完了 / トークン失効 / エラーで送信ボタン + 案内テキストを制御）
   (window as any).__onTurnstileSuccess = function() {
+    if (__formSubmitted) return;
     if (__turnstileTimerId !== undefined) {
       clearTimeout(__turnstileTimerId);
       __turnstileTimerId = undefined;
@@ -122,6 +126,7 @@ const { showPersonInCharge = true } = Astro.props;
     if (status) status.textContent = '';
   };
   (window as any).__onTurnstileExpired = function() {
+    if (__formSubmitted) return;
     const btn = document.querySelector('#contact-form button[type="submit"]') as HTMLButtonElement | null;
     if (btn) btn.disabled = true;
     const status = document.getElementById('turnstile-status');
@@ -130,6 +135,20 @@ const { showPersonInCharge = true } = Astro.props;
       status.classList.remove('turnstile-status--error');
     }
     startTurnstileTimer();
+  };
+  (window as any).__onTurnstileError = function() {
+    if (__formSubmitted) return;
+    if (__turnstileTimerId !== undefined) {
+      clearTimeout(__turnstileTimerId);
+      __turnstileTimerId = undefined;
+    }
+    const btn = document.querySelector('#contact-form button[type="submit"]') as HTMLButtonElement | null;
+    if (btn) btn.disabled = true;
+    const status = document.getElementById('turnstile-status');
+    if (status) {
+      status.textContent = 'セキュリティ確認でエラーが発生しました。ページを再読み込みしてお試しください。';
+      status.classList.add('turnstile-status--error');
+    }
   };
 
   // Turnstile 遅延読み込み（IO 非対応 or contact セクション不在時は即時ロード）
@@ -296,6 +315,14 @@ const { showPersonInCharge = true } = Astro.props;
           const data = JSON.parse(responseBodyText);
 
           if (data.success) {
+            // 終端状態へ遷移：以後 Turnstile の状態更新を無視する
+            __formSubmitted = true;
+
+            if (__turnstileTimerId !== undefined) {
+              clearTimeout(__turnstileTimerId);
+              __turnstileTimerId = undefined;
+            }
+
             if (typeof gtag === 'function') {
               const inquiryTypeValue = inquiryTypeSelect?.value || 'unknown';
               const leadSourceValue = leadSourceSelect?.value || '';
@@ -305,26 +332,20 @@ const { showPersonInCharge = true } = Astro.props;
                 ...(leadSourceValue && { lead_source: leadSourceValue }),
               });
             }
+
+            // フォームを非表示にし、成功メッセージのみ表示
+            contactForm.style.display = 'none';
+            const statusEl = document.getElementById('turnstile-status');
+            if (statusEl) statusEl.textContent = '';
             showSuccess('お問い合わせありがとうございます。送信完了しました。');
-            contactForm.reset();
-            if (otherDetailsGroup && otherDetailsTextarea && charCountElement) {
-              otherDetailsGroup.classList.add('hidden');
-              otherDetailsTextarea.required = false;
-              otherDetailsTextarea.value = '';
-              charCountElement.textContent = `0 / ${otherDetailsTextarea.maxLength}`;
-            }
-            if (leadSourceOtherGroup && leadSourceOtherTextarea && leadSourceCharCount) {
-              leadSourceOtherGroup.classList.add('hidden');
-              leadSourceOtherTextarea.value = '';
-              leadSourceCharCount.textContent = `0 / ${leadSourceOtherTextarea.maxLength}`;
-            }
           } else {
             throw new Error(data.error || '送信に失敗しました。');
           }
         } catch (error: any) {
           console.error('Form submission error:', error);
           showError('送信中にエラーが発生しました。' + (error.message || ''));
-        } finally {
+
+          // 失敗時のみ再試行可能状態へ戻す
           const turnstileWidget = contactForm.querySelector('.cf-turnstile');
           if (turnstileWidget && typeof turnstile !== 'undefined') {
             turnstile.reset(turnstileWidget);
