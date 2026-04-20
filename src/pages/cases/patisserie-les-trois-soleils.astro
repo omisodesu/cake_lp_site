@@ -1,58 +1,192 @@
 ---
 import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
 import CaseStudyCTA from '../../components/sections/CaseStudyCTA.astro';
+import CaseStudyFAQ from '../../components/sections/CaseStudyFAQ.astro';
 import Icon from '../../components/common/Icon.astro';
 import { Image } from 'astro:assets';
 import logoSoleils from '../../images/logo_soleils.png';
 import shopImage from '../../images/case_soleils_shop.png';
-import customerImage from '../../images/case_soleils_customer.png';
+import xmasOriginalImage from '../../images/case_soleils_xmas_original.jpg';
+import xmasAiImage from '../../images/case_soleils_xmas_ai.png';
+
+const faqItems = [
+  {
+    id: 'soleils_individual',
+    question: '個人店・小規模店でもWeb予約は始められますか？',
+    answer: 'はい、レ・トロワ・ソレイユ様のように女性オーナーが手がける個人パティスリーでも問題なく運用していただいています。初期費用0円・月額0円・予約発生時のみの従量課金なので、注文がない月のご負担はありません。',
+  },
+  {
+    id: 'soleils_mixed',
+    question: '既存の電話・店頭予約と、Web予約は混在運用できますか？',
+    answer: 'できます。レ・トロワ・ソレイユ様も、2025年クリスマス時点でWeb予約は約半数で、残りは電話・店頭予約です。Web分は管理パネルから即時集計、電話・店頭分は従来の伝票で受け、引き渡し時に照合する流れで運用されています。',
+  },
+  {
+    id: 'soleils_lifestage',
+    question: 'ライフステージの変化で営業日が変動しても運用できますか？',
+    answer: 'むしろライフステージの変化への備えとしておすすめします。Web予約は人手を介さずに注文を受けられるので、営業日数や人員体制が変わっても、予約の窓口を閉じずに済みます。レ・トロワ・ソレイユ様も、一度休業されてから再開されるタイミングで導入を決められました。',
+  },
+  {
+    id: 'soleils_ai_pricing',
+    question: 'AI画像生成機能は基本料金で使えますか？',
+    answer: '現時点では実験段階のため、追加費用なしでお使いいただけます。将来的には、たとえば月5枚までは無料・6枚目から従量課金、といった形に変更する可能性があります。価格体系を変更する際は、事前にご利用店舗様にご案内いたします。',
+  },
+  {
+    id: 'soleils_case_study_content',
+    question: '成功事例集（PDF）には、どんな内容が載っていますか？',
+    answer: 'A4・全6ページのPDFで、本ページではお伝えしきれなかった「お客様をWebに誘導したシンプルな仕掛け」「紙集計から瞬時に把握できるデータ集計の運用」「始める前の店舗作業シミュレーション3項目」など、現場の実務ノウハウを率直にまとめています。',
+  },
+];
+
+const blogUrl = 'https://gadandan.co.jp/news/case-study-trois-soleils-xmas/';
 ---
 <CaseStudyLayout
   title="パティスリー・レ・トロワ・ソレイユ様 導入事例"
-  description="パティスリー・レ・トロワ・ソレイユ様の「いつでもケーキ」導入事例。ライフステージの変化による営業日減少に対応し、繁忙期の電話予約業務をデジタル化した事例をご紹介します。"
+  description="埼玉県所沢市のパティスリー・レ・トロワ・ソレイユ様のWeb予約導入事例。クリスマスケーキの予約が初年度3割（150件）、2年目で約半数（180件）まで切り替わり、紙集計→デジタル化で繁忙期の業務負担を約19時間削減した実例をご紹介します。"
   shopName="パティスリー・レ・トロワ・ソレイユ 様"
-  problemSummary="ライフステージの変化で営業日が減少し、限られた人員での効率的な運営が求められていました"
+  problemSummary="ライフステージの変化で営業日が減少。限られた人員で、繁忙期も滞りなく運営したい——"
 >
+  <!-- 店舗紹介 -->
   <div class="case-study-section">
     <div class="case-study-intro">
       <div class="case-study-intro__details">
         <Image src={logoSoleils} alt="パティスリー・レ・トロワ・ソレイユ ロゴ" class="case-study-shop-logo" width={200} />
-        <p>埼玉県所沢市にある、太陽の温もりを感じさせるような明るい雰囲気のパティスリー。フランス語で「3つの太陽」を意味する店名には、お客様、スタッフ、そしてお店自身が輝けるようにという願いが込められています。女性オーナーが手がける伝統的なフランス菓子からオリジナルの創作ケーキまで、多彩なスイーツを提供されています。</p>
+        <p>埼玉県所沢市にある、太陽の温もりを感じさせるような明るい雰囲気のパティスリー。フランス語で「3つの太陽」を意味する店名には、お客様・スタッフ・お店自身が輝けるようにという願いが込められています。女性オーナーが手がける伝統的なフランス菓子からオリジナルの創作ケーキまで、多彩なスイーツを提供されています。</p>
       </div>
     </div>
   </div>
 
+  <!-- 導入前の課題 -->
   <section class="case-study-section">
     <h2><Icon name="question-circle" class="icon-style" /> 導入前の課題</h2>
-    <p>ライフステージの変化により営業日の減少が避けられない状況となり、限られた人員での効率的な運営が求められるようになりました。顧客サービス向上を目指したデジタル化も急務となっていました。特にクリスマス等の繁忙期における電話予約対応が、本来の接客サービスの質に影響を及ぼす課題となっていました。</p>
+    <p>レ・トロワ・ソレイユ様は、ご家族のライフステージの変化により、一度ケーキ店をお休みされていました。再開と同時に仕組みを見直したい——そんなタイミングでのご相談でした。</p>
+    <p>当時、特にクリスマス等の繁忙期は<strong>すべての予約を電話・店頭で受け</strong>、人手がフル稼働。本来の接客やお菓子づくりの時間を、電話対応に取られてしまうことが課題となっていました。</p>
     <Image src={shopImage} alt="パティスリー・レ・トロワ・ソレイユ 店内" class="case-study-image" width={700} />
   </section>
 
-  <section class="case-study-section">
-    <h2><Icon name="lightbulb" class="icon-style" /> 実現内容</h2>
-    <ul>
-      <li>24時間365日対応のWEB受取予約システム</li>
-      <li>営業日減少に対応した自動受付体制</li>
-      <li>繁忙期の電話予約業務を完全デジタル化</li>
-      <li>スマートフォン対応による顧客利便性向上</li>
-      <li>限られた人員での効率運営を実現</li>
-    </ul>
-    <Image src={customerImage} alt="パティスリー・レ・トロワ・ソレイユ 接客の様子" class="case-study-image" width={700} />
-  </section>
-
+  <!-- 導入効果 -->
   <section class="case-study-section">
     <h2><Icon name="chart-line" class="icon-style" /> 導入効果</h2>
-    <ul>
-      <li>営業日減少による機会損失の防止</li>
-      <li>繁忙期スタッフの接客サービスへの集中</li>
-      <li>電話対応業務からの完全解放</li>
-      <li>少人数での効率的店舗運営</li>
-      <li>顧客サービス品質の向上</li>
-      <li>デジタル化による競争力強化</li>
-      <li>ライフステージ変化への柔軟対応</li>
-    </ul>
+    <p>2024年2月にWeb予約の運用をスタートされてから、2025年クリスマスまでの実績です。</p>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-number">150<span class="stat-unit">件</span></div>
+        <div class="stat-label">2024年クリスマスのWeb予約<br><span class="stat-sub">／ 全408件（約3割）</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">180<span class="stat-unit">件</span></div>
+        <div class="stat-label">2025年クリスマスのWeb予約<br><span class="stat-sub">／ 全360件（約半数）</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">128<span class="stat-unit">件</span></div>
+        <div class="stat-label">営業時間外の予約（2024年）<br><span class="stat-sub">深夜0時台にも注文</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">約22<span class="stat-unit">時間</span></div>
+        <div class="stat-label">接客・電話対応の削減<br><span class="stat-sub">180件×7.5分換算（社内集計）</span></div>
+      </div>
+    </div>
   </section>
 
+  <!-- 紙集計からデータ集計へ -->
+  <section class="case-study-section">
+    <h2><Icon name="list-check" class="icon-style" /> 紙集計から、瞬時に把握できるデータ集計へ</h2>
+    <p>クリスマスシーズンに毎年必ず発生していたのが、<strong>「今日までに、どのケーキが、何台予約されているのか」</strong>を把握する作業。Web予約が半数まで届いた今、現場の動き方が変わりました。</p>
+
+    <div class="compare-box">
+      <div class="compare-col compare-col--before">
+        <p class="compare-col__title">従来｜紙伝票で毎日集計</p>
+        <ul class="compare-list">
+          <li>日付ごとに予約伝票をまとめる</li>
+          <li>1枚ずつ確認し、ケーキ種別に手集計</li>
+          <li>予約が追加されるたび再集計</li>
+          <li>スタッフ共有は一覧表を手作業で再作成</li>
+        </ul>
+      </div>
+      <div class="compare-col compare-col--after">
+        <p class="compare-col__title">導入後｜管理パネル＋CSVで即時集計</p>
+        <ul class="compare-list">
+          <li>受取期間別・受取日別の予約数を瞬時に確認</li>
+          <li>予約が入った時点で自動更新</li>
+          <li>CSVで出力してExcelで自由な切り口で分析</li>
+          <li>スタッフ・厨房とのデータ共有もかんたん</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="case-hint">お客様をWebに自然と誘導した「あるシンプルな仕掛け」については、<strong>成功事例集（PDF）</strong>で詳しくご紹介しています。</p>
+  </section>
+
+  <!-- AI画像生成 -->
+  <section class="case-study-section">
+    <h2><Icon name="lightbulb" class="icon-style" /> 商品画像もAIで「クリスマス仕様」に</h2>
+    <p>2025年のクリスマスでは、いつでもケーキの<strong>AI画像生成機能</strong>もご活用いただきました。店頭で撮影した普段のケーキ写真1枚から、Web予約画面に掲載するクリスマス仕様の背景をAIが自動生成します。</p>
+
+    <div class="ai-compare">
+      <figure class="ai-compare__col">
+        <Image src={xmasOriginalImage} alt="店頭で撮影した通常のクリスマスケーキ写真" class="ai-compare__image" width={500} />
+        <figcaption class="ai-compare__caption"><span class="ai-compare__label">BEFORE</span> 店頭撮影の通常写真</figcaption>
+      </figure>
+      <figure class="ai-compare__col">
+        <Image src={xmasAiImage} alt="AIで背景をクリスマス仕様に差し替えた画像" class="ai-compare__image" width={500} />
+        <figcaption class="ai-compare__caption"><span class="ai-compare__label ai-compare__label--after">AFTER</span> AIが背景をクリスマス仕様に生成</figcaption>
+      </figure>
+    </div>
+
+    <blockquote class="customer-voice">
+      <p>「過去最高の画像になった」</p>
+      <cite>パティスリー・レ・トロワ・ソレイユ オーナー様</cite>
+    </blockquote>
+
+    <p>撮影の撮り直しや、デザインの外注費用を発生させずに、季節のビジュアルを刷新できるのが特徴です。<a href="/#ai-features">AI機能の詳細はこちら →</a></p>
+  </section>
+
+  <!-- 成功事例集 DL CTA -->
+  <section class="case-study-section">
+    <h2><Icon name="file-alt" class="icon-style" /> 成功事例集（PDF）でさらに詳しく</h2>
+    <div class="casebook-box">
+      <p class="casebook-box__label">SUCCESS CASE STUDY ｜ Vol.01</p>
+      <h3 class="casebook-box__title">クリスマス予約Web化 成功事例集</h3>
+      <p class="casebook-box__lead">本ページでお伝えしきれなかった「現場の工夫の中身」を、A4・全6ページにまとめました。</p>
+      <ul class="casebook-box__toc">
+        <li>実績サマリー｜数字で見る2年間の変化</li>
+        <li>ノウハウ①｜お客様をWebに誘導したシンプルな仕掛け</li>
+        <li>ノウハウ②｜紙集計から"瞬時に把握"できるデータ集計へ</li>
+        <li>成功の鍵｜始める前の"店舗作業シミュレーション" 3項目</li>
+        <li>ご利用料金／私たちの姿勢／お問い合わせ</li>
+      </ul>
+      <a
+        href="/?inquiry=request_case_study#contact"
+        class="casebook-box__button"
+        data-cta-location="case_soleils_casebook"
+        data-cta-type="case_study_pdf"
+      >
+        成功事例集（PDF）を無料で請求する →
+      </a>
+      <p class="casebook-box__note">※ ご請求いただいたケーキ店様にだけお届けしています。</p>
+    </div>
+  </section>
+
+  <!-- 関連ブログ導線 -->
+  <section class="case-study-section">
+    <div class="story-link-box">
+      <p class="story-link-box__title">詳しいストーリーはこちら</p>
+      <p>展示会での出会いから2024年2月のWeb予約スタートまで、レ・トロワ・ソレイユ様との2年間の歩みをブログで詳しくご紹介しています。</p>
+      <a
+        href={blogUrl}
+        class="story-link"
+        data-case-link-kind="story"
+        data-case-name="trois_soleils"
+        target="_blank"
+        rel="noopener noreferrer"
+      >導入ストーリーを読む →</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <CaseStudyFAQ items={faqItems} />
+
+  <!-- 店舗情報 -->
   <section class="case-study-section shop-information">
     <h2><Icon name="store" class="icon-style" /> 店舗情報</h2>
     <dl>
@@ -82,11 +216,13 @@ import customerImage from '../../images/case_soleils_customer.png';
     description="初期費用0円・月額固定費0円。予約が入ったときだけ費用が発生するので、小さなお店でもリスクなく始められます。"
     primaryHref="/#contact"
     primaryLabel="無料相談・資料請求はこちら"
+    note="お問い合わせ後、無理な営業は一切いたしません。"
     dataLocation="case_soleils_bottom"
   />
 </CaseStudyLayout>
 
 <style>
+  /* --- ナビゲーション --- */
   .case-study-navigation {
     margin-top: 40px;
     padding-top: 30px;
@@ -110,5 +246,325 @@ import customerImage from '../../images/case_soleils_customer.png';
   .nav-button:hover {
     background-color: var(--secondary-color);
     color: var(--accent-color);
+  }
+
+  /* --- 数値カード --- */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 28px 0;
+  }
+
+  .stat-card {
+    background: #fff;
+    border: 1px solid #ede8e0;
+    border-radius: 14px;
+    padding: 22px 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .stat-number {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .stat-unit {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent-color);
+  }
+
+  .stat-label {
+    font-size: 0.88rem;
+    color: #555;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  .stat-sub {
+    font-size: 0.78rem;
+    color: #888;
+  }
+
+  /* --- ビフォーアフター（業務） --- */
+  .compare-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .compare-col {
+    border-radius: 14px;
+    padding: 22px;
+  }
+
+  .compare-col--before {
+    background: #fdf2f2;
+    border: 1px solid #f0c8c8;
+  }
+
+  .compare-col--after {
+    background: #f0faf0;
+    border: 1px solid #c8e8c8;
+  }
+
+  .compare-col__title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0 0 12px;
+  }
+
+  .compare-col--before .compare-col__title {
+    color: #c0392b;
+  }
+
+  .compare-col--after .compare-col__title {
+    color: #27ae60;
+  }
+
+  .compare-list {
+    padding-left: 1.2em;
+    margin: 0;
+  }
+
+  .compare-list li {
+    font-size: 0.9rem;
+    padding: 4px 0;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  /* --- AI画像 before/after --- */
+  .ai-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .ai-compare__col {
+    margin: 0;
+    text-align: center;
+  }
+
+  .ai-compare__image {
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    display: block;
+  }
+
+  .ai-compare__caption {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: #666;
+  }
+
+  .ai-compare__label {
+    display: inline-block;
+    background: #5C4033;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.72rem;
+    padding: 2px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.08em;
+    margin-right: 6px;
+  }
+
+  .ai-compare__label--after {
+    background: var(--accent-color);
+  }
+
+  /* --- お客様の声 --- */
+  .customer-voice {
+    background: var(--secondary-color);
+    border-left: 5px solid var(--accent-color);
+    padding: 24px 28px;
+    border-radius: 0 12px 12px 0;
+    margin: 24px 0 20px;
+  }
+
+  .customer-voice p {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--heading-color);
+    margin: 0 0 8px;
+    line-height: 1.7;
+  }
+
+  .customer-voice cite {
+    font-size: 0.9rem;
+    color: #888;
+    font-style: normal;
+  }
+
+  /* --- 文中ヒント --- */
+  .case-hint {
+    background: #fff8ed;
+    border-left: 4px solid var(--accent-color);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    color: #5a4a3a;
+    margin: 24px 0;
+  }
+
+  .case-hint strong {
+    color: var(--accent-color);
+  }
+
+  /* --- 成功事例集 DLボックス --- */
+  .casebook-box {
+    background: linear-gradient(135deg, #fff7ee 0%, #ffead0 100%);
+    border: 2px solid #e8c0a0;
+    border-radius: 16px;
+    padding: 32px 28px;
+    margin: 12px 0;
+    text-align: center;
+  }
+
+  .casebook-box__label {
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    color: #8b6f47;
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+
+  .casebook-box__title {
+    font-size: 1.5rem;
+    color: var(--heading-color);
+    font-weight: 800;
+    margin: 0 0 14px;
+    line-height: 1.4;
+  }
+
+  .casebook-box__lead {
+    font-size: 0.95rem;
+    color: #555;
+    margin: 0 0 20px;
+    line-height: 1.7;
+  }
+
+  .casebook-box__toc {
+    list-style: none;
+    padding: 18px 20px;
+    margin: 0 0 24px;
+    background: #fff;
+    border-radius: 10px;
+    text-align: left;
+    display: inline-block;
+  }
+
+  .casebook-box__toc li {
+    font-size: 0.88rem;
+    color: #555;
+    padding: 5px 0 5px 22px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .casebook-box__toc li::before {
+    content: "▸";
+    position: absolute;
+    left: 4px;
+    color: var(--accent-color);
+    font-weight: 700;
+  }
+
+  .casebook-box__button {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent-color), var(--main-color));
+    color: #fff;
+    padding: 16px 36px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 16px rgba(255, 140, 0, 0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .casebook-box__button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 140, 0, 0.45);
+  }
+
+  .casebook-box__note {
+    font-size: 0.78rem;
+    color: #888;
+    margin: 14px 0 0;
+  }
+
+  /* --- ブログ導線 --- */
+  .story-link-box {
+    background: #faf7f2;
+    border: 1px solid #e8dcc8;
+    border-radius: 14px;
+    padding: 24px 28px;
+  }
+
+  .story-link-box__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #5a4a3a;
+    margin: 0 0 8px;
+  }
+
+  .story-link-box p {
+    margin: 0 0 12px;
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  .story-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .story-link:hover {
+    text-decoration: underline;
+  }
+
+  /* --- レスポンシブ --- */
+  @media (max-width: 600px) {
+    .stat-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .compare-box {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-compare {
+      grid-template-columns: 1fr;
+    }
+
+    .customer-voice {
+      padding: 20px 22px;
+    }
+
+    .casebook-box {
+      padding: 24px 18px;
+    }
+
+    .casebook-box__title {
+      font-size: 1.25rem;
+    }
+
+    .casebook-box__toc {
+      display: block;
+    }
   }
 </style>

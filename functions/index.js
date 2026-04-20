@@ -26,24 +26,32 @@ const turnstileSecretKeyParam = defineSecret("TURNSTILE_SECRET_KEY");
 // --- 定数定義 ---
 const ALLOWED_INQUIRY_TYPES = [ // 許可するお問い合わせ種別の値
   "request_documents",
+  "request_case_study",
   "request_contact",
   "other",
 ];
 const ALLOWED_LEAD_SOURCES = [ // 許可する流入元の値
   "google_search",
   "sns",
+  "dm",
+  "blog",
+  "note",
   "referral",
   "trade_show",
   "other",
 ];
 const INQUIRY_TYPE_LABELS = { // メール本文用の日本語ラベル
-  "request_documents": "資料請求",
+  "request_documents": "資料請求（サービス概要）",
+  "request_case_study": "成功事例集請求（クリスマス事例）",
   "request_contact": "商品の説明が聞きたいので連絡が欲しい",
   "other": "その他",
 };
 const LEAD_SOURCE_LABELS = { // メール本文用の日本語ラベル
   "google_search": "Google検索",
   "sns": "SNS",
+  "dm": "DM",
+  "blog": "ブログ",
+  "note": "note",
   "referral": "知人の紹介",
   "trade_show": "展示会",
   "other": "その他",
@@ -80,12 +88,29 @@ function buildAutoReplyBody({
     body += `内容（その他）:\n${otherDetails}\n`;
   }
 
+  body += "─────────────────────────────────\n\n";
+
+  if (inquiryType === "request_case_study") {
+    body +=
+      "成功事例集（A4・全6ページPDF）を、\n" +
+      "担当者よりメールでお送りいたします。\n" +
+      "通常1営業日以内にご返信いたしますので、\n" +
+      "しばらくお待ちくださいませ。\n\n";
+  } else if (inquiryType === "request_documents") {
+    body +=
+      "サービス資料を、担当者より\n" +
+      "メールでお送りいたします。\n" +
+      "通常1営業日以内にご返信いたしますので、\n" +
+      "しばらくお待ちくださいませ。\n\n";
+  } else {
+    body +=
+      "内容を確認のうえ、担当者より\n" +
+      "折り返しご連絡いたします。\n" +
+      "通常2営業日以内にご返信いたしますので、\n" +
+      "しばらくお待ちくださいませ。\n\n";
+  }
+
   body +=
-    "─────────────────────────────────\n\n" +
-    "内容を確認のうえ、担当者より" +
-    "折り返しご連絡いたします。\n" +
-    "通常2営業日以内にご返信いたしますので、\n" +
-    "しばらくお待ちくださいませ。\n\n" +
     "※本メールは自動送信されています。\n" +
     "　このメールに直接ご返信いただいても\n" +
     "　お答えできない場合がございます。\n\n" +
