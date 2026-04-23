@@ -1,0 +1,333 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/common/Header.astro';
+import representativeImage from '../../images/representative_fukui.png';
+import { Image } from 'astro:assets';
+
+// 問い合わせ種別ごとの返信目安（自動返信メールと揃える）
+const replyTimingByInquiry: Record<string, string> = {
+  request_documents: '通常1営業日以内',
+  request_case_study: '通常1営業日以内',
+  request_contact: '通常2営業日以内',
+  other: '通常2営業日以内',
+};
+// JS無効時・パラメータ不明時に表示する中立表現（自動返信メールの幅を包含）
+const defaultReplyTiming = '通常1〜2営業日以内';
+---
+<BaseLayout
+  title="お問い合わせありがとうございます | いつでもケーキ"
+  description="お問い合わせの送信が完了しました。"
+  noIndex={true}
+>
+  <Header slot="header" simple={true} />
+
+  <main class="thanks">
+    <div class="container thanks__container">
+      <section class="thanks__intro" aria-labelledby="thanks-title">
+        <p class="thanks__eyebrow" aria-hidden="true">THANK YOU</p>
+        <h1 id="thanks-title" class="thanks__title">お問い合わせありがとうございます</h1>
+        <p class="thanks__lead">送信が完了しました。<br />確認の自動返信メールを送信しましたので、ご確認ください。</p>
+        <p class="thanks__timing" role="status">
+          担当者からのご返信は
+          <strong id="thanks-reply-timing">{defaultReplyTiming}</strong>
+          を目安にお送りします。
+        </p>
+        <p class="thanks__note">自動返信メールが届かない場合は、迷惑メールフォルダをご確認のうえ、<a href="mailto:info@gadandan.co.jp">info@gadandan.co.jp</a> までご連絡ください。</p>
+      </section>
+
+      <section class="thanks__steps" aria-labelledby="thanks-steps-title">
+        <h2 id="thanks-steps-title" class="thanks__section-title">次のステップ</h2>
+        <ol class="thanks__step-list">
+          <li class="thanks__step">
+            <span class="thanks__step-number" aria-hidden="true">1</span>
+            <div class="thanks__step-body">
+              <h3 class="thanks__step-title">自動返信メールの確認</h3>
+              <p>ご登録いただいたメールアドレス宛に、受付確認の自動返信をお送りしています。</p>
+            </div>
+          </li>
+          <li class="thanks__step">
+            <span class="thanks__step-number" aria-hidden="true">2</span>
+            <div class="thanks__step-body">
+              <h3 class="thanks__step-title">担当者による内容確認</h3>
+              <p>お問い合わせ内容を担当者が確認し、ご返信の準備を進めます。</p>
+            </div>
+          </li>
+          <li class="thanks__step">
+            <span class="thanks__step-number" aria-hidden="true">3</span>
+            <div class="thanks__step-body">
+              <h3 class="thanks__step-title">メールでの資料送付または日程調整</h3>
+              <p>ご希望内容に応じて、資料のご送付またはオンライン面談の日程調整をメールでご案内します。</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="thanks__person" aria-labelledby="thanks-person-title">
+        <h2 id="thanks-person-title" class="thanks__section-title">担当からひとこと</h2>
+        <article class="thanks__person-card">
+          <figure class="thanks__person-photo">
+            <Image
+              src={representativeImage}
+              alt="がだんだん株式会社 福井"
+              width={320}
+              loading="lazy"
+            />
+          </figure>
+          <div class="thanks__person-body">
+            <dl class="thanks__person-meta">
+              <dt>担当</dt>
+              <dd>がだんだん株式会社 福井</dd>
+            </dl>
+            <p class="thanks__person-message">私自身は洋菓子店の出身ではありません。だからこそ、実際に使うケーキ店オーナー様一人ひとりに「この機能が欲しい」を教わりながら、ここまで育ててきました。</p>
+            <p class="thanks__person-message">システム会社は &ldquo;お金を取っていくだけ&rdquo; と思われがちですが、私たちは御社の売上に一緒に貢献する仲間として、隣で並走させてください。</p>
+            <p class="thanks__person-message">まずは御社の今の予約の受け方を一度お聞かせください。</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="thanks__instagram" aria-labelledby="thanks-instagram-title">
+        <h2 id="thanks-instagram-title" class="thanks__section-title">Instagramでも情報発信しています</h2>
+        <p class="thanks__instagram-text">最新の出展情報や、ケーキ店向けの活用情報はInstagramでも発信しています。</p>
+        <a
+          class="cta-button thanks__instagram-cta"
+          href="https://www.instagram.com/gadandan_cake/"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cta-location="thanks"
+          data-cta-type="instagram"
+        >Instagramを見る</a>
+      </section>
+
+      <p class="thanks__home-link">
+        <a href="/">トップページへ戻る</a>
+      </p>
+    </div>
+  </main>
+
+  <script is:inline slot="scripts" define:vars={{ replyTimingByInquiry }}>
+    (function updateReplyTiming() {
+      var el = document.getElementById('thanks-reply-timing');
+      if (!el) return;
+      var params = new URLSearchParams(window.location.search);
+      var inquiry = params.get('inquiry');
+      if (inquiry && Object.prototype.hasOwnProperty.call(replyTimingByInquiry, inquiry)) {
+        el.textContent = replyTimingByInquiry[inquiry];
+      }
+    })();
+  </script>
+</BaseLayout>
+
+<style>
+  .thanks {
+    padding: 60px 0 80px;
+    background-color: var(--secondary-color);
+  }
+
+  .thanks__container {
+    max-width: 760px;
+  }
+
+  .thanks__intro {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 40px 28px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .thanks__eyebrow {
+    color: var(--accent-color);
+    letter-spacing: 0.2em;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .thanks__title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .thanks__lead {
+    margin-bottom: 1rem;
+  }
+
+  .thanks__timing {
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    padding: 12px 16px;
+    margin-bottom: 1rem;
+  }
+
+  .thanks__timing strong {
+    color: var(--accent-color);
+  }
+
+  .thanks__note {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-bottom: 0;
+  }
+
+  .thanks__section-title {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .thanks__section-title:after {
+    width: 60px;
+    height: 3px;
+    bottom: -8px;
+  }
+
+  .thanks__steps,
+  .thanks__person,
+  .thanks__instagram {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 32px 28px;
+    box-shadow: var(--shadow);
+    margin-bottom: 32px;
+  }
+
+  .thanks__step-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 16px;
+  }
+
+  .thanks__step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid var(--secondary-color);
+    border-radius: var(--border-radius);
+  }
+
+  .thanks__step-number {
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--main-color);
+    color: var(--white);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .thanks__step-body {
+    flex: 1 1 auto;
+  }
+
+  .thanks__step-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .thanks__step-body p {
+    margin-bottom: 0;
+  }
+
+  .thanks__person-card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .thanks__person-photo {
+    flex: 0 0 auto;
+    margin: 0;
+  }
+
+  .thanks__person-photo img {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 50%;
+    display: block;
+  }
+
+  .thanks__person-body {
+    flex: 1 1 280px;
+    min-width: 240px;
+  }
+
+  .thanks__person-meta {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .thanks__person-meta dt {
+    font-weight: bold;
+    color: var(--accent-color);
+  }
+
+  .thanks__person-meta dd {
+    margin: 0;
+    font-weight: bold;
+  }
+
+  .thanks__person-message {
+    margin-bottom: 1rem;
+  }
+
+  .thanks__person-message:last-child {
+    margin-bottom: 0;
+  }
+
+  .thanks__instagram {
+    text-align: center;
+  }
+
+  .thanks__instagram-text {
+    margin-bottom: 1.5rem;
+  }
+
+  .thanks__instagram-cta {
+    background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
+    color: var(--white);
+  }
+
+  .thanks__home-link {
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 640px) {
+    .thanks {
+      padding: 40px 0 60px;
+    }
+
+    .thanks__intro,
+    .thanks__steps,
+    .thanks__person,
+    .thanks__instagram {
+      padding: 24px 20px;
+    }
+
+    .thanks__title {
+      font-size: 1.6rem;
+    }
+
+    .thanks__person-card {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .thanks__person-meta {
+      justify-content: center;
+    }
+  }
+</style>

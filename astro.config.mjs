@@ -6,7 +6,7 @@ export default defineConfig({
   outDir: './dist',
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/compare/'),
+      filter: (page) => !page.includes('/compare/') && !page.includes('/thanks/'),
     }),
   ],
   build: {

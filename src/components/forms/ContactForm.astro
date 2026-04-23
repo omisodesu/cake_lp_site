@@ -89,7 +89,6 @@ const { showPersonInCharge = true } = Astro.props;
     <button type="submit" class="cta-button" disabled>送信する</button>
   </div>
 </form>
-<div id="form-success-message" class="form-response-message" role="status" aria-live="polite"></div>
 <div id="form-error-message" class="form-response-message" role="alert"></div>
 
 <script>
@@ -200,21 +199,9 @@ const { showPersonInCharge = true } = Astro.props;
     const leadSourceOtherGroup = document.getElementById('lead-source-other-group');
     const leadSourceOtherTextarea = document.getElementById('lead-source-other-details') as HTMLTextAreaElement | null;
     const leadSourceCharCount = document.getElementById('lead-source-char-count');
-    const formSuccessMessage = document.getElementById('form-success-message');
     const formErrorMessage = document.getElementById('form-error-message');
 
-    function showSuccess(message: string) {
-      if (formErrorMessage) formErrorMessage.textContent = '';
-      if (formSuccessMessage) {
-        formSuccessMessage.textContent = message;
-        formSuccessMessage.style.color = 'green';
-      } else {
-        alert(message);
-      }
-    }
-
     function showError(message: string) {
-      if (formSuccessMessage) formSuccessMessage.textContent = '';
       if (formErrorMessage) {
         formErrorMessage.textContent = message;
         formErrorMessage.style.color = 'red';
@@ -224,7 +211,6 @@ const { showPersonInCharge = true } = Astro.props;
     }
 
     function clearMessages() {
-      if (formSuccessMessage) formSuccessMessage.textContent = '';
       if (formErrorMessage) formErrorMessage.textContent = '';
     }
 
@@ -339,21 +325,42 @@ const { showPersonInCharge = true } = Astro.props;
               __turnstileTimerId = undefined;
             }
 
+            const inquiryTypeValue = inquiryTypeSelect?.value || 'unknown';
+            const leadSourceValue = leadSourceSelect?.value || '';
+
+            // サンクスページURLを組み立てる（許可値のみクエリに載せる）
+            const allowedInquiryValues = new Set([
+              'request_documents',
+              'request_case_study',
+              'request_contact',
+              'other',
+            ]);
+            const thanksParams = new URLSearchParams();
+            if (allowedInquiryValues.has(inquiryTypeValue)) {
+              thanksParams.set('inquiry', inquiryTypeValue);
+            }
+            const thanksQuery = thanksParams.toString();
+            const thanksUrl = thanksQuery ? `/thanks/?${thanksQuery}` : '/thanks/';
+
+            // GA4 イベントが確実に送信されてから遷移する（event_callback + タイムアウトフォールバック）
+            let navigated = false;
+            const navigate = () => {
+              if (navigated) return;
+              navigated = true;
+              window.location.assign(thanksUrl);
+            };
+
             if (typeof gtag === 'function') {
-              const inquiryTypeValue = inquiryTypeSelect?.value || 'unknown';
-              const leadSourceValue = leadSourceSelect?.value || '';
               gtag('event', 'contact_form_submit', {
                 event_category: 'contact',
                 event_label: inquiryTypeValue,
                 ...(leadSourceValue && { lead_source: leadSourceValue }),
+                event_callback: navigate,
               });
+              setTimeout(navigate, 1500);
+            } else {
+              navigate();
             }
-
-            // フォームを非表示にし、成功メッセージのみ表示
-            contactForm.style.display = 'none';
-            const statusEl = document.getElementById('turnstile-status');
-            if (statusEl) statusEl.textContent = '';
-            showSuccess('お問い合わせありがとうございます。送信完了しました。');
           } else {
             throw new Error(data.error || '送信に失敗しました。');
           }
