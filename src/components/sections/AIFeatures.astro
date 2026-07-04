@@ -1,6 +1,10 @@
 ---
 import BirthdaySongPreview from './BirthdaySongPreview.astro';
 import { aiFeaturesVoice } from '../../data/testimonials';
+import { Image } from 'astro:assets';
+// AI画像生成カードのビフォーアフター実例（ソレイユ事例ページと同じ素材を流用）
+import xmasOriginalImage from '../../images/case_soleils_xmas_original.jpg';
+import xmasAiImage from '../../images/case_soleils_xmas_ai.png';
 
 const cards = [
   {
@@ -8,36 +12,44 @@ const cards = [
     status: '稼働中',
     statusColor: '#22C55E',
     description: 'お客様の名前入りオリジナルソングをAIが自動生成。子供向け・大人向けの2種類から選べます。楽曲はがだんだんからお客様のメールアドレスへ直接お届けします。',
+    note: '',
     value: '体験価値の向上 × 追加売上',
     icon: 'music',
     hasSongPreview: true,
+    hasImageDemo: false,
   },
   {
     title: 'AI画像生成',
     status: '稼働中',
     statusColor: '#22C55E',
-    description: '商品写真やSNS投稿用バナーをAIが自動作成。撮影やデザイン外注のコストと手間を削減します。',
-    value: 'SNS発信の負担を軽減',
+    description: '普段の商品撮影のとき、背景を整えたり、ライトで明るくしたり、そのために一眼レフを使ったりしていませんでしたか？それらはスマホで撮った写真をAIで修正すれば、簡単に解決できます。',
+    note: '※ 現在プレビューで、月20枚まで無料でお試しいただけます',
+    value: '撮影の手間と外注コストを削減',
     icon: 'image',
     hasSongPreview: false,
+    hasImageDemo: true,
   },
   {
     title: 'デジタル手紙',
     status: '開発中',
     statusColor: '#F97316',
     description: '贈り主の気持ちをデジタルレターでお届け。ギフト需要の取りこぼしを防ぎ、客単価を向上させます。',
+    note: '',
     value: 'ギフト需要 × 客単価UP',
     icon: 'letter',
     hasSongPreview: false,
+    hasImageDemo: false,
   },
   {
     title: 'AI自動販促メール',
     status: '開発中',
     statusColor: '#F97316',
     description: '購入履歴や季節に合わせたメールをAIが自動配信。手間をかけずにリピート率を高めます。',
+    note: '',
     value: '手間なくリピート促進',
     icon: 'sparkle',
     hasSongPreview: false,
+    hasImageDemo: false,
   },
 ];
 ---
@@ -83,9 +95,27 @@ const cards = [
             </div>
           </div>
           <p class="ai-card__description">{card.description}</p>
+          {card.note && <p class="ai-card__note">{card.note}</p>}
           <p class="ai-card__value">→ {card.value}</p>
           {/* バースデーソング生成カードのみ試聴ブロックを表示（表示可否はコンポーネント内の SONG_EMBED_MODE で制御） */}
           {card.hasSongPreview && <BirthdaySongPreview />}
+          {/* AI画像生成カードのみ、ソレイユ様のビフォーアフター実例を表示（試聴ブロックと同じ構成で高さを揃える） */}
+          {card.hasImageDemo && (
+            <div class="image-demo">
+              <h4 class="image-demo__heading">まずは、見比べてみてください</h4>
+              <div class="image-demo__compare">
+                <figure class="image-demo__col">
+                  <Image src={xmasOriginalImage} alt="店頭のスマホ撮影による通常のクリスマスケーキ写真" class="image-demo__image" width={300} />
+                  <figcaption class="image-demo__caption"><span class="image-demo__label">BEFORE</span> 店頭撮影の写真</figcaption>
+                </figure>
+                <figure class="image-demo__col">
+                  <Image src={xmasAiImage} alt="AIで背景をクリスマス仕様に修正した画像" class="image-demo__image" width={300} />
+                  <figcaption class="image-demo__caption"><span class="image-demo__label image-demo__label--after">AFTER</span> AIが背景を修正</figcaption>
+                </figure>
+              </div>
+              <p class="image-demo__note">※ 導入店（パティスリー・レ・トロワ・ソレイユ様）の実例です</p>
+            </div>
+          )}
         </article>
       ))}
     </div>
@@ -182,11 +212,77 @@ const cards = [
     color: var(--text-color);
   }
 
+  .ai-card__note {
+    font-size: 0.78rem;
+    color: #888;
+    margin-bottom: 0.75rem;
+  }
+
   .ai-card__value {
     font-size: 0.875rem;
     font-weight: 700;
     color: var(--accent-color);
     margin-bottom: 0;
+  }
+
+  /* AI画像生成のビフォーアフター実例（.song-preview と同じ区切り構成で高さを揃える） */
+  .image-demo {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  .image-demo__heading {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    text-align: left;
+  }
+
+  .image-demo__compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .image-demo__col {
+    margin: 0;
+    text-align: center;
+  }
+
+  .image-demo__image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    display: block;
+  }
+
+  .image-demo__caption {
+    margin-top: 6px;
+    font-size: 0.75rem;
+    color: #666;
+  }
+
+  .image-demo__label {
+    display: inline-block;
+    background: #5C4033;
+    color: var(--white);
+    font-weight: 700;
+    font-size: 0.65rem;
+    padding: 1px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.08em;
+    margin-right: 4px;
+  }
+
+  .image-demo__label--after {
+    background: var(--accent-color);
+  }
+
+  .image-demo__note {
+    margin: 0.75rem 0 0;
+    font-size: 0.75rem;
+    color: #888;
   }
 
   /* 導入店オーナーの生の声（セクションの感情的アンカー）。/christmas/ の強調ボックスと同系の左ボーダー付き */

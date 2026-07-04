@@ -7,9 +7,10 @@
 //   'youtube' … B案: lite-youtube-embed（ファサード方式・通常iframeは使わない）
 //               埋め込みドメインは youtube-nocookie.com（lite-youtube-embed のデフォルト）、
 //               enablejsapi=1（GA4拡張計測「動画エンゲージメント」用）と rel=0 を params で付与
-//   'hidden'  … 非表示（何も描画しない）。音源・動画とも未受領のため、現在はこの値
+//   'hidden'  … 非表示（何も描画しない）
+// 現在はB案で公開中（2026-07-04 福井さん指示）。時期をみてA案へ移す可能性があるため、A案のコードは残すこと
 type SongEmbedMode = 'audio' | 'youtube' | 'hidden';
-const SONG_EMBED_MODE = 'hidden' as SongEmbedMode;
+const SONG_EMBED_MODE = 'youtube' as SongEmbedMode;
 
 // --- A案: サンプル音源（30秒程度・子供向け/大人向け各1） ---
 // TODO(福井さん確認): 音源ファイル受領後にパス設定（public/assets/audio/ に配置し、下記 src を実ファイル名へ更新）
@@ -19,8 +20,8 @@ const audioSamples = [
 ] as const;
 
 // --- B案: YouTube動画ID ---
-// TODO(福井さん確認): YouTube動画IDを設定（未定のため空文字。空のままだとB案でも何も描画されない）
-const YOUTUBE_VIDEO_ID = '';
+// 「キラキラアニメOP男性DEMO」（がだんだん公式チャンネル） https://youtu.be/aEZgtlRcQw0
+const YOUTUBE_VIDEO_ID = 'aEZgtlRcQw0';
 
 // 空セクションや壊れたUIを出さないための表示判定
 const showAudio = SONG_EMBED_MODE === 'audio';
