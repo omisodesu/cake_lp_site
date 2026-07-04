@@ -1,4 +1,5 @@
 ---
+import { pricingVoice } from '../../data/testimonials';
 ---
 <section class="section pricing" id="pricing">
   <div class="container">
@@ -51,6 +52,14 @@
           </tbody>
         </table>
       </div>
+
+      {/* 導入店オーナーの生の声（修正指示書 2026-07-04 第2弾 タスク2）。料金体系の主張の隣に置く */}
+      <figure class="pricing__voice">
+        <blockquote class="pricing__voice-quote">
+          <p>「{pricingVoice.text}」</p>
+        </blockquote>
+        <figcaption class="pricing__voice-context">— {pricingVoice.context}</figcaption>
+      </figure>
     </div>
 
     <div class="pricing__plans">
@@ -204,6 +213,35 @@
       padding: 10px 12px;
       font-size: 0.9rem;
     }
+  }
+
+  /* 導入店オーナーの生の声（クリーム背景の引用ボックス） */
+  .pricing__voice {
+    margin: 24px auto 0;
+    max-width: 560px;
+    background-color: #fff8ed;
+    border: 1px solid #e8dcc8;
+    border-radius: var(--border-radius);
+    padding: 20px 24px;
+    text-align: center;
+  }
+
+  .pricing__voice-quote {
+    margin: 0;
+  }
+
+  .pricing__voice-quote p {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+    line-height: 1.7;
+    color: var(--heading-color);
+  }
+
+  .pricing__voice-context {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: #999;
   }
 
   .pricing__simulation {

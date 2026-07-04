@@ -32,7 +32,7 @@ export const detailFeatures = [
     title: 'オプション設定',
     image: 'feature2.png',
     alt: 'オプション設定機能',
-    description: 'ローソク、メッセージプレート、のしなど、様々なオプションを設定できます。',
+    description: 'ローソク、メッセージプレートなど、有料オプションを個別に設定できます。',
   },
   {
     title: '在庫管理',

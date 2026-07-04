@@ -1,5 +1,6 @@
 ---
 import { detailFeatures } from '../../data/features';
+import { featuresColumnVoice } from '../../data/testimonials';
 import { Image } from 'astro:assets';
 
 const images = import.meta.glob<{ default: ImageMetadata }>('../../images/feature*.png', { eager: true });
@@ -15,13 +16,25 @@ const images = import.meta.glob<{ default: ImageMetadata }>('../../images/featur
           <div class="features__item">
             <h3 class="features__item-title">{feature.title}</h3>
             {imageModule && (
-              <Image src={imageModule.default} alt={feature.alt} class="features__item-image" width={500} />
+              <Image src={imageModule.default} alt={feature.alt} class="features__item-image" width={400} />
             )}
             <p>{feature.description}</p>
           </div>
         );
       })}
     </div>
+
+    {/* ミニ事例コラム（修正指示書 2026-07-04 第2弾 タスク4）。「初期値」の工夫を生の声とセットで紹介 */}
+    <aside class="features__column">
+      <h3 class="features__column-title">{featuresColumnVoice.heading}</h3>
+      <p class="features__column-body">{featuresColumnVoice.body}</p>
+      <figure class="features__column-voice">
+        <blockquote class="features__column-quote">
+          <p>「{featuresColumnVoice.quote}」</p>
+        </blockquote>
+        <figcaption class="features__column-attribution">— {featuresColumnVoice.author}</figcaption>
+      </figure>
+    </aside>
   </div>
 </section>
 
@@ -30,24 +43,26 @@ const images = import.meta.glob<{ default: ImageMetadata }>('../../images/featur
     background-color: var(--white);
   }
 
+  /* カードは一回り小さく（修正指示書 2026-07-04 第2弾 タスク6）。タブレット以上は3列相当、モバイルは2列 */
   .features__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
     margin-top: 40px;
   }
 
   .features__item {
     background-color: var(--secondary-color);
     border-radius: var(--border-radius);
-    padding: 30px;
+    padding: 20px;
     box-shadow: var(--shadow);
   }
 
   .features__item-title {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
+    font-size: 1.05rem;
+    margin-bottom: 10px;
     color: var(--accent-color);
+    overflow-wrap: break-word;
   }
 
   .features__item-image {
@@ -55,6 +70,86 @@ const images = import.meta.glob<{ default: ImageMetadata }>('../../images/featur
     width: 100%;
     height: auto;
     border-radius: var(--border-radius);
-    margin-bottom: 20px;
+    margin-bottom: 12px;
+  }
+
+  .features__item p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
+    overflow-wrap: break-word;
+  }
+
+  @media (max-width: 640px) {
+    .features__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .features__item {
+      padding: 14px;
+    }
+
+    .features__item-title {
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    .features__item p {
+      font-size: 0.8rem;
+    }
+  }
+
+  /* ミニ事例コラム（クリーム背景の囲みボックスに見出し・本文・締め引用をまとめる） */
+  .features__column {
+    max-width: 720px;
+    margin: 40px auto 0;
+    background-color: #fff8ed;
+    border: 1px solid #e8dcc8;
+    border-radius: var(--border-radius);
+    padding: 28px 32px;
+  }
+
+  .features__column-title {
+    font-size: 1.1rem;
+    color: var(--heading-color);
+    margin-bottom: 14px;
+  }
+
+  .features__column-body {
+    font-size: 0.95rem;
+    line-height: 1.9;
+    margin-bottom: 18px;
+  }
+
+  .features__column-voice {
+    margin: 0;
+    background-color: var(--white);
+    border-left: 4px solid var(--accent-color);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    padding: 14px 18px;
+  }
+
+  .features__column-quote {
+    margin: 0;
+  }
+
+  .features__column-quote p {
+    margin: 0;
+    font-weight: bold;
+    color: var(--heading-color);
+  }
+
+  .features__column-attribution {
+    margin-top: 8px;
+    text-align: right;
+    font-size: 0.85rem;
+    color: #888;
+  }
+
+  @media (max-width: 640px) {
+    .features__column {
+      padding: 20px 18px;
+    }
   }
 </style>

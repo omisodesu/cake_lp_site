@@ -1,5 +1,6 @@
 ---
 import BirthdaySongPreview from './BirthdaySongPreview.astro';
+import { aiFeaturesVoice } from '../../data/testimonials';
 
 const cards = [
   {
@@ -88,6 +89,14 @@ const cards = [
         </article>
       ))}
     </div>
+
+    {/* 導入店オーナーの生の声（修正指示書 2026-07-04 第2弾 タスク3）。このセクションの感情的アンカー */}
+    <figure class="ai-features__voice">
+      <blockquote class="ai-features__voice-quote">
+        <p>「{aiFeaturesVoice.text}」</p>
+      </blockquote>
+      <figcaption class="ai-features__voice-context">— {aiFeaturesVoice.context}</figcaption>
+    </figure>
 
     <div class="ai-features__cta">
       <a href="#contact" class="cta-button" data-cta-location="ai_features" data-cta-type="ai_inquiry">AI機能について詳しく聞く</a>
@@ -178,6 +187,45 @@ const cards = [
     font-weight: 700;
     color: var(--accent-color);
     margin-bottom: 0;
+  }
+
+  /* 導入店オーナーの生の声（セクションの感情的アンカー）。/christmas/ の強調ボックスと同系の左ボーダー付き */
+  .ai-features__voice {
+    max-width: 720px;
+    margin: 3rem auto 0;
+    background-color: #fff8ed;
+    border-left: 5px solid var(--accent-color);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    padding: 28px 32px;
+    text-align: center;
+  }
+
+  .ai-features__voice-quote {
+    margin: 0;
+  }
+
+  .ai-features__voice-quote p {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: bold;
+    line-height: 1.8;
+    color: var(--heading-color);
+  }
+
+  .ai-features__voice-context {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: #999;
+  }
+
+  @media (max-width: 640px) {
+    .ai-features__voice {
+      padding: 20px 22px;
+    }
+
+    .ai-features__voice-quote p {
+      font-size: 1.15rem;
+    }
   }
 
   .ai-features__cta {
