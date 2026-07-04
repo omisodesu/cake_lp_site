@@ -53,6 +53,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // --- セクション視認イベント（汎用） ---
+  // 使い方: 計測したい要素に data-section-view="<セクションID>" を付与するだけでよい。
+  // 50%以上可視になった初回のみ section_view を送信し、unobserve で同一セクションの重複発火を防ぐ。
+  const sectionViewTargets = document.querySelectorAll('[data-section-view]');
+  if (sectionViewTargets.length > 0 && 'IntersectionObserver' in window) {
+    const sectionObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        if (typeof gtag !== 'function') return;
+        gtag('event', 'section_view', {
+          section: (entry.target as HTMLElement).dataset.sectionView || '',
+        });
+      });
+    }, { threshold: 0.5 });
+    sectionViewTargets.forEach((el) => sectionObserver.observe(el));
+  }
+
   // --- スクロール深度イベント（LPトップページのみ） ---
   if (window.location.pathname === '/') {
     const scrollThresholds = [25, 50, 75, 100];

@@ -72,12 +72,32 @@ const isVisible = showAudio || showYoutube;
 )}
 
 <script>
+  // --- video_play 計測（計測指示書 第3弾 タスク1） ---
+  // デモ再生の開始をセッション内1回のみ送信する（モジュールスコープのフラグでdedupe。faq_openと同じ思想）。
+  // A案（audio）へ切り替えた場合も同名イベント・同じ video_id で拾えるよう、audio側にも同じ発火を仕込んでいる。
+  let videoPlayFired = false;
+  function fireVideoPlay() {
+    if (videoPlayFired) return;
+    videoPlayFired = true;
+    if (typeof gtag !== 'function') return;
+    gtag('event', 'video_play', {
+      video_id: 'birthday_song_demo',
+      location: 'ai_features',
+    });
+  }
+
+  // B案: lite-youtubeファサードのクリック（＝プレーヤー起動）で発火。
+  // JS無効時のフォールバックリンク（YouTube直リンク）は計測対象外。
+  document.querySelector('lite-youtube')?.addEventListener('click', fireVideoPlay);
+
   // --- A案: audio 再生開始の計測 ---
   // 既存の計測実装（ga4-events.ts / FAQ.astro）と同じく、gtag の存在を確認してから発火する。
   // 一時停止→再開でも play イベントが発火するため、1要素につき初回のみ送信する。
   document.querySelectorAll<HTMLAudioElement>('.song-preview audio[data-song-type]').forEach((audio) => {
     let hasFired = false;
     audio.addEventListener('play', () => {
+      // A案でも video_play を送信（video_id は 'birthday_song_demo' のまま。B案と同一指標として集計するため）
+      fireVideoPlay();
       if (hasFired) return;
       hasFired = true;
       if (typeof gtag !== 'function') return;

@@ -101,7 +101,7 @@ const cards = [
           {card.hasSongPreview && <BirthdaySongPreview />}
           {/* AI画像生成カードのみ、ソレイユ様のビフォーアフター実例を表示（試聴ブロックと同じ構成で高さを揃える） */}
           {card.hasImageDemo && (
-            <div class="image-demo">
+            <div class="image-demo" data-section-view="ai_image_ba">
               <h4 class="image-demo__heading">まずは、見比べてみてください</h4>
               <div class="image-demo__compare">
                 <figure class="image-demo__col">
