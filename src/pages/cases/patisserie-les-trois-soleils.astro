@@ -108,6 +108,13 @@ const blogUrl = 'https://gadandan.co.jp/news/case-study-trois-soleils-xmas/';
         data-cta-type="case_study_pdf"
       >この事例の詳細資料を請求する</a>
     </p>
+
+    {/* /christmas/ への控えめな導線（修正指示書 第4弾 タスク2）。CTAボタン群と競合させないテキストリンク */}
+    <p class="case-christmas-link">クリスマス商戦を乗り切る機能の全体像は <a
+      href="/christmas/"
+      data-cta-location="case_soleils_to_christmas"
+      data-cta-type="christmas_page"
+    >→ クリスマスケーキの予約管理ページへ</a></p>
   </section>
 
   <!-- 紙集計からデータ集計へ -->
@@ -309,6 +316,18 @@ const blogUrl = 'https://gadandan.co.jp/news/case-study-trois-soleils-xmas/';
   .case-detail-cta {
     text-align: center;
     margin: 32px 0;
+  }
+
+  .case-christmas-link {
+    text-align: center;
+    font-size: 0.9rem;
+    margin: 16px 0 0;
+  }
+
+  .case-christmas-link a {
+    color: var(--accent-color);
+    text-decoration: underline;
+    font-weight: bold;
   }
 
   .case-detail-cta__button {

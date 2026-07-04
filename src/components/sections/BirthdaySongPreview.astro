@@ -72,6 +72,11 @@ const isVisible = showAudio || showYoutube;
 )}
 
 <script>
+  // lite-youtube-embed のCSS。Astroがページ共通CSSへ抽出して <link> 配信する。
+  // ※動的import（import('...css')）にするとCSSは抽出される一方、プリロード用の
+  //   存在しないCSSチャンク参照がJSに残り本番で404になるため、静的importにすること（第3弾補修2）
+  import 'lite-youtube-embed/src/lite-yt-embed.css';
+
   // --- video_play 計測（計測指示書 第3弾 タスク1） ---
   // デモ再生の開始をセッション内1回のみ送信する（モジュールスコープのフラグでdedupe。faq_openと同じ思想）。
   // A案（audio）へ切り替えた場合も同名イベント・同じ video_id で拾えるよう、audio側にも同じ発火を仕込んでいる。
@@ -108,12 +113,11 @@ const isVisible = showAudio || showYoutube;
   });
 
   // --- B案: lite-youtube-embed の遅延ロード ---
-  // B案（YouTube）選択時のみ動的importし、A案・hidden時はJS/CSSとも一切ロードしない。
+  // B案（YouTube）選択時のみJSを動的importする（A案・hidden時はJSをロードしない。
+  // CSSは上記の静的importでページCSSに含まれる＝約2KB。ゼロにしたい場合はモード切替時にimportも外す）
   if (document.querySelector('lite-youtube')) {
     // @ts-ignore -- lite-youtube-embed は型定義ファイルを提供していない
     import('lite-youtube-embed');
-    // @ts-ignore -- パッケージ同梱CSSの直接import（Viteが別チャンクとして遅延読み込みする）
-    import('lite-youtube-embed/src/lite-yt-embed.css');
   }
 
   declare function gtag(...args: any[]): void;

@@ -3,7 +3,6 @@
 // TODO(福井さん確認): 公開タイミング（遅くとも7月末）。公開判断が出るまで本番反映しないこと。
 // 公開を遅らせる場合は、TOP実績バッジ（results.ts）とフッター（Footer.astro）の /christmas/ リンクも合わせて調整が必要。
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import AnnouncementBar from '../../components/common/AnnouncementBar.astro';
 import GlobalNav from '../../components/common/GlobalNav.astro';
 import Header from '../../components/common/Header.astro';
 import FAQ from '../../components/sections/FAQ.astro';
@@ -65,7 +64,8 @@ const christmasFaqItems = faqItems.filter((item) => christmasFaqIds.includes(ite
 ---
 <BaseLayout title={pageTitle} description={pageDescription}>
   <Fragment slot="header">
-    <AnnouncementBar />
+    {/* 告知バーはクリスマス訴求（/christmas/ への導線）のため、このページでは自己参照になり非表示（第4弾 タスク3）。
+        非クリスマスの告知に差し替えた際は <AnnouncementBar /> を再設置する */}
     <GlobalNav />
   </Fragment>
 
@@ -164,7 +164,8 @@ const christmasFaqItems = faqItems.filter((item) => christmasFaqIds.includes(ite
     </section>
 
     <!-- 7. FAQ抜粋（busy_season / slot_limit / prepayment。faq.ts のデータと faq_open 計測をそのまま再利用） -->
-    <FAQ items={christmasFaqItems} />
+    {/* showLinks={false}: busy_season の回答末尾リンクが /christmas/ への自己参照になるため非表示（第4弾 タスク1） */}
+    <FAQ items={christmasFaqItems} showLinks={false} />
   </main>
 </BaseLayout>
 

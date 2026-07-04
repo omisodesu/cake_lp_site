@@ -37,6 +37,14 @@ export const faqItems = [
     id: 'busy_season',
     question: 'クリスマスなどの繁忙期でも止まりませんか？',
     answer: 'はい、ご安心ください。導入店ではWEB予約が集中するクリスマス商戦でも安定して稼働した実績があります。時間帯ごとの受注制限機能で、お店の製造キャパシティに合わせた受け方もできます。',
+    // 表示専用の導線（修正指示書 第4弾 タスク1）。FAQPage JSON-LD は answer のみを参照するため、
+    // リンクをこの別フィールドに持たせることでスキーマにHTMLを混ぜず表示とJSON-LDの一致を保つ
+    link: {
+      href: '/christmas/',
+      label: '→ クリスマス商戦の予約管理について詳しくはこちら',
+      ctaLocation: 'faq_busy_season',
+      ctaType: 'christmas_page',
+    },
   },
   {
     id: 'slot_limit',

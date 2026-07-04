@@ -90,6 +90,13 @@ const blogUrl = 'https://gadandan.co.jp/news/case-study-patisserie-loop/';
     </div>
 
     <Image src={caseLoopAfterImage} alt="Web予約導入後のイメージ" class="case-study-image" width={700} />
+
+    {/* /christmas/ への控えめな導線（修正指示書 第4弾 タスク2）。CTAボタン群と競合させないテキストリンク */}
+    <p class="case-christmas-link">クリスマス商戦を乗り切る機能の全体像は <a
+      href="/christmas/"
+      data-cta-location="case_loop_to_christmas"
+      data-cta-type="christmas_page"
+    >→ クリスマスケーキの予約管理ページへ</a></p>
   </section>
 
   <!-- お客様の声 -->
@@ -343,6 +350,19 @@ const blogUrl = 'https://gadandan.co.jp/news/case-study-patisserie-loop/';
   .nav-button:hover {
     background-color: var(--secondary-color);
     color: var(--accent-color);
+  }
+
+  /* --- /christmas/ への導線（第4弾 タスク2） --- */
+  .case-christmas-link {
+    text-align: center;
+    font-size: 0.9rem;
+    margin: 16px 0 0;
+  }
+
+  .case-christmas-link a {
+    color: var(--accent-color);
+    text-decoration: underline;
+    font-weight: bold;
   }
 
   /* --- 数値カード --- */

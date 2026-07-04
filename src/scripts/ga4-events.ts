@@ -1,6 +1,6 @@
 declare function gtag(...args: any[]): void;
 
-document.addEventListener('DOMContentLoaded', () => {
+function init() {
   // --- CTA クリックイベント ---
   document.querySelectorAll('[data-cta-location]').forEach((el) => {
     el.addEventListener('click', () => {
@@ -102,4 +102,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, { passive: true });
   }
-});
+}
+
+// モジュールスクリプトは実行時点で既にDOMContentLoadedが発火済みの場合があり、
+// リスナー登録だけでは init が永遠に呼ばれない。readyState で分岐する（第3弾補修1）
+if (document.readyState !== 'loading') {
+  init();
+} else {
+  document.addEventListener('DOMContentLoaded', init);
+}

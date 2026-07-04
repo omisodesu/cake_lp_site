@@ -1,15 +1,17 @@
 ---
-// 期限切れの展示会告知（西日本食品産業創造展 5/20-22）のため非表示中。
-// 次の告知を掲載する際は isAnnouncementVisible を true に戻し、本文・リンク先を差し替えて再利用する。
-// 閉じるボタンの計測（announcement_bar_close / ga4-events.ts）は温存している。
-const isAnnouncementVisible = false;
+// クリスマス前倒し訴求の告知バー（修正指示書 第4弾 タスク3で再点灯）。
+// 掲載を止める際は isAnnouncementVisible を false に戻す（本文・計測コードは温存して再利用する）。
+// 閉じるボタンの計測（announcement_bar_close / ga4-events.ts）と
+// リンクの cta_click 計測（data-cta-location="announcement"）は ga4-events.ts が自動で拾う。
+// モバイル（480px以下）では1行に収まらないため、CSSで短縮版の文言に出し分ける（コピーは指示書の許容範囲内）。
+const isAnnouncementVisible = true;
 ---
 {isAnnouncementVisible && (
-  <div class="announcement-bar" id="announcement-bar" aria-label="展示会のお知らせ">
+  <div class="announcement-bar" id="announcement-bar" aria-label="クリスマス予約準備のお知らせ">
     <div class="announcement-bar__inner">
       <p class="announcement-bar__text">
-        <span class="announcement-bar__emoji" aria-hidden="true">🎪</span>
-        【展示会出展】<a href="https://gadandan.co.jp/news/west-japan-food-expo-2026/" class="announcement-bar__link" target="_blank" rel="noopener noreferrer">西日本食品産業創造展</a>（5/20-22）に出展します！
+        <span class="announcement-bar__text-full">クリスマスケーキのWEB予約、受付の準備はお早めに。<a href="/christmas/" class="announcement-bar__link" data-cta-location="announcement" data-cta-type="christmas_page">→ 詳しく見る</a></span>
+        <span class="announcement-bar__text-short"><a href="/christmas/" class="announcement-bar__link" data-cta-location="announcement" data-cta-type="christmas_page">クリスマスのWEB予約、準備はお早めに →</a></span>
       </p>
       <button
         class="announcement-bar__close"
@@ -69,8 +71,19 @@ const isAnnouncementVisible = false;
     color: var(--white);
   }
 
-  .announcement-bar__emoji {
-    margin-right: 0.25em;
+  /* 480px以下は短縮版の文言に出し分け（1行維持のため） */
+  .announcement-bar__text-short {
+    display: none;
+  }
+
+  @media (max-width: 480px) {
+    .announcement-bar__text-full {
+      display: none;
+    }
+
+    .announcement-bar__text-short {
+      display: inline;
+    }
   }
 
   .announcement-bar__link {
