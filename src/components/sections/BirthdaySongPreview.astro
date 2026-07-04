@@ -1,0 +1,167 @@
+---
+// バースデーソング試聴ブロック（修正指示書 タスク4）
+// 福井さんがA案/B案を選択待ちのため、両案を実装し定数1つで切り替えられる構造にしている。
+//
+// 【切り替え方法】下記 SONG_EMBED_MODE の値を書き換えるだけで表示が切り替わる
+//   'audio'   … A案（推奨）: 自前ホスティングの <audio controls preload="none">（子供向け・大人向け各1曲）
+//   'youtube' … B案: lite-youtube-embed（ファサード方式・通常iframeは使わない）
+//               埋め込みドメインは youtube-nocookie.com（lite-youtube-embed のデフォルト）、
+//               enablejsapi=1（GA4拡張計測「動画エンゲージメント」用）と rel=0 を params で付与
+//   'hidden'  … 非表示（何も描画しない）。音源・動画とも未受領のため、現在はこの値
+type SongEmbedMode = 'audio' | 'youtube' | 'hidden';
+const SONG_EMBED_MODE = 'hidden' as SongEmbedMode;
+
+// --- A案: サンプル音源（30秒程度・子供向け/大人向け各1） ---
+// TODO(福井さん確認): 音源ファイル受領後にパス設定（public/assets/audio/ に配置し、下記 src を実ファイル名へ更新）
+const audioSamples = [
+  { type: 'kids', label: '子供向けサンプル', src: '/assets/audio/birthday-song-kids.mp3' },
+  { type: 'adult', label: '大人向けサンプル', src: '/assets/audio/birthday-song-adult.mp3' },
+] as const;
+
+// --- B案: YouTube動画ID ---
+// TODO(福井さん確認): YouTube動画IDを設定（未定のため空文字。空のままだとB案でも何も描画されない）
+const YOUTUBE_VIDEO_ID = '';
+
+// 空セクションや壊れたUIを出さないための表示判定
+const showAudio = SONG_EMBED_MODE === 'audio';
+const showYoutube = SONG_EMBED_MODE === 'youtube' && YOUTUBE_VIDEO_ID !== '';
+const isVisible = showAudio || showYoutube;
+---
+{isVisible && (
+  <div class="song-preview">
+    <h4 class="song-preview__heading">まずは、聴いてみてください</h4>
+    <p class="song-preview__lead">お子さまの名前を呼ぶ、世界にひとつの誕生日の歌。導入店だけがお客様に提供できる体験です。</p>
+
+    {showAudio && (
+      <ul class="song-preview__list">
+        {audioSamples.map((sample) => (
+          <li class="song-preview__item">
+            <span class="song-preview__label" id={`song-label-${sample.type}`}>{sample.label}</span>
+            <audio
+              controls
+              preload="none"
+              src={sample.src}
+              data-song-type={sample.type}
+              aria-labelledby={`song-label-${sample.type}`}
+            >
+              {/* audio要素非対応環境向けフォールバック（JS無効でもネイティブ動作） */}
+              <a href={sample.src}>{sample.label}を聴く（音声ファイル）</a>
+            </audio>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {showYoutube && (
+      <lite-youtube
+        videoid={YOUTUBE_VIDEO_ID}
+        playlabel="バースデーソングのサンプルを再生"
+        params="enablejsapi=1&rel=0"
+      >
+        {/* JS無効時はカスタム要素が動かないため、リンクをフォールバックとして表示する */}
+        <a
+          class="lite-youtube-fallback"
+          href={`https://www.youtube.com/watch?v=${YOUTUBE_VIDEO_ID}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >YouTubeでバースデーソングのサンプルを再生する</a>
+      </lite-youtube>
+    )}
+  </div>
+)}
+
+<script>
+  // --- A案: audio 再生開始の計測 ---
+  // 既存の計測実装（ga4-events.ts / FAQ.astro）と同じく、gtag の存在を確認してから発火する。
+  // 一時停止→再開でも play イベントが発火するため、1要素につき初回のみ送信する。
+  document.querySelectorAll<HTMLAudioElement>('.song-preview audio[data-song-type]').forEach((audio) => {
+    let hasFired = false;
+    audio.addEventListener('play', () => {
+      if (hasFired) return;
+      hasFired = true;
+      if (typeof gtag !== 'function') return;
+      gtag('event', 'birthday_song_play', {
+        song_type: audio.dataset.songType || '',
+      });
+    });
+  });
+
+  // --- B案: lite-youtube-embed の遅延ロード ---
+  // B案（YouTube）選択時のみ動的importし、A案・hidden時はJS/CSSとも一切ロードしない。
+  if (document.querySelector('lite-youtube')) {
+    // @ts-ignore -- lite-youtube-embed は型定義ファイルを提供していない
+    import('lite-youtube-embed');
+    // @ts-ignore -- パッケージ同梱CSSの直接import（Viteが別チャンクとして遅延読み込みする）
+    import('lite-youtube-embed/src/lite-yt-embed.css');
+  }
+
+  declare function gtag(...args: any[]): void;
+</script>
+
+<style>
+  .song-preview {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  .song-preview__heading {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-align: left;
+  }
+
+  .song-preview__lead {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: var(--text-color);
+    margin-bottom: 0.75rem;
+  }
+
+  .song-preview__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .song-preview__item {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .song-preview__label {
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .song-preview__item audio {
+    width: 100%;
+  }
+
+  /* B案: 枠の見た目調整（実体スタイルは lite-yt-embed.css を動的importで適用） */
+  lite-youtube {
+    max-width: 100%;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+  }
+
+  /* JS無効時のフォールバックリンク。カスタム要素が定義されたら非表示にする */
+  .lite-youtube-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16 / 9;
+    padding: 1rem;
+    background-color: #000;
+    color: var(--white);
+    text-decoration: underline;
+    text-align: center;
+  }
+
+  :global(lite-youtube:defined) .lite-youtube-fallback {
+    display: none;
+  }
+</style>

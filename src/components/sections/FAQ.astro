@@ -1,11 +1,19 @@
 ---
 import { faqItems } from '../../data/faq';
+
+// 表示するFAQ項目を差し替えられるようにする軽微な汎用化（/christmas/ でのFAQ抜粋再掲用）。
+// items 未指定なら全件表示＝TOPページの従来挙動のまま。文言は faq.ts で一元管理する。
+interface Props {
+  items?: ReadonlyArray<(typeof faqItems)[number]>;
+}
+
+const { items = faqItems } = Astro.props;
 ---
 <section class="section faq" id="faq">
   <div class="container">
     <h2>よくある質問</h2>
     <div class="faq__list">
-      {faqItems.map((item) => (
+      {items.map((item) => (
         <details class="faq__item" data-faq-id={item.id}>
           <summary class="faq__question">
             {item.question}

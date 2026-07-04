@@ -39,6 +39,18 @@ const blogUrl = 'https://gadandan.co.jp/news/case-study-patisserie-loop/';
   shopName="パティスリー・ループ 様"
   problemSummary="週休2日にしたい。でも営業日が減れば、お客様も減ってしまう——"
 >
+  <!-- 課題→施策→結果 3行サマリー -->
+  <section class="case-study-section case-summary" aria-label="この事例の概要">
+    <dl class="case-summary__list">
+      <dt>課題</dt>
+      <dd>週休2日体制への移行で営業日が減少。お休みの日に予約が入ることはほぼゼロで、お店が閉まっている日は予約の窓口そのものが閉じていた。</dd>
+      <dt>施策</dt>
+      <dd>ホームページにバナーをひとつ設置してWeb予約を開始。お客様がスマホで写真を添付して予約できる画像添付機能も活用。</dd>
+      <dt>結果</dt>
+      <dd>休日予約が0件から週8件に。画像のやり取りも自動化され、月間数時間分の業務を削減。</dd>
+    </dl>
+  </section>
+
   <!-- 店舗紹介 -->
   <div class="case-study-section">
     <div class="case-study-intro">
@@ -88,6 +100,16 @@ const blogUrl = 'https://gadandan.co.jp/news/case-study-patisserie-loop/';
       <cite>パティスリー・ループ オーナー様</cite>
     </blockquote>
     <p>定休日が増えても、お客様とのつながりは途切れない。お客様にとっても、夜寝る前にスマホからポチっと予約できる。お店が開いているかどうかを気にする必要がなくなりました。</p>
+
+    <!-- 事例詳細資料CTA（記事中盤） -->
+    <p class="case-detail-cta">
+      <a
+        href="/?inquiry=case_christmas#contact"
+        class="case-detail-cta__button"
+        data-cta-location="case_loop_detail_mid"
+        data-cta-type="case_study_pdf"
+      >この事例の詳細資料を請求する</a>
+    </p>
   </section>
 
   <!-- 画像添付機能 -->
@@ -150,6 +172,32 @@ const blogUrl = 'https://gadandan.co.jp/news/case-study-patisserie-loop/';
     </dl>
   </section>
 
+  <!-- 事例詳細資料CTA（記事末尾） -->
+  <p class="case-detail-cta">
+    <a
+      href="/?inquiry=case_christmas#contact"
+      class="case-detail-cta__button"
+      data-cta-location="case_loop_detail_bottom"
+      data-cta-type="case_study_pdf"
+    >この事例の詳細資料を請求する</a>
+  </p>
+
+  <!-- もう一つの導入事例 -->
+  <section class="case-study-section related-case">
+    <h2>もう一つの導入事例</h2>
+    <a
+      href="/cases/patisserie-les-trois-soleils/"
+      class="related-case__card"
+      data-case-link-kind="related_case"
+      data-case-name="trois_soleils"
+    >
+      <p class="related-case__shop">パティスリー・レ・トロワ・ソレイユ 様</p>
+      <p class="related-case__quote">「ライフステージの変化で営業日が減少。限られた人員で、繁忙期も滞りなく運営したい——」</p>
+      <p class="related-case__result">クリスマスのWeb予約が初年度152件（3割超）、2年目には180件（約半数）に。接客・電話対応を約22時間削減した事例です。</p>
+      <span class="related-case__link">この事例を読む →</span>
+    </a>
+  </section>
+
   <nav class="case-study-navigation" aria-label="導入事例ナビゲーション" slot="navigation">
     <a href="/#testimonials" class="nav-button"><Icon name="arrow-left" size="0.9em" /> 導入事例一覧へ戻る</a>
     <a href="/cases/patisserie-les-trois-soleils/" class="nav-button">次の事例へ <Icon name="chevron-right" size="0.9em" /></a>
@@ -167,6 +215,110 @@ const blogUrl = 'https://gadandan.co.jp/news/case-study-patisserie-loop/';
 </CaseStudyLayout>
 
 <style>
+  /* --- 課題→施策→結果 サマリー --- */
+  .case-summary {
+    background: #faf7f2;
+    border: 1px solid #e8dcc8;
+    border-radius: 14px;
+    padding: 24px 28px;
+  }
+
+  .case-summary__list {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px 16px;
+    margin: 0;
+  }
+
+  .case-summary__list dt {
+    background: var(--accent-color);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 6px;
+    padding: 2px 12px;
+    justify-self: start;
+    align-self: start;
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+
+  .case-summary__list dd {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  /* --- 事例詳細資料CTA --- */
+  .case-detail-cta {
+    text-align: center;
+    margin: 32px 0;
+  }
+
+  .case-detail-cta__button {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent-color), var(--main-color));
+    color: #fff;
+    padding: 16px 36px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 16px rgba(255, 140, 0, 0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .case-detail-cta__button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 140, 0, 0.45);
+  }
+
+  /* --- もう一つの導入事例カード --- */
+  .related-case__card {
+    display: block;
+    background: #fff;
+    border: 1px solid #ede8e0;
+    border-radius: 14px;
+    padding: 24px 28px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .related-case__card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .related-case__shop {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--heading-color);
+    margin: 0 0 8px;
+  }
+
+  .related-case__quote {
+    font-size: 0.95rem;
+    color: #555;
+    margin: 0 0 8px;
+    line-height: 1.7;
+  }
+
+  .related-case__result {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0 0 12px;
+    line-height: 1.7;
+  }
+
+  .related-case__link {
+    color: var(--accent-color);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
   /* --- ナビゲーション --- */
   .case-study-navigation {
     margin-top: 40px;
@@ -338,6 +490,23 @@ const blogUrl = 'https://gadandan.co.jp/news/case-study-patisserie-loop/';
 
   /* --- レスポンシブ --- */
   @media (max-width: 600px) {
+    .case-summary {
+      padding: 20px 18px;
+    }
+
+    .case-summary__list {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .case-summary__list dd {
+      margin-bottom: 10px;
+    }
+
+    .case-summary__list dd:last-of-type {
+      margin-bottom: 0;
+    }
+
     .stat-grid {
       grid-template-columns: repeat(2, 1fr);
     }

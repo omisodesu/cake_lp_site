@@ -1,0 +1,427 @@
+---
+// クリスマス専用ページ（修正指示書 2026-06-10 タスク10）
+// TODO(福井さん確認): 公開タイミング（遅くとも7月末）。公開判断が出るまで本番反映しないこと。
+// 公開を遅らせる場合は、TOP実績バッジ（results.ts）とフッター（Footer.astro）の /christmas/ リンクも合わせて調整が必要。
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AnnouncementBar from '../../components/common/AnnouncementBar.astro';
+import GlobalNav from '../../components/common/GlobalNav.astro';
+import Header from '../../components/common/Header.astro';
+import FAQ from '../../components/sections/FAQ.astro';
+import Icon from '../../components/common/Icon.astro';
+import { faqItems } from '../../data/faq';
+import { Image } from 'astro:assets';
+import caseSoleilsImage from '../../images/case_soleils_shop.png';
+
+// メタ情報（文言は指示書タスク10どおり）
+const pageTitle = 'クリスマスケーキの予約管理を自動化｜いつでもケーキ';
+const pageDescription = 'クリスマスケーキの予約管理に強いケーキ店専門システム。時間帯別の受注制限・事前決済・自動集計で繁忙期の現場を守ります。導入店はWEB予約0→152件。初期費用0円・月額0円。';
+
+// 繁忙期特有の課題3つ（タイトルは指示書どおり。本文は既存LPの課題カード・FAQ・事例ページの文言を基にした補足）
+const christmasProblems = [
+  {
+    icon: 'phone',
+    title: '電話が殺到して作業が止まる',
+    description: '予約の電話が次々にかかってきて、そのたびにケーキ製作の手が止まる。一年でいちばん集中したい時期に、作業が進まなくなります。',
+  },
+  {
+    icon: 'clock',
+    title: '台数・受取時間の管理が限界',
+    description: '「どの時間帯に、あと何台受けられるのか」を頭の中と手書きのメモで管理していると、製造能力を超えた注文を受けてしまう心配があります。',
+  },
+  {
+    icon: 'list-check',
+    title: '手書き集計のミス',
+    description: '紙伝票の予約を1枚ずつ手で集計していると、繁忙期はミスや漏れが起こりがち。予約が増えるたびに、集計のやり直しも発生します。',
+  },
+] as const;
+
+// 機能4つ（タイトルは指示書どおり。本文は既存FAQ・事例ページの文言を基に記載）
+const christmasFeatures = [
+  {
+    icon: 'clock',
+    title: '時間帯別受注制限',
+    description: '受取時間帯ごとに在庫（受注枠）を設定できるため、繁忙期でも製造能力を超えた注文を受けてしまう心配がありません。',
+  },
+  {
+    icon: 'calendar-check',
+    title: '受注締切設定',
+    description: '予約の受付締切をあらかじめ設定できるので、製造計画に合わせて余裕を持って受付を終了できます。',
+  },
+  {
+    icon: 'yen-sign',
+    title: '事前決済でキャンセル防止',
+    description: 'お受け取り前にお支払いが完了しているため、作ったケーキが受け取られないリスクを減らせます。※WEB事前決済ご利用時は別途決済手数料3.6%が発生します',
+  },
+  {
+    icon: 'list-check',
+    title: '予約一覧の自動集計',
+    description: '受取日別・ケーキ別の予約数を管理パネルで瞬時に確認。予約が入った時点で自動更新されるので、手作業の集計から解放されます。',
+  },
+] as const;
+
+// FAQ抜粋: タスク8の3・4・6（busy_season / slot_limit / prepayment）を faq.ts から再利用（文言の二重管理をしない）
+const christmasFaqIds: readonly string[] = ['busy_season', 'slot_limit', 'prepayment'];
+const christmasFaqItems = faqItems.filter((item) => christmasFaqIds.includes(item.id));
+---
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Fragment slot="header">
+    <AnnouncementBar />
+    <GlobalNav />
+  </Fragment>
+
+  <!-- 1. ヒーロー -->
+  <Header slot="header" showLogo={false}>
+    <div class="header__content">
+      <h1 class="header__title">クリスマスの電話、<br>鳴り止まなくていい。</h1>
+      <p class="header__subtitle">予約も、台数管理も、集計も。クリスマス商戦をシステムに任せて、現場はケーキに集中する</p>
+      <div class="header__cta-group">
+        <a href="/?inquiry=case_christmas#contact" class="cta-button" data-cta-location="christmas_hero" data-cta-type="case_study_pdf">クリスマス事例集を請求する</a>
+        <a href="/#contact" class="cta-button cta-button--secondary" data-cta-location="christmas_hero" data-cta-type="consultation">まずは無料で相談する</a>
+      </div>
+    </div>
+  </Header>
+
+  <main>
+    <!-- 2. 繁忙期特有の課題3つ（TOPの課題カードのデザインを踏襲） -->
+    <section class="section christmas-problems" id="problems">
+      <div class="container">
+        <h2>クリスマス商戦、こんな課題はありませんか？</h2>
+        <ul class="christmas-problems__list">
+          {christmasProblems.map((problem) => (
+            <li class="problem-card">
+              <div class="problem-card__icon">
+                <Icon name={problem.icon} />
+              </div>
+              <h3 class="problem-card__title">{problem.title}</h3>
+              <p>{problem.description}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. ストーリー: WEB予約0件→152件（ソレイユ実績・事例集Vol.01より） -->
+    <section class="section christmas-story" id="story">
+      <div class="container">
+        <h2>WEB予約0件が、1年で152件に。</h2>
+        <p class="christmas-story__lead">同じお店の、1年違いのクリスマス。2023年はWEB予約0件（全367件）。導入1年目の2024年は152件（全408件）。味も腕も同じ。変わったのは『予約の仕組み』だけでした</p>
+        <div class="christmas-story__body">
+          <p>どんなに腕のよい職人がそろっていても、「予約したい」と思ったお客様を受け止める仕組みがなければ、注文はそこで止まってしまいます。電話がつながる時間にしか予約できなかった前年と、24時間いつでも予約できるようになった翌年。クリスマス商戦の数字の差は、そこから生まれました。</p>
+          <p>味や腕を磨くことと同じくらい、予約の受け皿を整えること。それが、繁忙期にお店の力を最大限に発揮するための準備です。</p>
+          <p class="christmas-story__note">※ パティスリー・レ・トロワ・ソレイユ様の実績（クリスマス予約Web化 成功事例集 Vol.01より）</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 繁忙期の現場を守る機能4つ -->
+    <section class="section christmas-features" id="features">
+      <div class="container">
+        <h2>繁忙期の現場を守る4つの機能</h2>
+        <ul class="christmas-features__list">
+          {christmasFeatures.map((feature) => (
+            <li class="christmas-feature-card">
+              <div class="christmas-feature-card__icon">
+                <Icon name={feature.icon} />
+              </div>
+              <h3 class="christmas-feature-card__title">{feature.title}</h3>
+              <p>{feature.description}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- 5. 実績: トロワソレイユ クリスマスWEB予約 0→152件 -->
+    <section class="section christmas-results" id="results">
+      <div class="container">
+        <h2>導入店の実績</h2>
+        <a
+          href="/cases/patisserie-les-trois-soleils/"
+          class="christmas-results__card"
+          data-case-link-kind="christmas_results"
+          data-case-name="trois_soleils"
+        >
+          <Image src={caseSoleilsImage} alt="パティスリー・レ・トロワ・ソレイユ 店内" class="christmas-results__image" width={600} />
+          <div class="christmas-results__body">
+            <p class="christmas-results__shop">パティスリー・レ・トロワ・ソレイユ 様</p>
+            <p class="christmas-results__stat">
+              <span class="christmas-results__number">0→152<span class="christmas-results__unit">件</span></span>
+              <span class="christmas-results__label">クリスマスWEB予約の増加（導入初年度）</span>
+            </p>
+            <span class="christmas-results__link">導入事例を詳しく見る →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 6. CTA: クリスマス事例集の請求（CTA文言は指示書どおり。リード・注記は事例ページの既存・成功事例集ボックスの文言を流用） -->
+    <section class="section christmas-cta" id="contact-cta">
+      <div class="container christmas-cta__inner">
+        <p class="christmas-cta__text">クリスマス商戦の実例とノウハウを、成功事例集（PDF）にまとめてお届けしています。</p>
+        <a href="/?inquiry=case_christmas#contact" class="cta-button" data-cta-location="christmas_bottom" data-cta-type="case_study_pdf">クリスマス事例集を請求する</a>
+        <p class="christmas-cta__note">※ ご請求いただいたケーキ店様にだけお届けしています。</p>
+      </div>
+    </section>
+
+    <!-- 7. FAQ抜粋（busy_season / slot_limit / prepayment。faq.ts のデータと faq_open 計測をそのまま再利用） -->
+    <FAQ items={christmasFaqItems} />
+  </main>
+</BaseLayout>
+
+<style>
+  /* ヒーロー（TOPページの header__* スタイルを踏襲） */
+  .header__content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .header__title {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    color: var(--heading-color);
+  }
+
+  .header__subtitle {
+    font-size: 1.4rem;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+  }
+
+  .header__cta-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* 課題カード（TOPの problem-card デザインを踏襲） */
+  .christmas-problems {
+    background-color: var(--secondary-color);
+  }
+
+  .christmas-problems__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+    list-style: none;
+    padding: 0;
+  }
+
+  .problem-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .problem-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .problem-card__icon {
+    font-size: 3rem;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+  }
+
+  .problem-card__title {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+
+  /* ストーリー */
+  .christmas-story {
+    background-color: var(--white);
+  }
+
+  .christmas-story__lead {
+    max-width: 720px;
+    margin: 40px auto 30px;
+    padding: 28px 32px;
+    background-color: var(--secondary-color);
+    border-left: 5px solid var(--accent-color);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--heading-color);
+    line-height: 1.8;
+  }
+
+  .christmas-story__body {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .christmas-story__note {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 16px;
+  }
+
+  /* 機能カード */
+  .christmas-features {
+    background-color: var(--secondary-color);
+  }
+
+  .christmas-features__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+    list-style: none;
+    padding: 0;
+  }
+
+  .christmas-feature-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+  }
+
+  .christmas-feature-card__icon {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 16px;
+  }
+
+  .christmas-feature-card__title {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: var(--accent-color);
+  }
+
+  /* 実績カード */
+  .christmas-results {
+    background-color: var(--white);
+  }
+
+  .christmas-results__card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+    max-width: 900px;
+    margin: 40px auto 0;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 30px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .christmas-results__card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    color: var(--text-color);
+  }
+
+  .christmas-results__image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+  }
+
+  .christmas-results__shop {
+    font-weight: bold;
+    color: var(--heading-color);
+    margin-bottom: 12px;
+  }
+
+  .christmas-results__stat {
+    margin-bottom: 16px;
+  }
+
+  .christmas-results__number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    font-family: "Hiragino Maru Gothic ProN", "BIZ UDPGothic", Meiryo, sans-serif;
+    line-height: 1.2;
+  }
+
+  .christmas-results__unit {
+    font-size: 1.2rem;
+  }
+
+  .christmas-results__label {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.95rem;
+  }
+
+  .christmas-results__link {
+    color: var(--accent-color);
+    font-weight: bold;
+  }
+
+  /* CTA（TOPの中間CTAデザインを踏襲） */
+  .christmas-cta {
+    background-color: var(--main-color);
+    padding: 60px 0;
+  }
+
+  .christmas-cta__inner {
+    text-align: center;
+  }
+
+  .christmas-cta__text {
+    color: var(--white);
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+  }
+
+  .christmas-cta__note {
+    color: var(--white);
+    font-size: 0.85rem;
+    margin: 1rem 0 0;
+  }
+
+  /* レスポンシブ */
+  @media (max-width: 768px) {
+    .header__title {
+      font-size: 2.2rem;
+    }
+
+    .header__subtitle {
+      font-size: 1.15rem;
+    }
+
+    .christmas-results__card {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .christmas-results__image {
+      height: 180px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header__title {
+      font-size: 1.8rem;
+    }
+
+    .header__subtitle {
+      font-size: 1rem;
+    }
+
+    .christmas-story__lead {
+      padding: 20px 22px;
+      font-size: 1.05rem;
+    }
+
+    .christmas-results__number {
+      font-size: 2rem;
+    }
+  }
+</style>

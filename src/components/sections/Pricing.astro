@@ -5,31 +5,48 @@
     <h2>料金プラン</h2>
     <div class="pricing__comparison">
       <h3>他社との違い</h3>
-      <p class="pricing__comparison-lead">「いつでもケーキ」は<strong>初期費用0円・月額固定費0円</strong>。一般的な予約システムとの料金を比較しました。</p>
+      {/* TODO(福井さん確認): 比較表リード文は指示書に指定がないため、新しい列名に合わせて最小限の修正のみ実施。文言の最終確認をお願いします */}
+      <p class="pricing__comparison-lead">「いつでもケーキ」は<strong>初期費用0円・月額固定費0円</strong>。月額固定型の予約システムや、SNSのDM・LINEでの受注と比較しました。</p>
       <div class="pricing__table-wrap">
         <table class="pricing__table">
           <thead>
             <tr>
               <th scope="col">比較項目</th>
               <th scope="col">いつでもケーキ</th>
-              <th scope="col">一般的な予約システム</th>
+              <th scope="col">月額固定型の予約システム</th>
+              <th scope="col">SNSのDM・LINEでの受注</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>初期費用</td>
+              <th scope="row">初期費用</th>
               <td><strong>0円</strong></td>
               <td>10万〜50万円</td>
+              <td>0円</td>
             </tr>
             <tr>
-              <td>月額固定費</td>
+              <th scope="row">月額費用</th>
               <td><strong>0円</strong></td>
-              <td>1万〜5万円/月</td>
+              <td>1店舗あたり月1〜2万円〜</td>
+              <td>0円</td>
             </tr>
             <tr>
-              <td>繁忙期のみ利用</td>
+              <th scope="row">複数店舗</th>
+              <td><strong>何店舗でも追加費用なし</strong></td>
+              <td>店舗数 × 月額</td>
+              <td>店舗ごとの管理が煩雑に</td>
+            </tr>
+            <tr>
+              <th scope="row">注文の管理</th>
+              <td>自動で一覧化・集計</td>
+              <td>自動</td>
+              <td>やり取りが何往復も続く</td>
+            </tr>
+            <tr>
+              <th scope="row">繁忙期のみの利用</th>
               <td><strong>可能</strong></td>
-              <td>年間契約が必要</td>
+              <td>年間契約が必要な場合あり</td>
+              <td>可能（ただし手作業）</td>
             </tr>
           </tbody>
         </table>
@@ -57,13 +74,23 @@
 
     <div class="pricing__simulation">
       <h3>料金シミュレーション</h3>
-      <dl class="pricing__simulation-example">
-        <dt>例: 平均単価3,000円 × 月50件のWEB予約の場合</dt>
-        <dd>
-          <p>売上: 50件 × 3,000円 = <strong>150,000円</strong></p>
-          <p>手数料: 150,000円 × 5.5% = <strong>8,250円</strong></p>
-          <p class="pricing__simulation-result">予約1件あたり <strong>165円</strong></p>
-        </dd>
+      <dl class="pricing__simulation-examples">
+        <div class="pricing__simulation-example">
+          <dt>例: 平均単価3,000円 × 月50件のWEB予約の場合</dt>
+          <dd>
+            <p>売上: 50件 × 3,000円 = <strong>150,000円</strong></p>
+            <p>手数料: 150,000円 × 5.5% = <strong>8,250円</strong></p>
+            <p class="pricing__simulation-result">予約1件あたり <strong>165円</strong></p>
+          </dd>
+        </div>
+        <div class="pricing__simulation-example">
+          <dt>例: 5店舗 × 月200件のWEB予約の場合（平均単価3,000円）</dt>
+          <dd>
+            <p>売上: 200件 × 3,000円 = <strong>600,000円</strong></p>
+            <p>手数料: 600,000円 × 5.5% = <strong>33,000円</strong></p>
+            <p class="pricing__simulation-result">月額固定型（1店舗2万円）なら月10万円。何店舗でも、固定費はかかりません。</p>
+          </dd>
+        </div>
       </dl>
     </div>
   </div>
@@ -129,7 +156,7 @@
   }
 
   .pricing__comparison {
-    max-width: 700px;
+    max-width: 800px;
     margin: 0 auto 40px;
     text-align: center;
   }
@@ -147,6 +174,8 @@
 
   .pricing__table {
     width: 100%;
+    /* 4列構成のためモバイル幅では潰さず、既存の横スクロール（.pricing__table-wrap）で対応 */
+    min-width: 560px;
     border-collapse: collapse;
     margin-top: 20px;
   }
@@ -158,23 +187,45 @@
     text-align: center;
   }
 
-  .pricing__table thead th {
+  .pricing__table thead th,
+  .pricing__table tbody th {
     background-color: var(--secondary-color);
     font-weight: bold;
   }
 
+  /* いつでもケーキ列は色で強調。太字は指示書の太字指定セル（strong）のみに付ける */
   .pricing__table tbody td:nth-child(2) {
     color: var(--accent-color);
-    font-weight: bold;
+  }
+
+  @media (max-width: 480px) {
+    .pricing__table th,
+    .pricing__table td {
+      padding: 10px 12px;
+      font-size: 0.9rem;
+    }
   }
 
   .pricing__simulation {
-    max-width: 600px;
+    max-width: 900px;
     margin: 40px auto 0;
     background-color: var(--secondary-color);
     border-radius: var(--border-radius);
     padding: 30px;
     text-align: center;
+  }
+
+  /* 1店舗例と多店舗例を横並びに（モバイルでは縦積み） */
+  .pricing__simulation-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: 0;
+  }
+
+  .pricing__simulation-example {
+    flex: 1;
+    min-width: 260px;
   }
 
   .pricing__simulation-example dt {

@@ -1,21 +1,29 @@
 ---
 import { results } from '../../data/results';
-
-const summaryItems = [
-  { ...results[0], unit: '件' },
-  { ...results[1], unit: '件' },
-  { ...results[3], unit: '時間' },
-];
 ---
 <section class="section results-summary" aria-label="導入実績サマリー">
   <div class="container">
     <ul class="results-summary__badges">
-      {summaryItems.map((item) => (
-        <li class="results-summary__badge">
-          <span class="results-summary__value">{item.value.toLocaleString()}<span class="results-summary__unit">{item.unit}</span></span>
-          <span class="results-summary__label">{item.title}</span>
-        </li>
-      ))}
+      {results.map((item) => {
+        // バッジの中身（リンクあり・なしで共通）
+        const badgeContent = (
+          <>
+            <span class="results-summary__value">{item.value}<span class="results-summary__unit">{item.unit}</span></span>
+            <span class="results-summary__label">{item.title}</span>
+          </>
+        );
+        return (
+          <li class="results-summary__badge">
+            {item.href ? (
+              <a href={item.href} class="results-summary__link" data-nav-name={item.navName}>
+                {badgeContent}
+              </a>
+            ) : (
+              badgeContent
+            )}
+          </li>
+        );
+      })}
     </ul>
   </div>
 </section>
@@ -42,6 +50,23 @@ const summaryItems = [
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     min-width: 180px;
+  }
+
+  /* リンク付きバッジ（/christmas/ への内部リンク）。既存デザインを維持しつつラベル下線でリンクと分かるようにする */
+  .results-summary__link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .results-summary__link .results-summary__label {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .results-summary__link:hover .results-summary__label,
+  .results-summary__link:focus-visible .results-summary__label {
+    color: var(--accent-color);
   }
 
   .results-summary__value {

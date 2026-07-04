@@ -15,22 +15,56 @@ import FAQ from '../components/sections/FAQ.astro';
 import TrustSignals from '../components/sections/TrustSignals.astro';
 import ContactForm from '../components/forms/ContactForm.astro';
 import { SITE } from '../data/site';
+import { faqItems } from '../data/faq';
+import { Image } from 'astro:assets';
+import caseSoleilsImage from '../images/case_soleils_shop.png';
+import caseLoopImage from '../images/shop2.jpg';
 
-const structuredData = {
+// TOPページのtitle / meta description（修正指示書タスク2-1・2-2の文言）
+const pageTitle = '【ケーキ店向け予約システム】電話予約を24時間ネット受付へ｜いつでもケーキ';
+const pageDescription = 'ケーキ店専門の予約システム「いつでもケーキ」。初期費用0円・月額0円、売れた分だけの5.5%。注文が入らなければ費用はかかりません。24時間WEB受付で営業時間外の予約（導入店実績51%）を取りこぼさない。無料相談受付中。';
+
+// JSON-LD: SoftwareApplication（修正指示書タスク2-3）
+const softwareApplicationSchema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "いつでもケーキ",
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Web",
-  "description": "ケーキ店専門の予約管理システム。サイズ・オプション選択、在庫管理、24時間WEB予約受付に対応。初期費用0円・月額固定費0円、注文代金の5.5%（税込）の従量課金制。"
+  "description": "ケーキ店専門の予約管理システム。サイズ・オプション選択、在庫管理、24時間WEB予約受付に対応。初期費用0円・月額固定費0円、注文代金の5.5%（税込）の従量課金制。",
+  "offers": {
+    "@type": "Offer",
+    "price": 0,
+    "priceCurrency": "JPY",
+    "description": "初期費用0円・月額0円・注文代金の5.5%の従量課金"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "がだんだん株式会社"
+  }
+};
+
+// JSON-LD: FAQPage（修正指示書タスク2-3）
+// 画面表示と完全一致させるため、faq.ts の配列からプログラム的に生成する（手書きで二重管理しない）
+const faqPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map((item) => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer,
+    },
+  })),
 };
 ---
 <BaseLayout
-  title={SITE.title}
-  description={SITE.description}
+  title={pageTitle}
+  description={pageDescription}
   ogTitle={SITE.ogTitle}
-  ogDescription={SITE.ogDescription}
-  structuredData={structuredData}
+  ogDescription={pageDescription}
+  structuredData={[softwareApplicationSchema, faqPageSchema]}
 >
   <Fragment slot="header">
     <AnnouncementBar />
@@ -41,6 +75,7 @@ const structuredData = {
     <div class="header__content">
       <h1 class="header__title">ケーキ店の電話予約、<br>もう手が止まらなくていい。</h1>
       <p class="header__subtitle">ケーキ店専門の予約管理システムで、売上も時間も取り戻す。</p>
+      <p class="header__risk-free">売れなければ、費用は0円。小さなお店こそ、リスクなく始められます。</p>
       <ul class="header__badges">
         <li>ケーキ店専門</li>
         <li>24時間WEB予約受付</li>
@@ -56,6 +91,41 @@ const structuredData = {
   </Header>
 
   <main>
+    <!-- ヒーロー直下: 導入事例ハイライト（修正指示書タスク9-1） -->
+    <section class="section hero-cases" aria-label="導入事例ハイライト">
+      <div class="container">
+        <ul class="hero-cases__list">
+          <li class="hero-cases__item">
+            <a
+              href="/cases/patisserie-les-trois-soleils/"
+              class="hero-case-card"
+              data-case-link-kind="hero_case_card"
+              data-case-name="les-trois-soleils"
+            >
+              <Image src={caseSoleilsImage} alt="パティスリー・レ・トロワ・ソレイユ 店内" class="hero-case-card__image" width={600} />
+              <p class="hero-case-card__effect">導入初年度のクリスマス、WEB予約が全体の3割超に</p>
+              <span class="hero-case-card__more">詳細を見る →</span>
+            </a>
+          </li>
+          <li class="hero-cases__item">
+            <a
+              href="/cases/patisserie-loop/"
+              class="hero-case-card"
+              data-case-link-kind="hero_case_card"
+              data-case-name="loop"
+            >
+              <Image src={caseLoopImage} alt="パティスリー・ループ 店舗外観" class="hero-case-card__image" width={600} />
+              <p class="hero-case-card__effect">店休日だけで月30〜40件。電話対応は月20時間削減</p>
+              <span class="hero-case-card__more">詳細を見る →</span>
+            </a>
+          </li>
+        </ul>
+        <div class="hero-cases__cta">
+          <a href="#contact" class="cta-button" data-cta-location="hero_cases" data-cta-type="consultation">無料相談はこちら</a>
+        </div>
+      </div>
+    </section>
+
     <ResultsSummary />
     <Problems />
     <Testimonials />
@@ -99,8 +169,15 @@ const structuredData = {
 
   .header__subtitle {
     font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     color: var(--text-color);
+  }
+
+  .header__risk-free {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
   }
 
   .header__badges {
@@ -127,6 +204,64 @@ const structuredData = {
     justify-content: center;
     gap: 1rem;
     flex-wrap: wrap;
+  }
+
+  /* ヒーロー直下の導入事例ハイライト */
+  .hero-cases {
+    background-color: var(--secondary-color);
+    padding: 50px 0;
+  }
+
+  .hero-cases__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+    list-style: none;
+    padding: 0;
+  }
+
+  .hero-case-card {
+    display: block;
+    height: 100%;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hero-case-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    color: var(--text-color);
+  }
+
+  .hero-case-card__image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    margin-bottom: 16px;
+  }
+
+  .hero-case-card__effect {
+    font-weight: bold;
+    color: var(--heading-color);
+    margin-bottom: 12px;
+  }
+
+  .hero-case-card__more {
+    color: var(--accent-color);
+    font-weight: bold;
+  }
+
+  .hero-cases__cta {
+    text-align: center;
+    margin-top: 30px;
   }
 
   .section--cta-mid {
@@ -169,6 +304,10 @@ const structuredData = {
     .header__subtitle {
       font-size: 1.2rem;
     }
+
+    .header__risk-free {
+      font-size: 1.05rem;
+    }
   }
 
   @media (max-width: 480px) {
@@ -178,6 +317,10 @@ const structuredData = {
 
     .header__subtitle {
       font-size: 1rem;
+    }
+
+    .header__risk-free {
+      font-size: 0.95rem;
     }
 
     .header__badges li {

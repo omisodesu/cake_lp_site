@@ -1,4 +1,7 @@
 ---
+// 注意: 現在どのページからも使用されていないコンポーネント（index.astro は ResultsSummary を使用）
+// results データの形式変更（タスク3-2）に合わせて同期済み。
+// 値が「0→152」など数値型でなくなったため、カウントアップアニメーションは廃止した
 import { results } from '../../data/results';
 ---
 <section class="section results" id="results">
@@ -9,55 +12,13 @@ import { results } from '../../data/results';
         <div class="result-card">
           <dt class="result-card__title">{result.title}</dt>
           <dd class="result-card__value">
-            <span class="result-card__number" data-value={result.value}>{result.value}</span>
+            <span class="result-card__number">{result.value}<span class="result-card__unit">{result.unit}</span></span>
           </dd>
-          <dd class="result-card__description">{result.description}</dd>
         </div>
       ))}
     </dl>
   </div>
 </section>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const resultNumbers = document.querySelectorAll('.result-card__number');
-    if (resultNumbers.length > 0 && 'IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const target = entry.target as HTMLElement;
-            const finalValue = parseInt(target.getAttribute('data-value') || '0', 10);
-            if (isNaN(finalValue) || target.classList.contains('counted')) return;
-            target.classList.add('counted');
-
-            // アニメーション開始: 0 から実際の値へカウントアップ
-            target.textContent = '0';
-            let currentValue = 0;
-            const duration = 2000;
-            const frameDuration = 16;
-            const totalFrames = Math.round(duration / frameDuration);
-            const increment = finalValue / totalFrames;
-            let currentFrame = 0;
-
-            const timer = setInterval(() => {
-              currentFrame++;
-              currentValue += increment;
-              if (currentFrame >= totalFrames) {
-                clearInterval(timer);
-                currentValue = finalValue;
-              }
-              target.textContent = Math.floor(currentValue).toLocaleString();
-            }, frameDuration);
-
-            obs.unobserve(target);
-          }
-        });
-      }, { threshold: 0.5 });
-
-      resultNumbers.forEach(number => observer.observe(number));
-    }
-  });
-</script>
 
 <style>
   .results {
@@ -95,13 +56,13 @@ import { results } from '../../data/results';
     display: block;
   }
 
+  .result-card__unit {
+    font-size: 1.4rem;
+  }
+
   .result-card__title {
     font-size: 1.3rem;
     margin-bottom: 15px;
     font-weight: bold;
-  }
-
-  .result-card__description {
-    margin: 0;
   }
 </style>

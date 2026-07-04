@@ -10,7 +10,8 @@
     "deploy:all": "npm run build && firebase deploy"
   },
   "dependencies": {
-    "astro": "^5.7.10"
+    "astro": "^5.7.10",
+    "lite-youtube-embed": "^0.3.4"
   },
   "devDependencies": {
     "@astrojs/sitemap": "^3.3.1",

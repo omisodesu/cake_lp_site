@@ -10,7 +10,7 @@ const { showPersonInCharge = true } = Astro.props;
 ---
 <form id="contact-form" class="contact-form" data-function-url={SITE.cloudFunctionUrl}>
   <div class="form-group">
-    <label for="shop-name">店舗名・会社名※個人の方はなしご記入ください <span class="required">*</span></label>
+    <label for="shop-name">店舗名・会社名※個人の方は「なし」とご記入ください <span class="required">*</span></label>
     <input type="text" id="shop-name" name="shop-name" required>
   </div>
 
@@ -234,16 +234,22 @@ const { showPersonInCharge = true } = Astro.props;
         charCountElement.textContent = `${otherDetailsTextarea.value.length} / ${maxLength}`;
       });
 
-      // URLパラメータ ?inquiry=... で問い合わせ種別を事前選択（外部記事からの導線）
-      const allowedInquiryValues = new Set([
-        'request_documents',
-        'request_case_study',
-        'request_contact',
-        'other',
-      ]);
+      // URLパラメータ ?inquiry=... で問い合わせ種別を事前選択（外部記事・事例ページからの導線）
+      // パラメータ値 → select の option value のマッピング。option value は本フォームの既存値を正とする
+      const inquiryParamToOptionValue: Record<string, string> = {
+        // option value と同名のパラメータ（既存導線との互換維持）
+        request_documents: 'request_documents',
+        request_case_study: 'request_case_study',
+        request_contact: 'request_contact',
+        other: 'other',
+        // エイリアス（導線別の別名 → option value）
+        case_christmas: 'request_case_study', // 事例ページ・/christmas/ からの「成功事例集請求（クリスマス事例）」導線
+        document: 'request_documents', // 「資料請求（サービス概要）」の短縮名
+      };
       const inquiryParam = new URLSearchParams(window.location.search).get('inquiry');
-      if (inquiryParam && allowedInquiryValues.has(inquiryParam)) {
-        inquiryTypeSelect.value = inquiryParam;
+      // 不正な値は無視して通常表示のまま（hasOwnProperty 判定でプロトタイプ由来のキーも除外）
+      if (inquiryParam && Object.prototype.hasOwnProperty.call(inquiryParamToOptionValue, inquiryParam)) {
+        inquiryTypeSelect.value = inquiryParamToOptionValue[inquiryParam];
         inquiryTypeSelect.dispatchEvent(new Event('change'));
       }
     }

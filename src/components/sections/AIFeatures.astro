@@ -1,4 +1,6 @@
 ---
+import BirthdaySongPreview from './BirthdaySongPreview.astro';
+
 const cards = [
   {
     title: 'バースデーソング生成',
@@ -7,6 +9,7 @@ const cards = [
     description: 'お客様の名前入りオリジナルソングをAIが自動生成。子供向け・大人向けの2種類から選べます。楽曲はがだんだんからお客様のメールアドレスへ直接お届けします。',
     value: '体験価値の向上 × 追加売上',
     icon: 'music',
+    hasSongPreview: true,
   },
   {
     title: 'AI画像生成',
@@ -15,6 +18,7 @@ const cards = [
     description: '商品写真やSNS投稿用バナーをAIが自動作成。撮影やデザイン外注のコストと手間を削減します。',
     value: 'SNS発信の負担を軽減',
     icon: 'image',
+    hasSongPreview: false,
   },
   {
     title: 'デジタル手紙',
@@ -23,6 +27,7 @@ const cards = [
     description: '贈り主の気持ちをデジタルレターでお届け。ギフト需要の取りこぼしを防ぎ、客単価を向上させます。',
     value: 'ギフト需要 × 客単価UP',
     icon: 'letter',
+    hasSongPreview: false,
   },
   {
     title: 'AI自動販促メール',
@@ -31,6 +36,7 @@ const cards = [
     description: '購入履歴や季節に合わせたメールをAIが自動配信。手間をかけずにリピート率を高めます。',
     value: '手間なくリピート促進',
     icon: 'sparkle',
+    hasSongPreview: false,
   },
 ];
 ---
@@ -77,6 +83,8 @@ const cards = [
           </div>
           <p class="ai-card__description">{card.description}</p>
           <p class="ai-card__value">→ {card.value}</p>
+          {/* バースデーソング生成カードのみ試聴ブロックを表示（表示可否はコンポーネント内の SONG_EMBED_MODE で制御） */}
+          {card.hasSongPreview && <BirthdaySongPreview />}
         </article>
       ))}
     </div>

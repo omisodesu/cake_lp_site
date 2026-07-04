@@ -12,7 +12,7 @@ interface Props {
   ogImage?: string;
   ogUrl?: string;
   noIndex?: boolean;
-  structuredData?: object;
+  structuredData?: object | object[];
 }
 
 const {
@@ -27,6 +27,14 @@ const {
 } = Astro.props;
 
 const canonicalUrl = ogUrl || new URL(Astro.url.pathname, SITE.url).toString();
+
+// JSON-LD は複数渡せるよう配列に正規化する（単一オブジェクトの既存呼び出しも互換）
+const structuredDataList = structuredData
+  ? (Array.isArray(structuredData) ? structuredData : [structuredData])
+  : [];
+
+// script 終了タグ等によるエスケープ崩れを防ぐため "<" を Unicode エスケープして出力する
+const toJsonLd = (data: object) => JSON.stringify(data).replace(/</g, '\\u003c');
 ---
 <!DOCTYPE html>
 <html lang="ja">
@@ -51,9 +59,12 @@ const canonicalUrl = ogUrl || new URL(Astro.url.pathname, SITE.url).toString();
   <!-- Favicon -->
   <link rel="icon" href="/favicon.png" type="image/png">
 
-  {structuredData && (
-    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
-  )}
+  <!-- GA4(gtag.js)読み込み用の事前接続（モバイル実環境での接続確立を短縮。表示内容には影響しない） -->
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+
+  {structuredDataList.map((data) => (
+    <script type="application/ld+json" set:html={toJsonLd(data)} />
+  ))}
 
   <GoogleAnalytics />
 
